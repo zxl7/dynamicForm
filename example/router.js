@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Field from './views/field.vue'
+import Field from './views/text_field.vue'
 
 Vue.use(Router)
 

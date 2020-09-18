@@ -64,3 +64,9 @@ export const Integer = {
 
 export default Integer
 </script>
+
+<style lang="scss" scoped>
+input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
+</style>

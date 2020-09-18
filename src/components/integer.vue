@@ -9,9 +9,10 @@
     >
       <input
         v-model.trim="inputValue"
-        type="text"
+        type="number"
         class="field-value"
         placeholder="请输入"
+        @keypress="validateKeycode"
       >
     </div>
   </field>
@@ -20,7 +21,7 @@
 <script>
 import Field from './base.vue'
 
-export const TextField = {
+export const Integer = {
   components: {
     Field,
   },
@@ -35,7 +36,7 @@ export const TextField = {
   props: {
     title: {
       type: String,
-      default: '单行文本',
+      default: '数字',
     },
   },
 
@@ -50,7 +51,16 @@ export const TextField = {
       this.$emit('input', value)
     },
   },
+
+  methods: {
+    validateKeycode(event) {
+      const regex = /[\-.\d]/g
+      if (!regex.test(event.key)) {
+        event.preventDefault()
+      }
+    },
+  },
 }
 
-export default TextField
+export default Integer
 </script>

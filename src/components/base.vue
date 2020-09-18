@@ -72,6 +72,20 @@ export default {
     line-height: 30px;
     flex-grow: 1;
     padding-bottom: 4px;
+
+    > .field-input.with-icon {
+      display: flex;
+      line-height: inherit;
+      align-items: center;
+      border-bottom: 1px solid rgba(97, 95, 108, 0.2);
+
+      > .field-value {
+        border-bottom: 0;
+        padding: 6px 0;
+        flex-grow: 1;
+        line-height: inherit;
+      }
+    }
   }
 
   ._field-input,

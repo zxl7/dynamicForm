@@ -112,4 +112,12 @@ input[type=tel] {
   border-radius: 0;
   line-height: 1.5em;
 }
+
+::-webkit-input-placeholder {
+  color: rgba(46, 46, 46, 0.2);
+  font-size: 16px;
+  font-family: inherit;
+  line-height: inherit;
+  font-weight: normal;
+}
 </style>

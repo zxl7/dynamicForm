@@ -5,21 +5,24 @@
       title="名称"
       description="描述"
     />
-    <text-field />
+    <integer v-model="count" />
   </div>
 </template>
 
 <script>
 import TextField from '../../src/components/text_field.vue'
+import Integer from '../../src/components/integer.vue'
 
 export default {
   components: {
     TextField,
+    Integer,
   },
 
   data() {
     return {
       name: '',
+      count: 0,
     }
   },
 }

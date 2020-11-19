@@ -44,3 +44,7 @@ export const TextField = {
 
 export default TextField
 </script>
+
+<style lang="scss" scoped>
+@import '../style.scss';
+</style>

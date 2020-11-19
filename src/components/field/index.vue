@@ -14,6 +14,8 @@
 <script>
 import _ from 'lodash'
 import { TextField } from '../text_field/index.vue'
+import { RadioButton } from '../radio_button/index.vue'
+import { CheckboxButton } from '../checkbox_button/index.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
@@ -29,6 +31,8 @@ const FIELDS_MAP = {
 export const Fields = {
   components: {
     TextField,
+    RadioButton,
+    CheckboxButton,
   },
   props: {
     fields: {

@@ -57,7 +57,30 @@ export default {
         }, {
           id: 12326, value: '新选项2', settings: { limit_settings: { max: null, text: '超过限制' } }, position: 1,
         }],
-      }, {
+      },
+      {
+        id: 9300,
+        title: '多选',
+        description: null,
+        type: 'Field::CheckBox',
+        position: 1,
+        validations: ['presence'],
+        other_option: null,
+        visibility: 'public_visibility',
+        marked: false,
+        settings: {
+          layout: 'list', other_option_settings: { limit: {} }, length_limit: {}, limit_settings: {}, char_size_limit_settings: {},
+        },
+        detail_id: null,
+        identity_key: '625f314b89b844439f471fc5c149992b',
+        data: {},
+        options: [{
+          id: 12195, value: '新选项', settings: { limit_settings: { max: null, text: '超过限制' } }, position: 0,
+        }, {
+          id: 12326, value: '新选项2', settings: { limit_settings: { max: null, text: '超过限制' } }, position: 1,
+        }],
+      },
+      {
         id: 9289,
         title: '日期时间',
         description: null,

@@ -1,0 +1,106 @@
+.van-cell.van-field.slp-field .van-field__control {
+  .ivu-select .ivu-select-selection {
+    border: none;
+    background: none;
+  }
+
+  .ivu-select-visible .ivu-select-selection {
+    box-shadow: none;
+  }
+
+  .ivu-select .ivu-select-selected-value {
+    color: #313131;
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .ivu-select .ivu-select-placeholder {
+    color: #969799 !important;
+    font-size: 14px;
+    padding: 0;
+  }
+
+  .ivu-select-dropdown-list .ivu-select-item {
+    font-size: 14px !important;
+    color: #313131 !important;
+  }
+
+  .ivu-select-dropdown-list .ivu-select-item:hover {
+    background-color: #f4f4f8;
+    color: #313131 !important;
+  }
+
+  .ivu-select-item.ivu-select-item-selected,
+  .ivu-select-item.ivu-select-item-focus {
+    background-color: #f4f4f8;
+    color: #313131 !important;
+  }
+
+  .ivu-date-picker {
+    margin-top: 4px;
+  }
+
+  .ivu-date-picker-focused input {
+    box-shadow: none;
+  }
+
+  .ivu-date-picker .ivu-date-picker-rel .ivu-input-inner-container .ivu-input {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0;
+    padding-left: 0;
+    outline: none;
+  }
+
+  .ivu-date-picker-focused input {
+    box-shadow: none;
+  }
+
+  /* BrickCheckboxSelect */
+  .popover {
+    width: 100%;
+  }
+
+  .select-trigger,
+  .select-trigger.select-trigger--focus {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    color: #313c56;
+  }
+
+  .select-trigger:hover {
+    background-color: transparent;
+  }
+
+  .popover__body {
+    background-color: #ffffff;
+  }
+
+  .popover__content {
+    left: 0;
+    width: 100%;
+  }
+
+  .popover__body__content {
+    padding: 0;
+  }
+
+  .select__selection .list__item {
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #6b7885;
+    border-bottom: none;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #f4f4f8;
+      color: #313c56;
+      border-bottom: none;
+    }
+  }
+
+  .checkbox-select__value-item {
+    color: #313c56;
+  }
+}

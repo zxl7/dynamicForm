@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@byzanteam/vis-components": "^0.1.7",
+    "iview": "^3.5.4",
     "lodash": "^4.17.15",
     "vant": "^2.10.14",
     "vue": "^2.6.10",

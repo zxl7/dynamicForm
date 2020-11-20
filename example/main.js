@@ -4,6 +4,7 @@ import router from './router'
 
 import '@byzanteam/vis-components/dist/index.css'
 import 'vant/lib/index.css'
+import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 

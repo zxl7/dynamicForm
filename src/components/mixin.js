@@ -10,12 +10,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    streetAxios: {
-      type: Function,
-    },
-    streetAuthorization: {
-      type: String,
-    },
   },
 
   data() {

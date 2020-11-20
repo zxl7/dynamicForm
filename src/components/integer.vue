@@ -1,72 +1,46 @@
 <template>
-  <field
-    v-bind="$attrs"
-    :title="title"
-  >
-    <div
-      slot="input"
-      class="field-input with-icon"
-    >
-      <input
-        v-model.trim="inputValue"
-        type="number"
-        class="field-value"
-        placeholder="请输入"
-        @keypress="validateKeycode"
-      >
-    </div>
-  </field>
+  <van-field
+    :id="field.identity_key"
+    v-model="value"
+    :label="field.title"
+    :class="statusClass"
+    autocomplete="off"
+    placeholder="请输入"
+    type="number"
+  />
 </template>
 
 <script>
-import Field from './base.vue'
+import FieldMixin from './mixin'
 
 export const Integer = {
-  components: {
-    Field,
-  },
-
-  inheritAttrs: false,
-
-  model: {
-    prop: 'value',
-    event: 'input',
-  },
-
-  props: {
-    title: {
-      type: String,
-      default: '数字',
-    },
-  },
+  mixins: [FieldMixin],
 
   data() {
     return {
-      inputValue: this.value,
+      value: '',
     }
   },
 
-  watch: {
-    inputValue(value) {
-      this.$emit('input', value)
-    },
-  },
-
   methods: {
-    validateKeycode(event) {
-      const regex = /[\-.\d]/g
-      if (!regex.test(event.key)) {
-        event.preventDefault()
+    getData() {
+      if (!this.value) return []
+      const entry = {
+        field_id: this.field.id,
+        value: this.value,
       }
+      return [entry]
+    },
+    getValid() {
+      if (!this.value && this.required) {
+        this.valid = false
+      } else {
+        this.valid = true
+      }
+      return this.valid
     },
   },
 }
 
 export default Integer
 </script>
-
-<style lang="scss" scoped>
-input[type=number]::-webkit-inner-spin-button {
-  display: none;
-}
-</style>

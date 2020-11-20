@@ -17,6 +17,7 @@ import { TextField } from '../text_field/index.vue'
 import { RadioButton } from '../radio_button/index.vue'
 import { CheckboxButton } from '../checkbox_button/index.vue'
 import { SlpTextArea } from '../text_area/index.vue'
+import { Integer } from '../integer.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
@@ -35,6 +36,7 @@ export const Fields = {
     RadioButton,
     CheckboxButton,
     SlpTextArea,
+    Integer,
   },
   props: {
     fields: {

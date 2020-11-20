@@ -16,11 +16,12 @@ import _ from 'lodash'
 import { TextField } from '../text_field/index.vue'
 import { RadioButton } from '../radio_button/index.vue'
 import { CheckboxButton } from '../checkbox_button/index.vue'
+import { SlpTextArea } from '../text_area/index.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
   'Field::IDNumber': 'integer',
-  'Field::TextArea': 'textarea',
+  'Field::TextArea': 'slp-text-area',
   'Field::CascadedSelect': 'cascaded-select',
   'Field::RadioButton': 'radio-button',
   'Field::CheckBox': 'checkbox-button',
@@ -33,6 +34,7 @@ export const Fields = {
     TextField,
     RadioButton,
     CheckboxButton,
+    SlpTextArea,
   },
   props: {
     fields: {

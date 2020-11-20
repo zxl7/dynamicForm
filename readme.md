@@ -10,5 +10,5 @@ yarn add slp-fields
 import '@byzanteam/vis-components/dist/index.css'
 import 'vant/lib/index.css'
 import 'iview/dist/styles/iview.css'
-import 'slp-fields/index.css'
+import '@byzanteam/slp-fields/index.css'
 ```

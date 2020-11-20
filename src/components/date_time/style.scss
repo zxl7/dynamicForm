@@ -1,0 +1,23 @@
+.van-cell.van-field.slp-field .van-field__control {
+  .van-field__control {
+    .ivu-date-picker {
+      margin-top: 4px;
+    }
+
+    .ivu-date-picker-focused input {
+      box-shadow: none;
+    }
+
+    .ivu-date-picker .ivu-date-picker-rel .ivu-input-inner-container .ivu-input {
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      border-radius: 0;
+      padding-left: 0;
+      outline: none;
+    }
+
+    .ivu-date-picker-focused input {
+      box-shadow: none;
+    }
+  }
+}

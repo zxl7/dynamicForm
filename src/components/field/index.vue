@@ -19,6 +19,7 @@ import { CheckboxButton } from '../checkbox_button/index.vue'
 import { SlpTextArea } from '../text_area/index.vue'
 import { Integer } from '../integer.vue'
 import { Uploader } from '../uploader/index.vue'
+import { DateTime } from '../date_time/index.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
@@ -39,6 +40,7 @@ export const Fields = {
     SlpTextArea,
     Integer,
     Uploader,
+    DateTime,
   },
   props: {
     fields: {

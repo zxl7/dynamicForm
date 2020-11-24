@@ -6,19 +6,26 @@
     :class="statusClass"
     autocomplete="off"
     placeholder="请输入"
-    type="number"
+    type="textarea"
   />
 </template>
 
 <script>
-import FieldMixin from './mixin'
+import FieldMixin from '../mixin'
 
-export const Integer = {
+export const SlpTextArea = {
   mixins: [FieldMixin],
+
+  props: {
+    initalValue: {
+      type: String,
+      default: '',
+    },
+  },
 
   data() {
     return {
-      value: '',
+      value: this.initalValue,
     }
   },
 
@@ -42,5 +49,5 @@ export const Integer = {
   },
 }
 
-export default Integer
+export default SlpTextArea
 </script>

@@ -6,19 +6,26 @@
     :class="statusClass"
     autocomplete="off"
     placeholder="请输入"
-    type="number"
+    type="text"
   />
 </template>
 
 <script>
-import FieldMixin from './mixin'
+import FieldMixin from '../mixin'
 
-export const Integer = {
+export const TextField = {
   mixins: [FieldMixin],
+
+  props: {
+    initalValue: {
+      type: String,
+      default: '',
+    },
+  },
 
   data() {
     return {
-      value: '',
+      value: this.initalValue,
     }
   },
 
@@ -42,5 +49,9 @@ export const Integer = {
   },
 }
 
-export default Integer
+export default TextField
 </script>
+
+<style lang="scss" scoped>
+@import '../style.scss';
+</style>

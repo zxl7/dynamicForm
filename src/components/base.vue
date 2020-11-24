@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .field {
   display: flex;
   flex-direction: column;
@@ -88,13 +88,20 @@ export default {
     }
   }
 
-  ._field-input,
   input[type='text'],
   input[type='number'],
   textarea {
     display: block;
     padding: 6px 0;
     border-bottom: 1px solid rgba(97, 95, 108, 0.2);
+  }
+
+  ::-webkit-input-placeholder {
+    color: rgba(46, 46, 46, 0.2);
+    font-size: 16px;
+    font-family: inherit;
+    line-height: inherit;
+    font-weight: normal;
   }
 }
 
@@ -111,13 +118,5 @@ input[type=tel] {
   box-shadow: none;
   border-radius: 0;
   line-height: 1.5em;
-}
-
-::-webkit-input-placeholder {
-  color: rgba(46, 46, 46, 0.2);
-  font-size: 16px;
-  font-family: inherit;
-  line-height: inherit;
-  font-weight: normal;
 }
 </style>

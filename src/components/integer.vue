@@ -16,6 +16,13 @@ import FieldMixin from './mixin'
 export const Integer = {
   mixins: [FieldMixin],
 
+  props: {
+    initalValue: {
+      type: Number,
+      default: 0,
+    },
+  },
+
   data() {
     return {
       value: '',

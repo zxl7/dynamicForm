@@ -1,9 +1,13 @@
 <template>
-  <fields :fields="flow.fields" />
+  <fields
+    :fields="flow.fields"
+    :before-upload-func="beforeUploadFunc"
+    :file-params="fileParams"
+  />
 </template>
 
 <script>
-import Fields from '../../src/components/field/index.vue'
+import { Fields } from '@byzanteam/slp-fields'
 
 export default {
   components: {
@@ -13,6 +17,7 @@ export default {
   data() {
     return {
       flow: {},
+      fileParams: {},
     }
   },
 
@@ -95,6 +100,12 @@ export default {
         data: {},
       }],
     }
+  },
+
+  methods: {
+    beforeUploadFunc() {
+      this.fileParams = { data: 2 }
+    },
   },
 }
 </script>

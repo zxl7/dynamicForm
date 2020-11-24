@@ -15,7 +15,7 @@
         <slot name="upload-btn">
           <i-button
             icon="ios-cloud-upload-outline"
-            @click="beforeUploadFunc"
+            @click="beforeUploadClickedFunc"
           >
             上传文件
           </i-button>
@@ -42,6 +42,10 @@ export const Uploader = {
       type: Object,
       default: () => {},
     },
+    beforeUploadFunc: {
+      type: Function,
+      required: true,
+    },
   },
 
   components: {
@@ -57,8 +61,8 @@ export const Uploader = {
   },
 
   methods: {
-    beforeUploadFunc() {
-      this.$emit('beforeUploadFunc')
+    beforeUploadClickedFunc() {
+      this.beforeUploadFunc()
     },
     getData() {
       if (this.files.length <= 0) return []

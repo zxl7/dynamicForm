@@ -6,6 +6,9 @@
       ref="field"
       :key="field.id"
       :field="field"
+      :before-upload-func="beforeUploadFunc"
+      :inital-value="field.value"
+      :file-params="fileParams"
       class="slp-field"
     />
   </div>
@@ -46,6 +49,18 @@ export const Fields = {
     fields: {
       type: Array,
       default: () => [],
+    },
+    beforeUploadFunc: {
+      type: Function,
+      default: () => [],
+    },
+    action: {
+      type: String,
+      default: '',
+    },
+    fileParams: {
+      type: Object,
+      default: () => {},
     },
   },
 

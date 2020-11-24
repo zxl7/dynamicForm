@@ -104,3 +104,7 @@ export const DateTime = {
 
 export default DateTime
 </script>
+
+<style lang="scss">
+@import './style.scss';
+</style>

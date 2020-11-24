@@ -9,51 +9,31 @@
   }
 
   .ivu-select .ivu-select-selected-value {
-    color: #313131;
-    font-size: 14px;
-    padding: 0;
+    color: $field-radio-value-color;
+    font-size: $field-radio-value-font-size;
+    padding: $field-radio-value-padding;
   }
 
   .ivu-select .ivu-select-placeholder {
-    color: #969799 !important;
-    font-size: 14px;
-    padding: 0;
+    color: $field-radio-placeholder-color !important;
+    font-size: $field-radio-placeholder-font-size;
+    padding: $field-radio-placeholder-padding;
   }
 
   .ivu-select-dropdown-list .ivu-select-item {
-    font-size: 14px !important;
-    color: #313131 !important;
+    font-size: $field-dropdown-list-item-font-size !important;
+    color: $field-dropdown-list-item-color !important;
   }
 
   .ivu-select-dropdown-list .ivu-select-item:hover {
-    background-color: #f4f4f8;
-    color: #313131 !important;
+    background-color: $field-dropdown-list-item-hover-background-color;
+    color: $field-dropdown-list-item-hover-color !important;
   }
 
   .ivu-select-item.ivu-select-item-selected,
   .ivu-select-item.ivu-select-item-focus {
-    background-color: #f4f4f8;
-    color: #313131 !important;
-  }
-
-  .ivu-date-picker {
-    margin-top: 4px;
-  }
-
-  .ivu-date-picker-focused input {
-    box-shadow: none;
-  }
-
-  .ivu-date-picker .ivu-date-picker-rel .ivu-input-inner-container .ivu-input {
-    border: none;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 0;
-    padding-left: 0;
-    outline: none;
-  }
-
-  .ivu-date-picker-focused input {
-    box-shadow: none;
+    background-color: $field-dropdown-list-item-selected-background-color;
+    color: $field-dropdown-list-item-selected-color !important;
   }
 
   /* BrickCheckboxSelect */

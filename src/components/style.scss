@@ -1,10 +1,10 @@
 .van-cell.van-field.slp-field {
   flex-direction: column;
   overflow: visible;
-  padding: 12px 20px 0;
+  padding: $field-padding;
 
   &.error {
-    background-color: #fcebec;
+    background-color: $field-error-background-color;
   }
 
   &.required {
@@ -13,7 +13,7 @@
       content: '*';
       bottom: 0;
       left: -13px;
-      color: #ff9800;
+      color: $field-required-color;
       font-size: 30px;
       z-index: 1;
       transform: translateY(-50%);
@@ -26,22 +26,22 @@
   }
 
   .van-field__label {
-    font-weight: 500;
-    font-size: 16px;
-    color: #313131;
-    line-height: 1.5em;
+    font-weight: $field-label-font-weight;
+    font-size: $field-label-font-size;
+    color: $field-label-color;
+    line-height: $field-label-line-height;
     width: auto;
     position: relative;
   }
 
   .van-field__value {
     margin-top: 8px;
-    line-height: 1.5em;
+    line-height: $field-value-line-height;
   }
 
   .van-field__body {
     display: flex;
-    margin-bottom: 25px;
+    margin-bottom: $field-margin-bottom;
   }
 
   &.no-border .van-field__control {
@@ -49,45 +49,20 @@
   }
 
   .van-field__control {
-    color: #313131;
+    color:$field-value-color;
     line-height: inherit;
     overflow: hidden;
     flex: 1;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 4px 0;
+    font-size: $field-value-font-size;
+    font-weight: $field-value-font-weight;
+    padding: $field-value-padding;
     border: none;
     outline: none;
     background: none;
     min-height: 1em;
     box-shadow: none;
     border-radius: 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
     overflow: visible;
-
-    .ivu-date-picker {
-      margin-top: 4px;
-    }
-
-    .ivu-date-picker-focused input {
-      box-shadow: none;
-    }
-
-    .ivu-date-picker .ivu-date-picker-rel .ivu-input-inner-container .ivu-input {
-      border: none;
-      border-bottom: 1px solid #e0e0e0;
-      border-radius: 0;
-      padding-left: 0;
-      outline: none;
-    }
-
-    .ivu-date-picker-focused input {
-      box-shadow: none;
-    }
-
-    /* BrickCheckboxSelect */
-    .checkbox-select__value-item {
-      color: #313c56;
-    }
   }
 }

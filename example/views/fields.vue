@@ -77,6 +77,9 @@ export default {
         type: 'Field::DateTime',
         position: 2,
         validations: [],
+        settings: {
+          input_type: 'date',
+        },
         data: {},
       }, {
         title: '文件上传',

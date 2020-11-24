@@ -16,9 +16,16 @@ import FieldMixin from '../mixin'
 export const SlpTextArea = {
   mixins: [FieldMixin],
 
+  props: {
+    initalValue: {
+      type: String,
+      default: '',
+    },
+  },
+
   data() {
     return {
-      value: '',
+      value: this.initalValue,
     }
   },
 

@@ -41,6 +41,13 @@ const DATE_OPTIONS_MAP = {
 export const DateTime = {
   mixins: [FieldMixin],
 
+  props: {
+    initalValue: {
+      type: String,
+      default: '',
+    },
+  },
+
   components: {
     DatePicker,
     TimePicker,
@@ -48,7 +55,7 @@ export const DateTime = {
 
   data() {
     return {
-      date: '',
+      date: this.initalValue,
     }
   },
 

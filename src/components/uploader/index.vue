@@ -42,10 +42,6 @@ export const Uploader = {
       type: Object,
       default: () => {},
     },
-    initalValue: {
-      type: Array,
-      default: () => [],
-    },
   },
 
   components: {
@@ -56,7 +52,7 @@ export const Uploader = {
 
   data() {
     return {
-      files: this.initalValue,
+      files: [],
     }
   },
 

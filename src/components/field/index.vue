@@ -23,10 +23,14 @@ import { SlpTextArea } from '../text_area/index.vue'
 import { Integer } from '../integer.vue'
 import { Uploader } from '../uploader/index.vue'
 import { DateTime } from '../date_time/index.vue'
+import { Phone } from '../phone/index.vue'
+import { IdNumber } from '../id_number/index.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
-  'Field::IDNumber': 'integer',
+  'Field::Integer': 'integer',
+  'Field::IDNumber': 'id-number',
+  'Field::Phone': 'phone',
   'Field::TextArea': 'slp-text-area',
   'Field::CascadedSelect': 'cascaded-select',
   'Field::RadioButton': 'radio-button',
@@ -44,6 +48,8 @@ export const Fields = {
     Integer,
     Uploader,
     DateTime,
+    IdNumber,
+    Phone,
   },
   props: {
     fields: {

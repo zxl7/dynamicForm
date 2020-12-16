@@ -4,6 +4,7 @@
     v-model="value"
     :label="field.title"
     :class="statusClass"
+    :error-message="errorMessage"
     autocomplete="off"
     placeholder="请输入"
     type="number"

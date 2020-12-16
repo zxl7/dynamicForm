@@ -72,7 +72,21 @@ export default {
       },
       {
         title: '数字',
+        type: 'Field::Integer',
+        position: 1,
+        validations: [],
+        data: {},
+      },
+      {
+        title: '身份证号',
         type: 'Field::IDNumber',
+        position: 1,
+        validations: [],
+        data: {},
+      },
+      {
+        title: '手机号',
+        type: 'Field::Phone',
         position: 1,
         validations: [],
         data: {},

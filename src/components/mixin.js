@@ -28,5 +28,9 @@ export default {
         error: !this.valid,
       }
     },
+
+    errorMessage() {
+      return this.valid ? '' : '填写错误，请重新填写'
+    },
   },
 }

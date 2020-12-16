@@ -17,6 +17,7 @@ export const IdNumber = {
 
   watch: {
     value: _.debounce(function debounceFunc(value) {
+      this.$emit('valueChanged', value)
       this.valid = true
       if (!value) return
       const sum = _.reduce(FACTOR, (memo, item, index) => {

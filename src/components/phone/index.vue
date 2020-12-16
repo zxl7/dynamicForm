@@ -15,6 +15,7 @@ export const Phone = {
 
   watch: {
     value: _.debounce(function debounceFunc(value) {
+      this.$emit('valueChanged', value)
       this.valid = true
       if (!value) return
       if (!PHONE_REGEX.test(value)) {

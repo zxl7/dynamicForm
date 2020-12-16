@@ -33,4 +33,10 @@ export default {
       return this.valid ? '' : '填写错误，请重新填写'
     },
   },
+
+  watch: {
+    value(value) {
+      this.$emit('valueChanged', value)
+    },
+  },
 }

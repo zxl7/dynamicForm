@@ -7,8 +7,8 @@
       :key="field.id"
       :field="field"
       :before-upload-func="beforeUploadFunc"
-      :inital-value="field.value"
       :file-params="fileParams"
+      :entry="getEntry(field)"
       class="slp-field"
     />
   </div>
@@ -56,6 +56,10 @@ export const Fields = {
       type: Array,
       default: () => [],
     },
+    entries: {
+      type: Array,
+      default: () => [],
+    },
     beforeUploadFunc: {
       type: Function,
       default: () => [],
@@ -89,6 +93,10 @@ export const Fields = {
     getValid() {
       const valids = this.$refs.field.map(item => item.getValid())
       return _.every(valids)
+    },
+
+    getEntry(field) {
+      return this.entries.filter(entry => entry.field_id === field.id)
     },
   },
 }

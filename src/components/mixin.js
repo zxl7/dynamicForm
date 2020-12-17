@@ -10,6 +10,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    entry: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
@@ -19,6 +23,12 @@ export default {
   },
 
   computed: {
+    initalValue() {
+      const entry = this.entry.find(item => !item._destroy)
+      if (!entry) return ''
+      return entry.value
+    },
+
     required() {
       return this.field.validations.includes('presence')
     },

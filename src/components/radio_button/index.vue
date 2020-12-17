@@ -44,13 +44,6 @@ import FieldMixin from '../mixin'
 export const RadioButton = {
   mixins: [FieldMixin],
 
-  props: {
-    initalValue: {
-      type: Object,
-      default: null,
-    },
-  },
-
   components: {
     BrickRadioButtonSelect,
   },
@@ -58,11 +51,21 @@ export const RadioButton = {
   data() {
     return {
       otherValue: '',
-      selectedValue: this.initalValue,
+      selectedValue: null,
     }
   },
 
   computed: {
+    initalValue() {
+      const entry = this.entry.find(item => !item._destroy)
+      if (!entry) return null
+      return {
+        ...entry,
+        uuid: entry.value,
+        label: entry.value,
+      }
+    },
+
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
@@ -81,6 +84,15 @@ export const RadioButton = {
         return options.concat(option)
       }
       return options
+    },
+  },
+
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.selectedValue = value
+      },
+      immediate: true,
     },
   },
 

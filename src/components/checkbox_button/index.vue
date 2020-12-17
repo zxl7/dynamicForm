@@ -44,13 +44,6 @@ import FieldMixin from '../mixin'
 export const CheckboxButton = {
   mixins: [FieldMixin],
 
-  props: {
-    initalValue: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
   components: {
     BrickCheckboxSelect,
   },
@@ -58,11 +51,19 @@ export const CheckboxButton = {
   data() {
     return {
       otherValue: '',
-      selectedValue: this.initalValue,
+      selectedValue: null,
     }
   },
 
   computed: {
+    initalValue() {
+      return this.entry.map(item => ({
+        ...item,
+        uuid: item.value,
+        label: item.value,
+      }))
+    },
+
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
@@ -81,6 +82,15 @@ export const CheckboxButton = {
         return options.concat(option)
       }
       return options
+    },
+  },
+
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.selectedValue = value
+      },
+      immediate: true,
     },
   },
 

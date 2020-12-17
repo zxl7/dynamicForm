@@ -17,17 +17,19 @@ import FieldMixin from '../mixin'
 export const TextField = {
   mixins: [FieldMixin],
 
-  props: {
-    initalValue: {
-      type: String,
-      default: '',
-    },
-  },
-
   data() {
     return {
-      value: this.initalValue,
+      value: '',
     }
+  },
+
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.value = value
+      },
+      immediate: true,
+    },
   },
 
   methods: {

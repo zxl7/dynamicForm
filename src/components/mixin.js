@@ -22,6 +22,7 @@ export default {
     required() {
       return this.field.validations.includes('presence')
     },
+
     statusClass() {
       return {
         required: this.required,
@@ -31,6 +32,13 @@ export default {
 
     errorMessage() {
       return this.valid ? '' : '填写错误，请重新填写'
+    },
+
+    disabled() {
+      if (this.field.customClass) {
+        return this.field.customClass.includes('disabled')
+      }
+      return false
     },
   },
 

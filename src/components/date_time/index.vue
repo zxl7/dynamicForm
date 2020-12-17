@@ -2,7 +2,8 @@
   <van-field
     :id="field.identity_key"
     :label="field.title"
-    :class="statusClass"
+    :class="[statusClass, field.customClass]"
+    :disabled="disabled"
     class="no-border"
   >
     <template #input>

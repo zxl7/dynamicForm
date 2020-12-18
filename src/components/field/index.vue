@@ -8,7 +8,7 @@
       :field="field"
       :before-upload-func="beforeUploadFunc"
       :file-params="fileParams"
-      :entry="getEntry(field)"
+      :entries="getEntry(field)"
       class="slp-field"
     />
   </div>

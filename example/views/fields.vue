@@ -21,12 +21,10 @@ export default {
       fileParams: {},
       entries: [
         { field_id: 1, value: '单行文本' },
-        { field_id: 2, id: 12195, value: '新选项' },
-        {
-          field_id: 2, id: 12326, value: '新选项2', _destroy: true,
-        },
-        { field_id: 3, id: 12196, value: '新选项' },
-        { field_id: 3, id: 12327, value: '新选项2' },
+        { field_id: 2, option_id: 12195, value: '新选项' },
+        { field_id: 2, option_id: 12326, value: '新选项2' },
+        { field_id: 3, option_id: 12196, value: '新选项' },
+        { field_id: 3, id: 122, value: '新选项2' },
         { field_id: 4, value: '这是一条很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文字' },
         { field_id: 5, value: 123333 },
         { field_id: 6, value: 510322199703122122 },

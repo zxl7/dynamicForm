@@ -2,7 +2,8 @@
   <van-field
     :id="field.identity_key"
     :label="field.title"
-    :class="statusClass"
+    :class="[statusClass, field.customClass]"
+    :disabled="disabled"
     class="no-border"
   >
     <template #input>
@@ -15,6 +16,7 @@
         <slot name="upload-btn">
           <i-button
             icon="ios-cloud-upload-outline"
+            :disabled="disabled"
             @click="beforeUploadClickedFunc"
           >
             上传文件

@@ -2,7 +2,8 @@
   <van-field
     :id="field.identity_key"
     :label="field.title"
-    :class="statusClass"
+    :class="[statusClass, field.customClass]"
+    :disabled="disabled"
   >
     <template #input>
       <brick-radio-button-select
@@ -37,18 +38,12 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { BrickRadioButtonSelect } from '@byzanteam/vis-components'
 import FieldMixin from '../mixin'
 
 export const RadioButton = {
   mixins: [FieldMixin],
-
-  props: {
-    initalValue: {
-      type: Object,
-      default: null,
-    },
-  },
 
   components: {
     BrickRadioButtonSelect,
@@ -57,24 +52,34 @@ export const RadioButton = {
   data() {
     return {
       otherValue: '',
-      selectedValue: this.initalValue,
+      selectedValue: null,
     }
   },
 
   computed: {
+    initalValue() {
+      const entry = this.entries.find(item => !item._destroy)
+      if (!entry) return null
+      return {
+        ...entry,
+        id: entry.option_id,
+        label: entry.value,
+      }
+    },
+
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
         id: option.id,
         label: option.value,
-        uuid: option.value,
+        value: option.value,
       }))
       if (otherOption) {
         const option = {
           id: 0,
           name: otherOption,
           label: this.otherValue,
-          uuid: otherOption,
+          value: otherOption,
           other_option: true,
         }
         return options.concat(option)
@@ -83,16 +88,39 @@ export const RadioButton = {
     },
   },
 
-  methods: {
-    getData() {
-      if (!this.selectedValue) return []
-      const entry = {
-        field_id: this.field.id,
-        option_id: this.selectedValue.id,
-        value: this.selectedValue.label,
-      }
-      return [entry]
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.selectedValue = value
+      },
+      immediate: true,
     },
+  },
+
+  methods: {
+    getEntries() {
+      const entry = _.first(this.entries)
+      const option = this.selectedValue
+      const entries = []
+
+      if (entry) {
+        if (option) {
+          if (option.id !== 0 && option.id === entry.option_id) {
+            entries.push(_.clone(entry))
+          } else {
+            entries.push(_.extend(_.clone(entry), { _destroy: true }))
+            entries.push(this._generateEntryFromOption(option))
+          }
+        } else {
+          entries.push(_.extend(_.clone(entry), { _destroy: true }))
+        }
+      } else if (option) {
+        entries.push(this._generateEntryFromOption(option))
+      }
+
+      return entries
+    },
+
     getValid() {
       if (!this.selectedValue && this.required) {
         this.valid = false
@@ -100,6 +128,15 @@ export const RadioButton = {
         this.valid = true
       }
       return this.valid
+    },
+
+    _generateEntryFromOption(option) {
+      debugger
+      return {
+        value: option.value,
+        field_id: this.field.id,
+        option_id: option.id,
+      }
     },
   },
 }

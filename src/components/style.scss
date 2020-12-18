@@ -3,6 +3,10 @@
   overflow: visible;
   padding: $field-padding;
 
+  &.van-field--disabled .van-field__label {
+    color: #c8c9cc;
+  }
+
   &.error {
     background-color: $field-error-background-color;
   }

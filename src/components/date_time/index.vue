@@ -2,7 +2,8 @@
   <van-field
     :id="field.identity_key"
     :label="field.title"
-    :class="statusClass"
+    :class="[statusClass, field.customClass]"
+    :disabled="disabled"
     class="no-border"
   >
     <template #input>
@@ -41,13 +42,6 @@ const DATE_OPTIONS_MAP = {
 export const DateTime = {
   mixins: [FieldMixin],
 
-  props: {
-    initalValue: {
-      type: String,
-      default: '',
-    },
-  },
-
   components: {
     DatePicker,
     TimePicker,
@@ -55,7 +49,7 @@ export const DateTime = {
 
   data() {
     return {
-      date: this.initalValue,
+      date: '',
     }
   },
 
@@ -65,6 +59,15 @@ export const DateTime = {
     },
     timePickerShow() {
       return this.field.settings.input_type === 'time'
+    },
+  },
+
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.date = value
+      },
+      immediate: true,
     },
   },
 

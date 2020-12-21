@@ -1,7 +1,7 @@
 <template>
   <div class="fields-group">
     <component
-      :is="fieldsMap[field.type]"
+      :is="fieldsMap[field.type] || 'text-field'"
       v-for="field in fields"
       ref="field"
       :key="field.id"
@@ -32,7 +32,6 @@ const FIELDS_MAP = {
   'Field::IDNumber': 'id-number',
   'Field::Phone': 'phone',
   'Field::TextArea': 'slp-text-area',
-  'Field::CascadedSelect': 'cascaded-select',
   'Field::RadioButton': 'radio-button',
   'Field::CheckBox': 'checkbox-button',
   'Field::DateTime': 'date-time',
@@ -84,7 +83,7 @@ export const Fields = {
     getData() {
       const entries = []
       this.$refs.field.forEach((component) => {
-        const data = component.getData()
+        const data = component.getEntries()
         entries.push(...data)
       })
       return entries

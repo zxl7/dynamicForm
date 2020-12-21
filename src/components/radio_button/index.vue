@@ -131,7 +131,6 @@ export const RadioButton = {
     },
 
     _generateEntryFromOption(option) {
-      debugger
       return {
         value: option.value,
         field_id: this.field.id,

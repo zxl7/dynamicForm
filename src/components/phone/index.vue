@@ -23,6 +23,14 @@ export const Phone = {
       }
     }, 1000),
   },
+
+  methods: {
+    methods: {
+      getValid() {
+        return this.valid
+      },
+    },
+  },
 }
 
 export default Phone

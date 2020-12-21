@@ -31,6 +31,12 @@ export const IdNumber = {
       }
     }, 1000),
   },
+
+  methods: {
+    getValid() {
+      return this.valid
+    },
+  },
 }
 
 export default IdNumber

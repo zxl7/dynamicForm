@@ -9,26 +9,33 @@ export const Phone = {
 
   computed: {
     errorMessage() {
-      return this.valid ? '' : '手机号格式错误'
+      const errors = []
+      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
+      errors.push(this.valid ? '' : '手机号格式错误')
+      return _.compact(errors)[0]
     },
   },
 
   watch: {
-    value: _.debounce(function debounceFunc(value) {
-      this.$emit('valueChanged', value)
-      this.valid = true
-      if (!value) return
-      if (!PHONE_REGEX.test(value)) {
-        this.valid = false
-      }
-    }, 1000),
+    value: {
+      handler: _.debounce(function debounceFunc(value) {
+        this.$emit('valueChanged', value)
+        this.valid = true
+        if (!value) return
+        if (!PHONE_REGEX.test(value)) {
+          this.valid = false
+        }
+      }, 1000),
+      immediate: true,
+    },
   },
 
   methods: {
-    methods: {
-      getValid() {
-        return this.valid
-      },
+    getValid() {
+      if (!this.value && this.required) {
+        this.valid = false
+      }
+      return this.valid
     },
   },
 }

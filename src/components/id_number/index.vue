@@ -11,29 +11,38 @@ export const IdNumber = {
 
   computed: {
     errorMessage() {
-      return this.valid ? '' : '身份证号格式错误'
+      const errors = []
+      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
+      errors.push(this.valid ? '' : '身份证号格式错误')
+      return _.compact(errors)[0]
     },
   },
 
   watch: {
-    value: _.debounce(function debounceFunc(value) {
-      this.$emit('valueChanged', value)
-      this.valid = true
-      if (!value) return
-      const sum = _.reduce(FACTOR, (memo, item, index) => {
-        const count = memo + value.substr(index, 1) * item
-        return count
-      }, 0)
+    value: {
+      handler: _.debounce(function debounceFunc(value) {
+        this.$emit('valueChanged', value)
+        this.valid = true
+        if (!value) return
+        const sum = _.reduce(FACTOR, (memo, item, index) => {
+          const count = memo + value.substr(index, 1) * item
+          return count
+        }, 0)
 
-      const validRegex = ID_NUMBER_REGEX.test(value)
-      if (!(validRegex && PARITY[sum % 11].toString() === value.substr(17, 1).toString())) {
-        this.valid = false
-      }
-    }, 1000),
+        const validRegex = ID_NUMBER_REGEX.test(value)
+        if (!(validRegex && PARITY[sum % 11].toString() === value.substr(17, 1).toString())) {
+          this.valid = false
+        }
+      }, 1000),
+      immediate: true,
+    },
   },
 
   methods: {
     getValid() {
+      if (!this.value && this.required) {
+        this.valid = false
+      }
       return this.valid
     },
   },

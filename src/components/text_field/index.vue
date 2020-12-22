@@ -5,6 +5,7 @@
     :label="field.title"
     :class="[statusClass, field.customClass]"
     :disabled="disabled"
+    :error-message="errorMessage"
     autocomplete="off"
     placeholder="请输入"
     type="text"
@@ -12,6 +13,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import FieldMixin from '../mixin'
 
 export const TextField = {
@@ -29,6 +31,15 @@ export const TextField = {
         this.value = value
       },
       immediate: true,
+    },
+  },
+
+  computed: {
+    errorMessage() {
+      const errors = []
+      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
+      errors.push(this.valid ? '' : '填写错误，请重新填写')
+      return _.compact(errors)[0]
     },
   },
 

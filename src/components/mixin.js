@@ -54,8 +54,11 @@ export default {
   },
 
   watch: {
-    value(value) {
-      this.$emit('valueChanged', value)
+    value: {
+      handler(value) {
+        this.valid = true
+        this.$emit('valueChanged', value)
+      },
     },
   },
 

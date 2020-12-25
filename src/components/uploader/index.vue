@@ -4,6 +4,7 @@
     :label="field.title"
     :class="[statusClass, field.customClass]"
     :disabled="disabled"
+    :error-message="errorMessage"
     class="no-border"
   >
     <template #input>

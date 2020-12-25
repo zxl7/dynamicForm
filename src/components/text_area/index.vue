@@ -5,6 +5,7 @@
     :label="field.title"
     :class="[statusClass, field.customClass]"
     :disabled="disabled"
+    :error-message="errorMessage"
     autocomplete="off"
     placeholder="请输入"
     type="textarea"

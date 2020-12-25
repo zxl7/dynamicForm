@@ -4,6 +4,7 @@
     :label="field.title"
     :class="[statusClass, field.customClass]"
     :disabled="disabled"
+    :error-message="errorMessage"
   >
     <template #input>
       <brick-radio-button-select
@@ -131,7 +132,6 @@ export const RadioButton = {
     },
 
     _generateEntryFromOption(option) {
-      debugger
       return {
         value: option.value,
         field_id: this.field.id,

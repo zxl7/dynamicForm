@@ -3,7 +3,7 @@
     :id="field.identity_key"
     v-model="value"
     :label="field.title"
-    :class="[statusClass, field.customClass]"
+    :class="[statusClass, field.customClass, field.settings.layout]"
     :disabled="disabled"
     :error-message="errorMessage"
     autocomplete="off"
@@ -60,4 +60,8 @@ export default TextField
 
 <style lang="scss" scoped>
 @import '../style.scss';
+// inline
+.van-cell.van-field.inline {
+  flex-direction: row;
+}
 </style>

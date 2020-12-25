@@ -59,6 +59,6 @@ body {
 }
 
 .container {
-  margin: 0 2rem;
+  margin: 0 1rem;
 }
 </style>

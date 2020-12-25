@@ -136,16 +136,6 @@ export const CheckboxButton = {
       return result.concat(deletedOldEntries)
     },
 
-    getData() {
-      if (this.selectedValue.length <= 0) return []
-      const entries = this.selectedValue.map(item => ({
-        field_id: this.field.id,
-        option_id: item.id,
-        value: item.label,
-      }))
-      return entries
-    },
-
     getValid() {
       if (this.selectedValue.length <= 0 && this.required) {
         this.valid = false

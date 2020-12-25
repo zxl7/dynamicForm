@@ -73,15 +73,6 @@ export const DateTime = {
   },
 
   methods: {
-    getData() {
-      if (!this.date) return []
-      const entry = {
-        field_id: this.field.id,
-        value: this.generateEntry(),
-      }
-      return [entry]
-    },
-
     getValid() {
       if (!this.date && this.required) {
         this.valid = false

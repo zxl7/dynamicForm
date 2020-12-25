@@ -34,14 +34,6 @@ export const SlpTextArea = {
   },
 
   methods: {
-    getData() {
-      if (!this.value) return []
-      const entry = {
-        field_id: this.field.id,
-        value: this.value,
-      }
-      return [entry]
-    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false

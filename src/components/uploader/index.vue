@@ -67,7 +67,7 @@ export const Uploader = {
     beforeUploadClickedFunc() {
       this.beforeUploadFunc()
     },
-    getData() {
+    getEntries() {
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value: item.name,

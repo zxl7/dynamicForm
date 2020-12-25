@@ -44,6 +44,7 @@ export default {
         position: 0,
         validations: [],
         data: {},
+        customClass: ['disabled'],
       }, {
         id: 2,
         title: '单选',

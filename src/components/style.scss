@@ -15,8 +15,8 @@
     .van-field__label span::after {
       position: absolute;
       content: '*';
-      bottom: 0;
-      left: -13px;
+      top: 12px;
+      left: -14px;
       color: $field-required-color;
       font-size: 30px;
       z-index: 1;

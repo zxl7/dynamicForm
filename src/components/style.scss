@@ -1,4 +1,4 @@
-.van-cell.van-field.slp-field {
+.van-cell.van-field {
   flex-direction: column;
   overflow: visible;
   padding: $field-padding;
@@ -51,22 +51,22 @@
   &.no-border .van-field__control {
     border-bottom: none;
   }
-
-  .van-field__control {
-    color:$field-value-color;
-    line-height: inherit;
-    overflow: hidden;
-    flex: 1;
-    font-size: $field-value-font-size;
-    font-weight: $field-value-font-weight;
-    padding: $field-value-padding;
-    border: none;
-    outline: none;
-    background: none;
-    min-height: 1em;
-    box-shadow: none;
-    border-radius: 0;
-    border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
-    overflow: visible;
-  }
 }
+
+.van-field__control {
+  color: $field-value-color;
+  line-height: inherit;
+  overflow: hidden;
+  flex: 1;
+  font-size: $field-value-font-size;
+  font-weight: $field-value-font-weight;
+  padding: $field-value-padding;
+  border: none;
+  outline: none;
+  background: none;
+  min-height: 1em;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+

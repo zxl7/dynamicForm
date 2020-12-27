@@ -1,15 +1,17 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    v-model="value"
-    :label="field.title"
-    :class="[statusClass, field.customClass, field.settings.layout]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-    autocomplete="off"
-    placeholder="请输入"
-    type="text"
-  />
+  <div class="text">
+    <van-field
+      :id="field.identity_key"
+      v-model="value"
+      :label="field.title"
+      :class="[statusClass, field.customClass, field.settings.layout]"
+      :disabled="disabled"
+      :error-message="errorMessage"
+      autocomplete="off"
+      placeholder="请输入"
+      type="text"
+    />
+  </div>
 </template>
 
 <script>
@@ -59,7 +61,8 @@ export default TextField
 </script>
 
 <style lang="scss" scoped>
-@import '../style.scss';
+@import './style.scss';
+
 // inline
 .van-cell.van-field.inline {
   flex-direction: row;

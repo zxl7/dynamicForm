@@ -1,15 +1,17 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    v-model="value"
-    :label="field.title"
-    :class="[statusClass, field.customCla, field.settings.layout]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-    autocomplete="off"
-    placeholder="请输入"
-    type="textarea"
-  />
+  <div class="text-area">
+    <van-field
+      :id="field.identity_key"
+      v-model="value"
+      :label="field.title"
+      :class="[statusClass, field.customCla, field.settings.layout]"
+      :disabled="disabled"
+      :error-message="errorMessage"
+      autocomplete="off"
+      placeholder="请输入"
+      type="textarea"
+    />
+  </div>
 </template>
 
 <script>
@@ -48,8 +50,6 @@ export const SlpTextArea = {
 export default SlpTextArea
 </script>
 <style lang="scss" scoped>
-// inline
-.van-cell.van-field.inline {
-  flex-direction: row;
-}
+@import './style.scss';
+
 </style>

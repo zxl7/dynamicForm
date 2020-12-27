@@ -70,3 +70,17 @@
   overflow: visible;
 }
 
+// 描述
+.description {
+  font-size: $field-radio-value-font-size;
+  color: #888;
+  line-height: $field-value-line-height;
+}
+
+// 其他选项
+.other-option {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+

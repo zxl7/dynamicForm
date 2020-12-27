@@ -25,7 +25,14 @@ export default {
 
   created() {
     this.flow = {
-      title: '流程222',
+      id: 726,
+      title: '表单组件测试用例',
+      description:
+        '<p><img src="https://slp-qiniu-material-beta.skylarkly.com/690-1608876640-53b6afcf289861e0a1bfadfd0529d513-1608876640437?attname=640.gif&amp;e=1608880241&amp;token=WFpC8JEsN77rEZRgdoQgQw-yB82e-j3fpp8dXB8Z:B1AzSP6oAkcbGKwMpjnQl7ovsyg=">Test</p>',
+      created_at: '2020-12-25T10:41:39.273+08:00',
+      updated_at: '2020-12-27T20:48:36.771+08:00',
+      status: 'published',
+      identity_vertify_type: 'off',
       fields: [
         {
           id: 7260,
@@ -130,7 +137,7 @@ export default {
           type: 'Field::RadioButton',
           position: 4,
           validations: ['presence'],
-          other_option: '测试其他',
+          other_option: '',
           visibility: 'protected_visibility',
           marked: false,
           settings: {
@@ -237,6 +244,28 @@ export default {
               },
               position: 2,
             },
+            {
+              id: 9148,
+              value: '新选项4',
+              settings: {
+                limit_settings: {
+                  max: null,
+                  text: '超过限制',
+                },
+              },
+              position: 3,
+            },
+            {
+              id: 9149,
+              value: '新选项5',
+              settings: {
+                limit_settings: {
+                  max: null,
+                  text: '超过限制',
+                },
+              },
+              position: 4,
+            },
           ],
         },
         {
@@ -264,7 +293,7 @@ export default {
           options: [
             {
               id: 9115,
-              value: '新选项1',
+              value: '新选项1下拉下拉',
               settings: {
                 limit_settings: {
                   max: null,
@@ -294,6 +323,39 @@ export default {
                 },
               },
               position: 2,
+            },
+            {
+              id: 9145,
+              value: '新选项4',
+              settings: {
+                limit_settings: {
+                  max: null,
+                  text: '超过限制',
+                },
+              },
+              position: 3,
+            },
+            {
+              id: 9146,
+              value: '新选项4',
+              settings: {
+                limit_settings: {
+                  max: null,
+                  text: '超过限制',
+                },
+              },
+              position: 4,
+            },
+            {
+              id: 9147,
+              value: '新选项5',
+              settings: {
+                limit_settings: {
+                  max: null,
+                  text: '超过限制',
+                },
+              },
+              position: 5,
             },
           ],
         },
@@ -377,30 +439,6 @@ export default {
               position: 4,
             },
           ],
-        },
-        {
-          id: 7270,
-          title: '多行文本（区块）',
-          description: null,
-          type: 'Field::TextArea',
-          position: 8,
-          validations: ['presence'],
-          other_option: null,
-          visibility: 'public_visibility',
-          marked: false,
-          settings: {
-            layout: 'block',
-            char_size_limit_settings: {},
-            other_option_settings: {
-              limit: {},
-            },
-            length_limit: {},
-            limit_settings: {},
-            enable_wechat_scan: false,
-          },
-          detail_id: null,
-          identity_key: 'bbeac81ff0a643f986a24fa4ecca3251',
-          data: {},
         },
         {
           id: 7267,

@@ -6,10 +6,11 @@
       :label="field.title"
       :class="[statusClass, field.customCla, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errorMessage"
+      :error-message="errors"
       autocomplete="off"
       placeholder="请输入"
       type="textarea"
+      @blur="errorMessageBlur(value)"
     />
   </div>
 </template>
@@ -23,6 +24,7 @@ export const SlpTextArea = {
   data() {
     return {
       value: '',
+      errors: '',
     }
   },
 
@@ -36,6 +38,13 @@ export const SlpTextArea = {
   },
 
   methods: {
+    errorMessageBlur() {
+      if (this.required && !this.value) {
+        this.errors = '必填字段不能为空'
+      } else {
+        this.errors = ''
+      }
+    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false

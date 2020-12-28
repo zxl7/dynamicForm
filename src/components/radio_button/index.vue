@@ -6,7 +6,6 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errorMessage"
     >
       <template #input>
         <p class="description">
@@ -28,7 +27,7 @@
             <span>{{ field.other_option }}</span>
             <input
               v-model="otherValue"
-              class="other-option"
+              class="other-input"
               type="text"
               placeholder="请输入"
             >
@@ -66,20 +65,22 @@
           <van-cell-group>
             <van-cell
               clickable
+              class="other-option"
               @click="onOtherValue()"
             >
               <template #right-icon>
-                <input
-                  v-model="otherValue"
-                  class="other-option"
-                  type="text"
-                  placeholder="请输入"
-                  @blur="onOtherValue"
-                >
                 <van-radio
                   v-if="field.other_option"
                   checked-color="#fd7d58"
-                />
+                >
+                  <input
+                    v-model="otherValue"
+                    class="other-input"
+                    type="text"
+                    placeholder="请输入"
+                    @blur="onOtherValue"
+                  >
+                </van-radio>
               </template>
             </van-cell>
             <van-cell

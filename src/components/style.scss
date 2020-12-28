@@ -78,12 +78,28 @@
 }
 
 // 其他选项
-.other-option {
+.other-input {
   border: none;
+  margin-left: 10px;
   border-bottom: 1px solid #e0e0e0;
 }
-.other-option .van-cell .van-field {
-  padding: 0px;
+
+.other-option {
+  width: 80%;
+
+  .van-radio {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+
+  .other-input {
+    margin-left: -8px;
+  }
+}
+::-webkit-input-placeholder {
+  color: red;
 }
 
 .popup {
@@ -93,9 +109,5 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  .other-option {
-    width: 80%;
-    height: 30px;
   }
 }

@@ -12,12 +12,12 @@
         <p class="description">
           {{ field.description }}
         </p>
-        <van-radio-group v-model="radio">
+        <van-radio-group v-model="selectedValue">
           <van-radio
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
-            :name="option.id"
+            :name="option"
           >
             {{ option.value }}
           </van-radio>
@@ -25,10 +25,12 @@
             v-if="field.other_option"
             checked-color="#fd7d58"
           >
-            {{ field.other_option }}
+            <span>{{ field.other_option }}</span>
             <input
+              v-model="otherValue"
               class="other-option"
               type="text"
+              placeholder="请输入"
             >
           </van-radio>
         </van-radio-group>
@@ -37,7 +39,7 @@
     <!-- 单选下拉组件 -->
     <van-field
       v-else
-      v-model="selectedValue"
+      v-model="radio"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
@@ -60,18 +62,36 @@
         @click="show = false"
       />
       <div class="popup">
-        <van-radio-group v-model="radio">
+        <van-radio-group v-model="selectedValue">
           <van-cell-group>
+            <van-cell
+              clickable
+              @click="onOtherValue()"
+            >
+              <template #right-icon>
+                <input
+                  v-model="otherValue"
+                  class="other-option"
+                  type="text"
+                  placeholder="请输入"
+                  @blur="onOtherValue"
+                >
+                <van-radio
+                  v-if="field.other_option"
+                  checked-color="#fd7d58"
+                />
+              </template>
+            </van-cell>
             <van-cell
               v-for="option in field.options"
               :key="option.id"
               :title="option.value"
               clickable
-              @click="onConfirm(option, field)"
+              @click="onConfirm(option)"
             >
               <template #right-icon>
                 <van-radio
-                  :name="option.id"
+                  :name="option"
                   checked-color="#fd7d58"
                 />
               </template>
@@ -87,6 +107,7 @@
 import {
   RadioGroup, Radio, Cell, CellGroup, Popup,
 } from 'vant'
+import _ from 'lodash'
 import FieldMixin from '../mixin'
 
 export const RadioButton = {
@@ -101,36 +122,92 @@ export const RadioButton = {
   data() {
     return {
       radio: '',
-      value: '',
       show: false,
+      otherValue: '',
       selectedValue: '',
     }
   },
-
-  computed: {},
-
-  watch: {
-    // initalValue: {
-    //   handler(value) {
-    //     this.selectedValue = value
-    //   },
-    //   immediate: true,
-    // },
+  computed: {
+    initalValue() {
+      const entry = this.entries.find(item => !item._destroy)
+      if (!entry) return null
+      return {
+        ...entry,
+        id: entry.option_id,
+        label: entry.value,
+      }
+    },
+    options() {
+      const { other_option: otherOption } = this.field
+      const options = this.field.options.map(option => ({
+        id: option.id,
+        label: option.value,
+        value: option.value,
+      }))
+      if (otherOption) {
+        const option = {
+          id: 0,
+          name: otherOption,
+          label: this.otherValue,
+          value: otherOption,
+          other_option: true,
+        }
+        return options.concat(option)
+      }
+      return options
+    },
   },
-
+  watch: {
+    initalValue: {
+      handler(value) {
+        this.selectedValue = value
+      },
+      immediate: true,
+    },
+  },
   methods: {
     onConfirm(option) {
-      this.selectedValue = option.value
-      this.radio = option.id
+      this.selectedValue = option
+      this.radio = option.value
     },
-    // getValid() {
-    //   if (!this.selectedValue && this.required) {
-    //     this.valid = false
-    //   } else {
-    //     this.valid = true
-    //   }
-    //   return this.valid
-    // },
+    onOtherValue() {
+      this.radio = this.otherValue
+    },
+    getEntries() {
+      const entry = _.first(this.entries)
+      const option = this.selectedValue
+      const entries = []
+      if (entry) {
+        if (option) {
+          if (option.id !== 0 && option.id === entry.option_id) {
+            entries.push(_.clone(entry))
+          } else {
+            entries.push(_.extend(_.clone(entry), { _destroy: true }))
+            entries.push(this._generateEntryFromOption(option))
+          }
+        } else {
+          entries.push(_.extend(_.clone(entry), { _destroy: true }))
+        }
+      } else if (option) {
+        entries.push(this._generateEntryFromOption(option))
+      }
+      return entries
+    },
+    getValid() {
+      if (!this.selectedValue && this.required) {
+        this.valid = false
+      } else {
+        this.valid = true
+      }
+      return this.valid
+    },
+    _generateEntryFromOption(option) {
+      return {
+        value: option.value,
+        field_id: this.field.id,
+        option_id: option.id,
+      }
+    },
   },
 }
 

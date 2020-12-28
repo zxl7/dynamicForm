@@ -1,12 +1,7 @@
 .van-radio {
   padding: 7px 0;
   margin: 2px 0;
-
-  // 单选按钮颜色
-  .van-radio__icon--checked .van-icon {
-    background-color: #fd7d58;
-    border-color: #fd7d58;
-  }
+  
 }
 .list .van-field__control {
   display: flex;
@@ -56,11 +51,5 @@
     color: #fd7d58;
     cursor: pointer;
     font-size: 16px;
-  }
-}
-.popup {
-  .van-cell--clickable {
-    display: flex;
-    align-items: center;
   }
 }

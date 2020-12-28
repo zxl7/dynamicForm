@@ -83,4 +83,11 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-
+.popup {
+  height: 82%;
+  overflow: scroll;
+  .van-cell--clickable {
+    display: flex;
+    align-items: center;
+  }
+}

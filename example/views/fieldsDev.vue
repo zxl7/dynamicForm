@@ -30,7 +30,7 @@ export default {
       description:
         '<p><img src="https://slp-qiniu-material-beta.skylarkly.com/690-1608876640-53b6afcf289861e0a1bfadfd0529d513-1608876640437?attname=640.gif&amp;e=1608880241&amp;token=WFpC8JEsN77rEZRgdoQgQw-yB82e-j3fpp8dXB8Z:B1AzSP6oAkcbGKwMpjnQl7ovsyg=">Test</p>',
       created_at: '2020-12-25T10:41:39.273+08:00',
-      updated_at: '2020-12-27T20:48:36.771+08:00',
+      updated_at: '2020-12-28T10:12:13.732+08:00',
       status: 'published',
       identity_vertify_type: 'off',
       fields: [
@@ -293,7 +293,7 @@ export default {
           options: [
             {
               id: 9115,
-              value: '新选项1下拉下拉',
+              value: '新选项下拉',
               settings: {
                 limit_settings: {
                   max: null,
@@ -366,7 +366,7 @@ export default {
           type: 'Field::CheckBox',
           position: 7,
           validations: ['presence'],
-          other_option: '测试其他',
+          other_option: '其他',
           visibility: 'public_visibility',
           marked: false,
           settings: {
@@ -384,74 +384,75 @@ export default {
           data: {},
           options: [
             {
-              id: 9118,
-              value: '1',
+              id: 9154,
+              value: '新选项1',
               settings: {
                 limit_settings: {
                   max: null,
                   text: '超过限制',
                 },
               },
-              position: 0,
+              position: 5,
             },
             {
-              id: 9119,
-              value: '2',
+              id: 9155,
+              value: '新选项2',
               settings: {
                 limit_settings: {
                   max: null,
                   text: '超过限制',
                 },
               },
-              position: 1,
+              position: 6,
             },
             {
-              id: 9120,
-              value: '3',
+              id: 9156,
+              value: '新选项3',
               settings: {
                 limit_settings: {
                   max: null,
                   text: '超过限制',
                 },
               },
-              position: 2,
+              position: 7,
             },
             {
-              id: 9121,
-              value: '4',
+              id: 9157,
+              value: '新选项4',
               settings: {
                 limit_settings: {
                   max: null,
                   text: '超过限制',
                 },
               },
-              position: 3,
+              position: 8,
             },
             {
-              id: 9122,
-              value: '5',
+              id: 9158,
+              value: '新选项5',
               settings: {
                 limit_settings: {
                   max: null,
                   text: '超过限制',
                 },
               },
-              position: 4,
+              position: 9,
             },
           ],
         },
         {
-          id: 7267,
+          id: 7275,
           title: '多选（平铺）',
-          description: '描述撒打算',
+          description: '这是描述！！！',
           type: 'Field::CheckBox',
-          position: 9,
+          position: 8,
           validations: ['presence'],
-          other_option: '测试其他',
+          other_option: '其他',
           visibility: 'public_visibility',
           marked: false,
           settings: {
             layout: 'inline',
+            callback_url: 'www.baidu.com',
             other_option_settings: {
               limit: {},
             },
@@ -460,12 +461,12 @@ export default {
             char_size_limit_settings: {},
           },
           detail_id: null,
-          identity_key: '4e876f3c2fe441fcb9e969522795b458',
+          identity_key: 'b041ca20a3c444ef8883616c2b46ba80',
           data: {},
           options: [
             {
-              id: 9123,
-              value: '1',
+              id: 9159,
+              value: '新选项1',
               settings: {
                 limit_settings: {
                   max: null,
@@ -475,8 +476,8 @@ export default {
               position: 0,
             },
             {
-              id: 9124,
-              value: '2',
+              id: 9160,
+              value: '新选项2',
               settings: {
                 limit_settings: {
                   max: null,
@@ -486,8 +487,8 @@ export default {
               position: 1,
             },
             {
-              id: 9125,
-              value: '3',
+              id: 9161,
+              value: '新选项3',
               settings: {
                 limit_settings: {
                   max: null,
@@ -497,8 +498,8 @@ export default {
               position: 2,
             },
             {
-              id: 9126,
-              value: '4',
+              id: 9162,
+              value: '新选项4',
               settings: {
                 limit_settings: {
                   max: null,
@@ -508,8 +509,8 @@ export default {
               position: 3,
             },
             {
-              id: 9127,
-              value: '5',
+              id: 9163,
+              value: '新选项5',
               settings: {
                 limit_settings: {
                   max: null,
@@ -521,31 +522,32 @@ export default {
           ],
         },
         {
-          id: 7268,
+          id: 7276,
           title: '多选（下拉）',
-          description: '描述',
+          description: '这是描述！！！',
           type: 'Field::CheckBox',
-          position: 10,
+          position: 9,
           validations: ['presence'],
-          other_option: '测试其他',
+          other_option: '其他',
           visibility: 'public_visibility',
           marked: false,
           settings: {
             layout: 'select',
-            length_limit: {},
+            callback_url: 'www.baidu.com',
             other_option_settings: {
               limit: {},
             },
+            length_limit: {},
             limit_settings: {},
             char_size_limit_settings: {},
           },
           detail_id: null,
-          identity_key: 'cb216a955ddc44e5a333ad73f38d7683',
+          identity_key: '1eb5a4c69b1c4c439a316d4db2da4c35',
           data: {},
           options: [
             {
-              id: 9128,
-              value: '1',
+              id: 9164,
+              value: '新选项1',
               settings: {
                 limit_settings: {
                   max: null,
@@ -555,8 +557,8 @@ export default {
               position: 0,
             },
             {
-              id: 9129,
-              value: '2',
+              id: 9165,
+              value: '新选项2',
               settings: {
                 limit_settings: {
                   max: null,
@@ -566,8 +568,8 @@ export default {
               position: 1,
             },
             {
-              id: 9130,
-              value: '3',
+              id: 9166,
+              value: '新选项3',
               settings: {
                 limit_settings: {
                   max: null,
@@ -577,8 +579,8 @@ export default {
               position: 2,
             },
             {
-              id: 9131,
-              value: '4',
+              id: 9167,
+              value: '新选项4',
               settings: {
                 limit_settings: {
                   max: null,
@@ -588,8 +590,8 @@ export default {
               position: 3,
             },
             {
-              id: 9132,
-              value: '5',
+              id: 9168,
+              value: '新选项5',
               settings: {
                 limit_settings: {
                   max: null,
@@ -605,7 +607,7 @@ export default {
           title: '日期时间',
           description: null,
           type: 'Field::DateTime',
-          position: 11,
+          position: 12,
           validations: ['presence'],
           other_option: null,
           visibility: 'public_visibility',

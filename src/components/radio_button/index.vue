@@ -16,11 +16,15 @@
           <van-radio
             v-for="option in field.options"
             :key="option.id"
+            checked-color="#fd7d58"
             :name="option.id"
           >
             {{ option.value }}
           </van-radio>
-          <van-radio v-if="field.other_option">
+          <van-radio
+            v-if="field.other_option"
+            checked-color="#fd7d58"
+          >
             {{ field.other_option }}
             <input
               class="other-option"
@@ -66,7 +70,10 @@
               @click="onConfirm(option, field)"
             >
               <template #right-icon>
-                <van-radio :name="option.id" />
+                <van-radio
+                  :name="option.id"
+                  checked-color="#fd7d58"
+                />
               </template>
             </van-cell>
           </van-cell-group>

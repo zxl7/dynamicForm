@@ -9,15 +9,6 @@ const PARITY = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
 export const IdNumber = {
   extends: Integer,
 
-  computed: {
-    errorMessage() {
-      const errors = []
-      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
-      errors.push(this.valid ? '' : '身份证号格式错误')
-      return _.compact(errors)[0]
-    },
-  },
-
   watch: {
     value: {
       handler: _.debounce(function debounceFunc(value) {

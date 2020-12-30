@@ -60,7 +60,6 @@ export default TextField
 </script>
 
 <style lang="scss" scoped>
-@import './style.scss';
 
 // inline
 .van-cell.van-field.inline {

@@ -2,6 +2,7 @@
   flex-direction: column;
   overflow: visible;
   padding: $field-padding;
+  margin-bottom: $field-margin-bottom;
 
   &.van-field--disabled .van-field__label {
     color: #c8c9cc;
@@ -42,12 +43,12 @@
     margin-top: 8px;
     line-height: $field-value-line-height;
   }
+}
 
-  .van-field__body {
-    display: flex;
-    margin-bottom: $field-margin-bottom;
+.text {
+  /deep/ .van-field__control {
+    border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
   }
-
 }
 
 .van-field__control {

@@ -1,4 +1,4 @@
-.van-cell.van-field {
+.van-field {
   flex-direction: column;
   overflow: visible;
   padding: $field-padding;
@@ -48,9 +48,6 @@
     margin-bottom: $field-margin-bottom;
   }
 
-  &.no-border .van-field__control {
-    border-bottom: none;
-  }
 }
 
 .van-field__control {

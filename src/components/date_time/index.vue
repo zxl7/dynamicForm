@@ -84,7 +84,7 @@ export const DateTime = {
   watch: {
     initalValue: {
       handler(value) {
-        this.date = value
+        this.value = value
       },
       immediate: true,
     },
@@ -96,7 +96,8 @@ export const DateTime = {
 
   methods: {
     errorMessageBlur() {
-      if (this.required && !this.value) {
+      console.log(this.required && this.value)
+      if (this.required && this.value) {
         this.errors = '必填字段不能为空'
       }
     },
@@ -121,10 +122,11 @@ export const DateTime = {
       this.showPicker = true
     },
     formatDate(date) {
+      this.errors = ''
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     },
     getValid() {
-      if (!this.date && this.required) {
+      if (!this.value && this.required) {
         this.valid = false
       } else {
         this.valid = true

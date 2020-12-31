@@ -14,7 +14,12 @@
       @blur="errorMessageBlur(value)"
       @click="showPicker = true"
     />
-    <van-popup v-model="showPicker" position="bottom" :style="{ height: '50%' }" round>
+    <van-popup
+      v-model="showPicker"
+      position="bottom"
+      :style="{ height: '50%' }"
+      round
+    >
       <div class="popup">
         <vanDatetimePicker
           :type="

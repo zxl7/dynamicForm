@@ -15,21 +15,35 @@ export const IdNumber = {
         this.$emit('valueChanged', value)
         this.valid = true
         if (!value) return
-        const sum = _.reduce(FACTOR, (memo, item, index) => {
-          const count = memo + value.substr(index, 1) * item
-          return count
-        }, 0)
+        const sum = _.reduce(
+          FACTOR,
+          (memo, item, index) => {
+            const count = memo + value.substr(index, 1) * item
+            return count
+          },
+          0,
+        )
 
         const validRegex = ID_NUMBER_REGEX.test(value)
         if (!(validRegex && PARITY[sum % 11].toString() === value.substr(17, 1).toString())) {
           this.valid = false
         }
-      }, 1000),
+      }, 500),
       immediate: true,
     },
   },
 
   methods: {
+    errorMessageBlur() {
+      if (this.required && !this.value) {
+        this.errors = '必填字段不能为空'
+      }
+      if (!this.valid) {
+        this.errors = '身份证格式错误'
+      } else {
+        this.errors = ''
+      }
+    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false

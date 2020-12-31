@@ -6,7 +6,6 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errorMessage"
     >
       <template #input>
         <p class="description">
@@ -46,7 +45,6 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errorMessage"
       placeholder="请选择"
       readonly
       right-icon="arrow-down"

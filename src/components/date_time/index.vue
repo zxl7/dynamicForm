@@ -4,21 +4,17 @@
       :id="field.identity_key"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :error-message="errorMessage"
+      :error-message="errors"
       placeholder="请选择"
       :value="value"
       readonly
       clickable
       name="datetimePicker"
       right-icon="arrow-down"
+      @blur="errorMessageBlur(value)"
       @click="showPicker = true"
     />
-    <van-popup
-      v-model="showPicker"
-      position="bottom"
-      :style="{ height: '50%' }"
-      round
-    >
+    <van-popup v-model="showPicker" position="bottom" :style="{ height: '50%' }" round>
       <div class="popup">
         <vanDatetimePicker
           :type="
@@ -67,6 +63,7 @@ export const DateTime = {
       nowYear: new Date().getFullYear(),
       minDate: '',
       maxDate: '',
+      errors: '',
     }
   },
 
@@ -93,6 +90,11 @@ export const DateTime = {
   },
 
   methods: {
+    errorMessageBlur() {
+      if (this.required && !this.value) {
+        this.errors = '必填字段不能为空'
+      }
+    },
     onConfirm(time) {
       switch (this.field.settings.input_type) {
         case 'time':

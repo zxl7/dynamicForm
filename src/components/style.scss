@@ -10,6 +10,9 @@
 
   &.error {
     background-color: $field-error-background-color;
+    .other-input {
+      background-color: $field-error-background-color;
+    }
   }
 
   &.required {
@@ -90,6 +93,10 @@
   margin-left: 10px;
   border-bottom: 1px solid #e0e0e0;
 }
+.other-input::-webkit-input-placeholder {
+  color: #cccbcb;
+  font-size: 0.7rem;
+}
 
 .other-option {
   width: 80%;
@@ -102,7 +109,13 @@
   }
 
   .other-input {
+    margin: 0;
     margin-left: -8px;
+    border: none;
+  }
+
+  .other-input::-webkit-input-placeholder {
+    color: #cccbcb;
   }
 }
 ::-webkit-input-placeholder {

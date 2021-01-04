@@ -6,6 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
+      :error-message="errors"
     >
       <template #input>
         <p class="description">
@@ -17,12 +18,14 @@
             :key="option.id"
             checked-color="#fd7d58"
             :name="option"
+            @click="onConfirm(option)"
           >
             {{ option.value }}
           </van-radio>
           <van-radio
             v-if="field.other_option"
             checked-color="#fd7d58"
+            @click="onOtherValue"
           >
             <span>{{ field.other_option }}</span>
             <input
@@ -42,7 +45,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errorMessage"
+      :error-message="errors"
       placeholder="请选择"
       readonly
       right-icon="arrow-down"
@@ -63,8 +66,7 @@
       <div class="popup">
         <van-radio-group v-model="selectedValue">
           <van-cell-group>
-            <van-cell
-              clickable
+            <!-- <van-cell
               class="other-option"
               @click="onOtherValue()"
             >
@@ -82,12 +84,11 @@
                   >
                 </van-radio>
               </template>
-            </van-cell>
+            </van-cell> -->
             <van-cell
               v-for="option in field.options"
               :key="option.id"
               :title="option.value"
-              clickable
               @click="onConfirm(option)"
             >
               <template #right-icon>
@@ -125,7 +126,10 @@ export const RadioButton = {
       radio: '',
       show: false,
       otherValue: '',
+      otherArr: [],
       selectedValue: '',
+      hasChosen: [],
+      errors: '',
     }
   },
   computed: {
@@ -165,14 +169,57 @@ export const RadioButton = {
       },
       immediate: true,
     },
+    hasChosen: {
+      handler() {
+        if (this.hasChosen.length === 0) {
+          this.value = false
+          this.errors = '必填字段不能为空'
+          this.errorMessageBlur()
+        } else {
+          this.errorMessageBlur()
+        }
+      },
+    },
+    otherValue: {
+      handler(otherValue) {
+        if (otherValue) {
+          this.valid = true
+          this.value = true
+          this.errors = ''
+        } else {
+          this.errors = '其他选项不能为空'
+          this.value = false
+          this.valid = false
+        }
+      },
+    },
   },
   methods: {
-    onConfirm(option) {
-      this.selectedValue = option
-      this.radio = option.value
+
+    onConfirm(target) {
+      if (this.hasChosen[0] === target.id) {
+        this.radio = ''
+        this.selectedValue = {}
+        this.hasChosen = []
+      } else {
+        this.radio = target.value
+        this.value = true
+        this.selectedValue = target
+        this.hasChosen.unshift(target.id)
+      }
     },
     onOtherValue() {
-      this.radio = this.otherValue
+      if (this.otherArr[0] === '其他') {
+        this.radio = ''
+        this.selectedValue = {}
+        this.otherArr = []
+        this.errors = '必填字段不能为空'
+      } else {
+        this.radio = this.otherValue
+        this.otherArr.unshift('其他')
+        this.valid = false
+        this.errors = '其他选项不能为空'
+      }
     },
     getEntries() {
       const entry = _.first(this.entries)

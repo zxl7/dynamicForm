@@ -1,5 +1,11 @@
 .checkbox {
   .van-checkbox {
-    margin-top: 10px;
+    margin: 7px 0px;
+  }
+
+  .inline {
+    .van-checkbox {
+      margin: 7px 7px 7px 0px;
+    }
   }
 }

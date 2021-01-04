@@ -41,17 +41,11 @@ export const SlpTextArea = {
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
-      } else {
-        this.errors = ''
-      }
-    },
-    getValid() {
-      if (!this.value && this.required) {
         this.valid = false
       } else {
+        this.errors = ''
         this.valid = true
       }
-      return this.valid
     },
   },
 }
@@ -60,5 +54,4 @@ export default SlpTextArea
 </script>
 <style lang="scss" scoped>
 @import './style.scss';
-
 </style>

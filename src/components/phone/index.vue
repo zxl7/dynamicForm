@@ -16,6 +16,9 @@ export const Phone = {
         if (!value) return
         if (!PHONE_REGEX.test(value)) {
           this.valid = false
+          this.errors = '手机号格式错误'
+        } else {
+          this.errors = ''
         }
       }, 500),
       immediate: true,
@@ -26,6 +29,7 @@ export const Phone = {
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
+        this.valid = false
       } else if (!this.valid) {
         this.errors = '手机号格式错误'
       } else {

@@ -38,7 +38,9 @@
 </template>
 
 <script>
-import { DatetimePicker, Cell, Popup, Icon } from 'vant'
+import {
+  DatetimePicker, Cell, Popup, Icon,
+} from 'vant'
 import FieldMixin from '../mixin'
 
 const DATE_OPTIONS_MAP = {

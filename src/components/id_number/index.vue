@@ -37,6 +37,7 @@ export const IdNumber = {
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
+        this.valid = false
       } else if (!this.valid) {
         this.errors = '身份证格式错误'
       } else {

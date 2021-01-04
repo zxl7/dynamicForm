@@ -41,6 +41,7 @@ export const Integer = {
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
+        this.valid = false
       } else {
         this.errors = ''
       }

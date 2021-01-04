@@ -38,17 +38,13 @@ export const TextField = {
   },
 
   methods: {
+    // 效验样式处理
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
-      } else {
-        this.errors = ''
-      }
-    },
-    getValid() {
-      if (!this.value && this.required) {
         this.valid = false
       } else {
+        this.errors = ''
         this.valid = true
       }
       return this.valid
@@ -60,7 +56,6 @@ export default TextField
 </script>
 
 <style lang="scss" scoped>
-
 // inline
 .van-cell.van-field.inline {
   flex-direction: row;

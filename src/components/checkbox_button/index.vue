@@ -59,7 +59,7 @@
       <van-cell
         class="popup-head"
         title="取消"
-        value="确认"
+        value="确定"
         @click="showCheck = false"
       />
       <div class="popup">

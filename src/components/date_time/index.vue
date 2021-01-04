@@ -11,7 +11,7 @@
       clickable
       name="datetimePicker"
       :right-icon="value ? 'clear' : 'play'"
-      @blur="errorMessageBlur(value)"
+      @blur="errorMessageBlur"
       @click="showPicker = true"
       @click-right-icon.stop="clearValue"
     />
@@ -24,13 +24,14 @@
     >
       <div class="popup">
         <vanDatetimePicker
+          confirm-button-text="确定"
           :type="
             field.settings.input_type === 'datetime-local' ? 'datetime' : field.settings.input_type
           "
           :min-date="minDate"
           :max-date="maxDate"
           @confirm="onConfirm"
-          @cancel="showPicker = false"
+          @cancel="onCancel"
         />
       </div>
     </van-popup>
@@ -87,11 +88,10 @@ export const DateTime = {
   },
 
   watch: {
-    initalValue: {
-      handler(value) {
-        this.value = value
+    value: {
+      handler() {
+        this.errorMessageBlur()
       },
-      immediate: true,
     },
   },
   mounted() {
@@ -100,16 +100,15 @@ export const DateTime = {
   },
 
   methods: {
+    onCancel() {
+      this.showPicker = false
+    },
+    // 清除值
     clearValue() {
       this.value = ''
-      this.statusClass.error = true
-      this.errorMessageBlur()
     },
-    errorMessageBlur() {
-      if (this.required && !this.value) {
-        this.errors = '必填字段不能为空'
-      }
-    },
+
+    // 赋值
     onConfirm(time) {
       switch (this.field.settings.input_type) {
         case 'time':
@@ -126,9 +125,7 @@ export const DateTime = {
       this.errors = ''
       this.statusClass.error = false
     },
-    showCalendar() {
-      this.showPicker = true
-    },
+
     formatDate(date) {
       this.errors = ''
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`

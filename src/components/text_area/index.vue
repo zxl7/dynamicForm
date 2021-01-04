@@ -37,17 +37,7 @@ export const SlpTextArea = {
     },
   },
 
-  methods: {
-    errorMessageBlur() {
-      if (this.required && !this.value) {
-        this.errors = '必填字段不能为空'
-        this.valid = false
-      } else {
-        this.errors = ''
-        this.valid = true
-      }
-    },
-  },
+  methods: {},
 }
 
 export default SlpTextArea

@@ -26,6 +26,7 @@ export const Phone = {
   },
 
   methods: {
+    // blur判断
     errorMessageBlur() {
       if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
@@ -34,6 +35,7 @@ export const Phone = {
         this.errors = '手机号格式错误'
       } else {
         this.errors = ''
+        this.valid = true
       }
     },
     getValid() {

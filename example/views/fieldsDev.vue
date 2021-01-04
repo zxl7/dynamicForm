@@ -30,7 +30,7 @@ export default {
       description:
         '<p><img src="https://slp-qiniu-material-beta.skylarkly.com/690-1608876640-53b6afcf289861e0a1bfadfd0529d513-1608876640437?attname=640.gif&amp;e=1608880241&amp;token=WFpC8JEsN77rEZRgdoQgQw-yB82e-j3fpp8dXB8Z:B1AzSP6oAkcbGKwMpjnQl7ovsyg=">Test</p>',
       created_at: '2020-12-25T10:41:39.273+08:00',
-      updated_at: '2020-12-30T17:23:05.129+08:00',
+      updated_at: '2020-12-30T17:23:05.129+08',
       status: 'published',
       identity_vertify_type: 'off',
       fields: [

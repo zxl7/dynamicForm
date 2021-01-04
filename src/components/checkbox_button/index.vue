@@ -6,6 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
+      :error-message="errors"
     >
       <template #input>
         <p class="description">
@@ -48,6 +49,7 @@
       placeholder="请选择"
       readonly
       right-icon="arrow-down"
+      :error-message="errors"
       @click="showCheck = true"
     />
     <van-popup
@@ -154,8 +156,15 @@ export const CheckboxButton = {
         value.forEach((select) => {
           this.checkboxValue += `${select.value}、`
         })
+        if (this.selectedValue.length === 0) {
+          this.value = false
+          this.errors = '必填字段不能为空'
+          this.errorMessageBlur()
+        } else {
+          this.value = true
+          this.errorMessageBlur()
+        }
       },
-      immediate: true,
     },
   },
   methods: {

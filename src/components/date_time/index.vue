@@ -10,15 +10,17 @@
       readonly
       clickable
       name="datetimePicker"
-      right-icon="arrow-down"
+      :right-icon="value ? 'clear' : 'play'"
       @blur="errorMessageBlur(value)"
       @click="showPicker = true"
+      @click-right-icon.stop="clearValue"
     />
     <van-popup
       v-model="showPicker"
       position="bottom"
       :style="{ height: '50%' }"
       round
+      :close-on-click-overlay="false"
     >
       <div class="popup">
         <vanDatetimePicker
@@ -36,7 +38,7 @@
 </template>
 
 <script>
-import { DatetimePicker, Cell, Popup } from 'vant'
+import { DatetimePicker, Cell, Popup, Icon } from 'vant'
 import FieldMixin from '../mixin'
 
 const DATE_OPTIONS_MAP = {
@@ -59,6 +61,7 @@ export const DateTime = {
     vanDatetimePicker: DatetimePicker,
     vanCell: Cell,
     vanPopup: Popup,
+    vanIcon: Icon,
   },
 
   data() {
@@ -95,9 +98,13 @@ export const DateTime = {
   },
 
   methods: {
+    clearValue() {
+      this.value = ''
+      this.statusClass.error = true
+      this.errorMessageBlur()
+    },
     errorMessageBlur() {
-      console.log(this.required && this.value)
-      if (this.required && this.value) {
+      if (this.required && !this.value) {
         this.errors = '必填字段不能为空'
       }
     },
@@ -105,18 +112,17 @@ export const DateTime = {
       switch (this.field.settings.input_type) {
         case 'time':
           this.value = time
-          this.showPicker = false
           break
         case 'datetime-local':
           this.value = this.formatDate(time) + this.generateTime(time)
-          this.showPicker = false
           break
-
         default:
           this.value = this.formatDate(time)
-          this.showPicker = false
           break
       }
+      this.showPicker = false
+      this.errors = ''
+      this.statusClass.error = false
     },
     showCalendar() {
       this.showPicker = true

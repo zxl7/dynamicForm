@@ -43,6 +43,15 @@
     margin-top: 8px;
     line-height: $field-value-line-height;
   }
+
+  .van-field__right-icon {
+    position: absolute;
+    right: 0px;
+
+    .van-icon-play::before {
+      transform: rotate(90deg);
+    }
+  }
 }
 
 .text {

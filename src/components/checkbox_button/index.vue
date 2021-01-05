@@ -145,17 +145,11 @@ export const CheckboxButton = {
     },
   },
   watch: {
-    initalValue: {
-      handler(value) {
-        this.selectedValue = value
-      },
-      immediate: true,
-    },
     selectedValue: {
       handler(value) {
         this.checkboxValue = ''
         value.forEach((select) => {
-          this.checkboxValue += `${select.value}、`
+          this.checkboxValue = `${this.checkboxValue}${select.value}、`
         })
         if (this.selectedValue.length === 0) {
           this.value = false

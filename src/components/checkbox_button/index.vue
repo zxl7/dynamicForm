@@ -113,6 +113,7 @@ export const CheckboxButton = {
       selectedValue: [],
       checkboxValue: '',
       showCheck: false,
+      errors: '',
     }
   },
   computed: {

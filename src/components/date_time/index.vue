@@ -23,7 +23,7 @@
       :close-on-click-overlay="false"
     >
       <div class="popup">
-        <vanDatetimePicker
+        <van-datetime-picker
           confirm-button-text="确定"
           :type="
             field.settings.input_type === 'datetime-local' ? 'datetime' : field.settings.input_type

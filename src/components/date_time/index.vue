@@ -4,7 +4,7 @@
       :id="field.identity_key"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :error-message="errors"
+      :error-message="error"
       placeholder="请选择"
       :value="value"
       readonly
@@ -74,7 +74,7 @@ export const DateTime = {
       nowYear: new Date().getFullYear(),
       minDate: '',
       maxDate: '',
-      errors: '',
+      error: '',
     }
   },
 
@@ -122,12 +122,12 @@ export const DateTime = {
           break
       }
       this.showPicker = false
-      this.errors = ''
+      this.error = ''
       this.statusClass.error = false
     },
 
     formatDate(date) {
-      this.errors = ''
+      this.error = ''
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     },
     getValid() {

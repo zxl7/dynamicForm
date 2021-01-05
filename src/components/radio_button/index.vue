@@ -6,7 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errors"
+      :error-message="error"
     >
       <template #input>
         <p class="description">
@@ -45,7 +45,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errors"
+      :error-message="error"
       placeholder="请选择"
       readonly
       right-icon="arrow-down"
@@ -129,7 +129,7 @@ export const RadioButton = {
       otherArr: [],
       selectedValue: '',
       hasChosen: [],
-      errors: '',
+      error: '',
     }
   },
   computed: {
@@ -173,7 +173,7 @@ export const RadioButton = {
       handler() {
         if (this.hasChosen.length === 0) {
           this.value = false
-          this.errors = '必填字段不能为空'
+          this.error = '必填字段不能为空'
           this.errorMessageBlur()
         } else {
           this.errorMessageBlur()
@@ -185,9 +185,9 @@ export const RadioButton = {
         if (otherValue) {
           this.valid = true
           this.value = true
-          this.errors = ''
+          this.error = ''
         } else {
-          this.errors = '其他选项不能为空'
+          this.error = '其他选项不能为空'
           this.value = false
           this.valid = false
         }
@@ -213,12 +213,12 @@ export const RadioButton = {
         this.radio = ''
         this.selectedValue = {}
         this.otherArr = []
-        this.errors = '必填字段不能为空'
+        this.error = '必填字段不能为空'
       } else {
         this.radio = this.otherValue
         this.otherArr.unshift('其他')
         this.valid = false
-        this.errors = '其他选项不能为空'
+        this.error = '其他选项不能为空'
       }
     },
     getEntries() {

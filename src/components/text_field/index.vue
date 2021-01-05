@@ -6,7 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errors"
+      :error-message="error"
       autocomplete="off"
       placeholder="请输入"
       type="text"
@@ -24,7 +24,7 @@ export const TextField = {
   data() {
     return {
       value: '',
-      errors: '',
+      error: '',
     }
   },
 

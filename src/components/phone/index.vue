@@ -16,9 +16,9 @@ export const Phone = {
         if (!value) return
         if (!PHONE_REGEX.test(value)) {
           this.valid = false
-          this.errors = '手机号格式错误'
+          this.error = '手机号格式错误'
         } else {
-          this.errors = ''
+          this.error = ''
         }
       }, 500),
       immediate: true,
@@ -29,12 +29,12 @@ export const Phone = {
     // blur判断
     errorMessageBlur() {
       if (this.required && !this.value) {
-        this.errors = '必填字段不能为空'
+        this.error = '必填字段不能为空'
         this.valid = false
       } else if (!this.valid) {
-        this.errors = '手机号格式错误'
+        this.error = '手机号格式错误'
       } else {
-        this.errors = ''
+        this.error = ''
         this.valid = true
       }
     },

@@ -6,7 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass]"
       :disabled="disabled"
-      :error-message="errors"
+      :error-message="error"
       autocomplete="off"
       placeholder="请输入"
       type="number"
@@ -24,7 +24,7 @@ export const Integer = {
   data() {
     return {
       value: '',
-      errors: '',
+      error: '',
     }
   },
 

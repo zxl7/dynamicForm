@@ -6,7 +6,7 @@
       :label="field.title"
       :class="[statusClass, field.customCla, field.settings.layout]"
       :disabled="disabled"
-      :error-message="errors"
+      :error-message="error"
       autocomplete="off"
       placeholder="请输入"
       type="textarea"
@@ -24,7 +24,7 @@ export const SlpTextArea = {
   data() {
     return {
       value: '',
-      errors: '',
+      error: '',
     }
   },
 

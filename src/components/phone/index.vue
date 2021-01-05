@@ -7,30 +7,37 @@ const PHONE_REGEX = /^(?:\+?86)?1(?:3\d{3}|5[^4\D]\d{2}|8\d{3}|7(?:[01356789]\d{
 export const Phone = {
   extends: Integer,
 
-  computed: {
-    errorMessage() {
-      const errors = []
-      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
-      errors.push(this.valid ? '' : '手机号格式错误')
-      return _.compact(errors)[0]
-    },
-  },
-
   watch: {
     value: {
+      // 手机号规则校验
       handler: _.debounce(function debounceFunc(value) {
         this.$emit('valueChanged', value)
         this.valid = true
         if (!value) return
         if (!PHONE_REGEX.test(value)) {
           this.valid = false
+          this.error = '手机号格式错误'
+        } else {
+          this.error = ''
         }
-      }, 1000),
+      }, 500),
       immediate: true,
     },
   },
 
   methods: {
+    // blur判断
+    errorMessageBlur() {
+      if (this.required && !this.value) {
+        this.error = '必填字段不能为空'
+        this.valid = false
+      } else if (!this.valid) {
+        this.error = '手机号格式错误'
+      } else {
+        this.error = ''
+        this.valid = true
+      }
+    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false

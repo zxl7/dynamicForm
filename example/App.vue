@@ -3,7 +3,19 @@
     <div id="nav">
       <router-link to="/">
         Home
-      </router-link> |
+      </router-link>
+      |
+      <router-link to="/fields">
+        Fields
+      </router-link>
+      |
+      <router-link to="/text-field">
+        text-field
+      </router-link>
+      |
+      <router-link to="/fieldsDev">
+        fieldsDev
+      </router-link>
     </div>
     <div class="container">
       <router-view />
@@ -47,6 +59,6 @@ body {
 }
 
 .container {
-  margin: 0 2rem;
+  margin: 0 1rem;
 }
 </style>

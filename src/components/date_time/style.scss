@@ -1,17 +1,30 @@
-.van-cell.van-field.slp-field .van-field__control {
-  .ivu-date-picker {
-    margin-top: $field-date-picker-margin-top;
-
-    .ivu-date-picker-rel .ivu-input-inner-container .ivu-input {
-      border: none;
-      border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
-      border-radius: 0;
-      padding: $field-date-picker-input-padding;
-      outline: none;
-    }
+.date {
+  .van-field__control {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(97, 95, 108, 0.2);
+  }
+  .popup {
+    overflow: hidden;
   }
 
-  .ivu-date-picker-focused input {
-    box-shadow: $field-date-picker-focused-box-shadow;
+  .inline {
+    flex-direction: row;
+  }
+
+  // header
+  .van-picker__toolbar {
+    border-bottom: 1px solid #ebedf0;
+    height: 55px;
+    cursor: pointer;
+    .van-picker__cancel {
+      font-size: 16px;
+      color: #9e9e9e;
+    }
+    .van-picker__confirm {
+      font-size: 16px;
+      color: #fd7d58;
+    }
   }
 }

@@ -1,15 +1,18 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    v-model="value"
-    :label="field.title"
-    :class="[statusClass, field.customClass]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-    autocomplete="off"
-    placeholder="请输入"
-    type="number"
-  />
+  <div class="text">
+    <van-field
+      :id="field.identity_key"
+      v-model="value"
+      :label="field.title"
+      :class="[statusClass, field.customClass]"
+      :disabled="disabled"
+      :error-message="error"
+      autocomplete="off"
+      placeholder="请输入"
+      type="number"
+      @blur="errorMessageBlur(value)"
+    />
+  </div>
 </template>
 
 <script>
@@ -21,6 +24,7 @@ export const Integer = {
   data() {
     return {
       value: '',
+      error: '',
     }
   },
 

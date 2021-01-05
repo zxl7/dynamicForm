@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import TextField from './views/text_field.vue'
 import Fields from './views/fields.vue'
+import fieldsDev from './views/fieldsDev.vue'
 
 Vue.use(Router)
 
@@ -19,6 +20,11 @@ export default new Router({
       name: 'Fields',
       path: '/fields',
       component: Fields,
+    },
+    {
+      name: 'fieldsDev',
+      path: '/fieldsDev',
+      component: fieldsDev,
     },
   ],
 })

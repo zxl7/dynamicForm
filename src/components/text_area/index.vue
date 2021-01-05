@@ -1,15 +1,18 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    v-model="value"
-    :label="field.title"
-    :class="[statusClass, field.customClass]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-    autocomplete="off"
-    placeholder="请输入"
-    type="textarea"
-  />
+  <div class="text-area">
+    <van-field
+      :id="field.identity_key"
+      v-model="value"
+      :label="field.title"
+      :class="[statusClass, field.customCla, field.settings.layout]"
+      :disabled="disabled"
+      :error-message="error"
+      autocomplete="off"
+      placeholder="请输入"
+      type="textarea"
+      @blur="errorMessageBlur(value)"
+    />
+  </div>
 </template>
 
 <script>
@@ -21,6 +24,7 @@ export const SlpTextArea = {
   data() {
     return {
       value: '',
+      error: '',
     }
   },
 
@@ -33,17 +37,11 @@ export const SlpTextArea = {
     },
   },
 
-  methods: {
-    getValid() {
-      if (!this.value && this.required) {
-        this.valid = false
-      } else {
-        this.valid = true
-      }
-      return this.valid
-    },
-  },
+  methods: {},
 }
 
 export default SlpTextArea
 </script>
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

@@ -9,36 +9,41 @@ const PARITY = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
 export const IdNumber = {
   extends: Integer,
 
-  computed: {
-    errorMessage() {
-      const errors = []
-      errors.push(this.required && !this.value ? '必填字段不能为空' : '')
-      errors.push(this.valid ? '' : '身份证号格式错误')
-      return _.compact(errors)[0]
-    },
-  },
-
   watch: {
     value: {
       handler: _.debounce(function debounceFunc(value) {
         this.$emit('valueChanged', value)
         this.valid = true
         if (!value) return
-        const sum = _.reduce(FACTOR, (memo, item, index) => {
-          const count = memo + value.substr(index, 1) * item
-          return count
-        }, 0)
+        const sum = _.reduce(
+          FACTOR,
+          (memo, item, index) => {
+            const count = memo + value.substr(index, 1) * item
+            return count
+          },
+          0,
+        )
 
         const validRegex = ID_NUMBER_REGEX.test(value)
         if (!(validRegex && PARITY[sum % 11].toString() === value.substr(17, 1).toString())) {
           this.valid = false
         }
-      }, 1000),
+      }, 500),
       immediate: true,
     },
   },
 
   methods: {
+    errorMessageBlur() {
+      if (this.required && !this.value) {
+        this.error = '必填字段不能为空'
+        this.valid = false
+      } else if (!this.valid) {
+        this.error = '身份证格式错误'
+      } else {
+        this.error = ''
+      }
+    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false

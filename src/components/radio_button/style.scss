@@ -1,86 +1,63 @@
-.van-cell.van-field.slp-field .van-field__control {
-  .ivu-select .ivu-select-selection {
-    border: none;
-    background: none;
-  }
+.van-radio {
+  padding: 7px 0;
+  margin: 2px 0;
+}
+.list .van-field__control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .ivu-select-visible .ivu-select-selection {
-    box-shadow: none;
-  }
+.inline .van-field__control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-  .ivu-select .ivu-select-selected-value {
-    color: $field-radio-value-color;
-    font-size: $field-radio-value-font-size;
-    padding: $field-radio-value-padding;
-  }
+  .van-radio-group {
+    display: flex;
+    flex-wrap: wrap;
 
-  .ivu-select .ivu-select-placeholder {
-    color: $field-radio-placeholder-color !important;
-    font-size: $field-radio-placeholder-font-size;
-    padding: $field-radio-placeholder-padding;
-  }
-
-  .ivu-select-dropdown-list .ivu-select-item {
-    font-size: $field-dropdown-list-item-font-size !important;
-    color: $field-dropdown-list-item-color !important;
-  }
-
-  .ivu-select-dropdown-list .ivu-select-item:hover {
-    background-color: $field-dropdown-list-item-hover-background-color;
-    color: $field-dropdown-list-item-hover-color !important;
-  }
-
-  .ivu-select-item.ivu-select-item-selected,
-  .ivu-select-item.ivu-select-item-focus {
-    background-color: $field-dropdown-list-item-selected-background-color;
-    color: $field-dropdown-list-item-selected-color !important;
-  }
-
-  /* BrickCheckboxSelect */
-  .popover {
-    width: 100%;
-  }
-
-  .select-trigger,
-  .select-trigger.select-trigger--focus {
-    border: none;
-    box-shadow: none;
-    background-color: transparent;
-    color: #313c56;
-  }
-
-  .select-trigger:hover {
-    background-color: transparent;
-  }
-
-  .popover__body {
-    background-color: #ffffff;
-  }
-
-  .popover__content {
-    left: 0;
-    width: 100%;
-  }
-
-  .popover__body__content {
-    padding: 0;
-  }
-
-  .select__selection .list__item {
-    font-size: 14px;
-    background-color: #ffffff;
-    color: #6b7885;
-    border-bottom: none;
-    box-shadow: none;
-
-    &:hover {
-      background-color: #f4f4f8;
-      color: #313c56;
-      border-bottom: none;
+    .van-radio {
+      margin-right: 15px;
     }
   }
+}
 
-  .checkbox-select__value-item {
-    color: #313c56;
+.select {
+  .van-field__body {
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+.van-cell--clickable {
+  color: red;
+}
+// 弹框
+.popup-head {
+  padding: 1em 0.75rem;
+  border-bottom: 1px solid #e9e9e9;
+  display: flex;
+  height: 54px;
+  line-height: 54px;
+  justify-content: space-between;
+  align-items: center;
+
+  .van-cell__title {
+    color: #9e9e9e;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .van-cell__value {
+    color: #fd7d58;
+    cursor: pointer;
+    font-size: 16px;
+  }
+}
+
+.popup {
+  .van-cell__title {
+    display: flex;
+    align-items: center;
   }
 }

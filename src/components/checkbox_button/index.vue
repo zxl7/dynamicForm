@@ -1,62 +1,121 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    :label="field.title"
-    :class="[statusClass, field.customClass]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-  >
-    <template #input>
-      <brick-checkbox-select
-        v-model="selectedValue"
-        :options="options"
-      >
-        <template #optionTemplate="{option}">
-          <div
-            v-if="option.other_option"
-            class="other-select-item"
+  <div class="checkbox">
+    <van-field
+      v-if="field.settings.layout !== 'select'"
+      :id="field.identity_key"
+      :label="field.title"
+      :class="[statusClass, field.customClass, field.settings.layout]"
+      :disabled="disabled"
+      :error-message="error"
+    >
+      <template #input>
+        <p class="description">
+          {{ field.description }}
+        </p>
+        <van-checkbox-group
+          v-model="selectedValue"
+          :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
+        >
+          <van-checkbox
+            v-for="option in field.options"
+            :key="option.id"
+            checked-color="#fd7d58"
+            :name="option"
+            shape="square"
           >
-            <div
+            {{ option.value }}
+          </van-checkbox>
+          <!-- <van-checkbox
+            v-if="field.other_option"
+            shape="square"
+            checked-color="#fd7d58"
+          >
+            {{ field.other_option }}
+            <input
               class="other-option"
-              @click.stop
+              type="text"
             >
-              <div class="other-option-label">
-                {{ option.name }}
-              </div>
-              <input
-                v-model="otherValue"
-                class="other-option-input"
-              >
-            </div>
-          </div>
-          <span v-else>
-            {{ option.label }}
-          </span>
-        </template>
-      </brick-checkbox-select>
-    </template>
-  </van-field>
+          </van-checkbox> -->
+        </van-checkbox-group>
+      </template>
+    </van-field>
+    <!-- 多选下拉组件 -->
+    <van-field
+      v-else
+      v-model="checkboxValue"
+      :label="field.title"
+      :class="[statusClass, field.customClass, field.settings.layout]"
+      :disabled="disabled"
+      placeholder="请选择"
+      readonly
+      right-icon="arrow-down"
+      :error-message="error"
+      @click="showCheck = true"
+    />
+    <van-popup
+      v-model="showCheck"
+      position="bottom"
+      :style="{ height: '50%' }"
+      round
+    >
+      <van-cell
+        class="popup-head"
+        title="取消"
+        value="确定"
+        @click="showCheck = false"
+      />
+      <div class="popup">
+        <van-checkbox-group v-model="selectedValue">
+          <van-cell-group>
+            <van-cell
+              v-for="(option, index) in field.options"
+              :key="option.id"
+              :title="option.value"
+              clickable
+              @click="toggle(index)"
+            >
+              <template #right-icon>
+                <van-checkbox
+                  ref="checkboxes"
+                  :name="option"
+                  checked-color="#fd7d58"
+                  shape="square"
+                />
+              </template>
+            </van-cell>
+          </van-cell-group>
+        </van-checkbox-group>
+      </div>
+    </van-popup>
+  </div>
 </template>
 
 <script>
+import {
+  Checkbox, CheckboxGroup, Cell, CellGroup, Popup,
+} from 'vant'
 import _ from 'lodash'
-import { BrickCheckboxSelect } from '@byzanteam/vis-components'
 import FieldMixin from '../mixin'
 
 export const CheckboxButton = {
   mixins: [FieldMixin],
 
   components: {
-    BrickCheckboxSelect,
+    vanCheckbox: Checkbox,
+    vanCheckboxGroup: CheckboxGroup,
+    vanCell: Cell,
+    vanCellGroup: CellGroup,
+    vanPopup: Popup,
   },
 
   data() {
     return {
-      otherValue: '',
       selectedValue: [],
+      checkboxValue: '',
+      showCheck: false,
+      error: '',
     }
   },
-
   computed: {
     initalValue() {
       return this.entries.map(item => ({
@@ -65,7 +124,6 @@ export const CheckboxButton = {
         label: item.value,
       }))
     },
-
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
@@ -86,17 +144,28 @@ export const CheckboxButton = {
       return options
     },
   },
-
   watch: {
-    initalValue: {
+    selectedValue: {
       handler(value) {
-        this.selectedValue = value
+        this.checkboxValue = ''
+        value.forEach((select) => {
+          this.checkboxValue = `${this.checkboxValue}${select.value}、`
+        })
+        if (this.selectedValue.length === 0) {
+          this.value = false
+          this.error = '必填字段不能为空'
+          this.errorMessageBlur()
+        } else {
+          this.value = true
+          this.errorMessageBlur()
+        }
       },
-      immediate: true,
     },
   },
-
   methods: {
+    toggle(index) {
+      this.$refs.checkboxes[index].toggle()
+    },
     getEntries() {
       const fieldId = this.field.id
       const oldEntries = this.entries.slice()
@@ -135,7 +204,6 @@ export const CheckboxButton = {
       result = result.concat(deletedOldEntries)
       return result.concat(deletedOldEntries)
     },
-
     getValid() {
       if (this.selectedValue.length <= 0 && this.required) {
         this.valid = false

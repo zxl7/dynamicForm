@@ -31,6 +31,7 @@
             @cancel="onCancel"
           />
         </div>
+        <!-- 有无年月 -->
         <div v-else>
           <van-datetime-picker
             v-model="currentDate"
@@ -92,7 +93,6 @@ export const DateTime = {
       error: '',
     }
   },
-
   computed: {
     dateOptions() {
       return DATE_OPTIONS_MAP[this.field.settings.input_type]
@@ -101,7 +101,6 @@ export const DateTime = {
       return this.field.settings.input_type === 'time'
     },
   },
-
   watch: {
     value: {
       handler() {
@@ -122,10 +121,8 @@ export const DateTime = {
     clearValue() {
       this.value = ''
     },
-
     // 赋值
     onConfirm(date) {
-      console.log(date)
       switch (this.field.settings.input_type) {
         case 'time':
           this.value = date
@@ -141,7 +138,6 @@ export const DateTime = {
       this.error = ''
       this.statusClass.error = false
     },
-
     getValid() {
       if (!this.value && this.required) {
         this.valid = false
@@ -150,7 +146,6 @@ export const DateTime = {
       }
       return this.valid
     },
-
     generateDate(date) {
       const month = date.getMonth() + 1
       const day = date.getDate()
@@ -158,7 +153,6 @@ export const DateTime = {
         day < 10 ? `0${day}` : day
       }`
     },
-
     generateTime(date) {
       const hours = date.getHours()
       const minutes = date.getMinutes()
@@ -166,7 +160,6 @@ export const DateTime = {
     },
   },
 }
-
 export default DateTime
 </script>
 

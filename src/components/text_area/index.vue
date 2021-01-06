@@ -20,14 +20,12 @@ import FieldMixin from '../mixin'
 
 export const SlpTextArea = {
   mixins: [FieldMixin],
-
   data() {
     return {
       value: '',
       error: '',
     }
   },
-
   watch: {
     initalValue: {
       handler(value) {
@@ -36,8 +34,24 @@ export const SlpTextArea = {
       immediate: true,
     },
   },
-
-  methods: {},
+  methods: {
+    getData() {
+      if (!this.value) return []
+      const entry = {
+        field_id: this.field.id,
+        value: this.value,
+      }
+      return [entry]
+    },
+    getValid() {
+      if (!this.value && this.required) {
+        this.valid = false
+      } else {
+        this.valid = true
+      }
+      return this.valid
+    },
+  },
 }
 
 export default SlpTextArea

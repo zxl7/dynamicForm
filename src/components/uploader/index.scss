@@ -1,0 +1,22 @@
+.uploader {
+  .van-uploader {
+    width: 100%;
+  }
+  .van-uploader__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 36%);
+    justify-content: space-around;
+  }
+
+  .van-uploader__preview {
+    position: relative;
+    margin: 10px 0px;
+    cursor: pointer;
+    justify-self: center;
+  }
+
+  .van-uploader__upload {
+    margin: 10px 0px;
+    justify-self: center;
+  }
+}

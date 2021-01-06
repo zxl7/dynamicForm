@@ -21,7 +21,7 @@ import { RadioButton } from '../radio_button/index.vue'
 import { CheckboxButton } from '../checkbox_button/index.vue'
 import { SlpTextArea } from '../text_area/index.vue'
 import { Integer } from '../integer.vue'
-import { Uploader } from '../uploader/index.vue'
+import { Upload } from '../uploader/index.vue'
 import { DateTime } from '../date_time/index.vue'
 import { Phone } from '../phone/index.vue'
 import { IdNumber } from '../id_number/index.vue'
@@ -35,7 +35,7 @@ const FIELDS_MAP = {
   'Field::RadioButton': 'radio-button',
   'Field::CheckBox': 'checkbox-button',
   'Field::DateTime': 'date-time',
-  'Field::File': 'uploader',
+  'Field::File': 'Upload',
 }
 
 export const Fields = {
@@ -45,7 +45,7 @@ export const Fields = {
     CheckboxButton,
     SlpTextArea,
     Integer,
-    Uploader,
+    Upload,
     DateTime,
     IdNumber,
     Phone,

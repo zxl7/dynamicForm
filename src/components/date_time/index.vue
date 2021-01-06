@@ -5,7 +5,7 @@
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :error-message="error"
-      placeholder="请选择"
+      placeholder="请选择日期"
       :value="value"
       readonly
       clickable
@@ -23,16 +23,29 @@
       :close-on-click-overlay="false"
     >
       <div class="popup">
-        <van-datetime-picker
-          confirm-button-text="确定"
-          :type="
-            field.settings.input_type === 'datetime-local' ? 'datetime' : field.settings.input_type
-          "
-          :min-date="minDate"
-          :max-date="maxDate"
-          @confirm="onConfirm"
-          @cancel="onCancel"
-        />
+        <div v-if="field.settings.input_type === 'time'">
+          <van-datetime-picker
+            v-model="currentTime"
+            type="time"
+            @confirm="onConfirm(currentTime)"
+            @cancel="onCancel"
+          />
+        </div>
+        <div v-else>
+          <van-datetime-picker
+            v-model="currentDate"
+            confirm-button-text="确定"
+            :type="
+              field.settings.input_type === 'datetime-local'
+                ? 'datetime'
+                : field.settings.input_type
+            "
+            :min-date="minDate"
+            :max-date="maxDate"
+            @confirm="onConfirm(currentDate)"
+            @cancel="onCancel"
+          />
+        </div>
       </div>
     </van-popup>
   </div>
@@ -74,6 +87,8 @@ export const DateTime = {
       nowYear: new Date().getFullYear(),
       minDate: '',
       maxDate: '',
+      currentDate: new Date(),
+      currentTime: '12:30',
       error: '',
     }
   },
@@ -109,16 +124,17 @@ export const DateTime = {
     },
 
     // 赋值
-    onConfirm(time) {
+    onConfirm(date) {
+      console.log(date)
       switch (this.field.settings.input_type) {
         case 'time':
-          this.value = time
+          this.value = date
           break
         case 'datetime-local':
-          this.value = this.formatDate(time) + this.generateTime(time)
+          this.value = `${this.generateDate(date)} ${this.generateTime(date)}`
           break
         default:
-          this.value = this.formatDate(time)
+          this.value = this.generateDate(date)
           break
       }
       this.showPicker = false
@@ -126,10 +142,6 @@ export const DateTime = {
       this.statusClass.error = false
     },
 
-    formatDate(date) {
-      this.error = ''
-      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-    },
     getValid() {
       if (!this.value && this.required) {
         this.valid = false
@@ -139,25 +151,18 @@ export const DateTime = {
       return this.valid
     },
 
-    generateEntry(date) {
-      const { input_type: inputType } = this.field.settings
-      if (inputType === 'date') {
-        return this.generateDate(date)
-      }
-      if (inputType === 'datetime-local') {
-        return `${this.generateDate(date)}-${this.generateTime()}`
-      }
-      return this.date
-    },
-
-    generateDate() {
-      return `${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}`
+    generateDate(date) {
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      return `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${
+        day < 10 ? `0${day}` : day
+      }`
     },
 
     generateTime(date) {
       const hours = date.getHours()
       const minutes = date.getMinutes()
-      return ` ${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`
+      return `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`
     },
   },
 }

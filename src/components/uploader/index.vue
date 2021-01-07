@@ -9,27 +9,9 @@
       class="no-border"
     >
       <template #input>
-        <!-- <upload
-        :data="fileParams"
-        :on-success="successFunc"
-        :on-error="errorFunc"
-        :action="action"
-      >
-        <slot name="upload-btn">
-          <i-button
-            icon="ios-cloud-upload-outline"
-            :disabled="disabled"
-            @click="beforeUploadClickedFunc"
-          >
-            上传文件
-          </i-button>
-        </slot>
-      </upload> -->
-
         <van-uploader
           v-model="fileList"
           multiple
-          :data="fileParams"
           :after-read="afterRead"
           accept="*"
         />
@@ -55,6 +37,7 @@ export const Upload = {
       type: Object,
       default: () => {},
     },
+
     beforeUploadFunc: {
       type: Function,
       required: true,
@@ -73,40 +56,13 @@ export const Upload = {
       fileList: [],
     }
   },
-
   methods: {
     afterRead(file) {
-      // 此时可以自行将文件上传至服务器
-      console.log(file)
-      console.log(this.fileParams)
-      this.beforeUploadFunc()
-      const formData = new FormData()
-      formData.append('file', file.file)
-      formData.append('token', this.fileParams.uptoken)
-      formData.append('x:key', new Date())
-
-      this.axios({
-        method: 'get',
-        url: this.action,
-        params: {
-          data: formData,
-        },
-        headers: {
-          'content-type': false,
-        },
-      })
-        .then((data) => {
-          this.files.push(data)
-        })
-        .catch((data) => {
-          this.files.push(data)
-          Toast.fail('上传文件失败，请重试')
-        })
-    },
-    beforeUploadClickedFunc() {
-      this.beforeUploadFunc()
+      this.beforeUploadFunc(file)
     },
     getEntries() {
+      console.log(this.fileParams)
+      this.files = this.fileParams.files
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value: item.name,
@@ -123,13 +79,6 @@ export const Upload = {
       }
       return this.valid
     },
-    // successFunc(data) {
-    //   this.files.push(data)
-    // },
-    // errorFunc(data) {
-    //   this.files.push(data)
-    //   Toast.fail('上传文件失败，请重试')
-    // },
   },
 }
 

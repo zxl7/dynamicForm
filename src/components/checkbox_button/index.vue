@@ -13,14 +13,14 @@
           {{ field.description }}
         </p>
         <van-checkbox-group
-          v-model="selectedValue"
+          v-model="checkboxArr"
           :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
         >
           <van-checkbox
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
-            :name="option"
+            :name="option.id"
             shape="square"
           >
             {{ option.value }}
@@ -42,7 +42,7 @@
     <!-- 多选下拉组件 -->
     <van-field
       v-else
-      v-model="checkboxValue"
+      v-model="checkboxArr"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
@@ -65,7 +65,7 @@
         @click="showCheck = false"
       />
       <div class="popup">
-        <van-checkbox-group v-model="selectedValue">
+        <van-checkbox-group v-model="checkboxArr">
           <van-cell-group>
             <van-cell
               v-for="(option, index) in field.options"
@@ -77,7 +77,7 @@
               <template #right-icon>
                 <van-checkbox
                   ref="checkboxes"
-                  :name="option"
+                  :name="option.id"
                   checked-color="#fd7d58"
                   shape="square"
                 />
@@ -110,8 +110,10 @@ export const CheckboxButton = {
 
   data() {
     return {
+      checkboxArr: [],
       selectedValue: [],
-      checkboxValue: '',
+      checkboxTextValue: '',
+      checkboxTextArr: [],
       showCheck: false,
       error: '',
     }
@@ -145,13 +147,24 @@ export const CheckboxButton = {
     },
   },
   watch: {
+    initalValue: {
+      handler(value) {
+        console.log(value)
+        value.forEach((res) => {
+          this.checkboxArr.push(res.option_id)
+        })
+        this.checkboxArr = [...new Set(this.checkboxArr)]
+      },
+      immediate: true,
+    },
     selectedValue: {
       handler(value) {
-        this.checkboxValue = ''
+        this.checkboxTextValue = ''
         value.forEach((select) => {
-          this.checkboxValue = `${this.checkboxValue}${select.value}、`
+          this.checkboxTextArr.push(value)
+          this.checkboxTextValue = `${this.checkboxTextValue}${select.value}、`
         })
-        if (this.selectedValue.length === 0) {
+        if (this.checkboxArr.length === 0) {
           this.value = false
           this.error = '必填字段不能为空'
           this.errorMessageBlur()
@@ -167,6 +180,14 @@ export const CheckboxButton = {
       this.$refs.checkboxes[index].toggle()
     },
     getEntries() {
+      // 获取选中对象
+      this.field.options.forEach((option) => {
+        this.checkboxArr.forEach((res) => {
+          if (res === option.id) {
+            this.selectedValue.push(option)
+          }
+        })
+      })
       const fieldId = this.field.id
       const oldEntries = this.entries.slice()
       let result = []

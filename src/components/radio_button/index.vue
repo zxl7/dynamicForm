@@ -12,12 +12,12 @@
         <p class="description">
           {{ field.description }}
         </p>
-        <van-radio-group v-model="selectedValue">
+        <van-radio-group v-model="radioValue">
           <van-radio
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
-            :name="option"
+            :name="option.id"
             @click="onConfirm(option)"
           >
             {{ option.value }}
@@ -25,7 +25,8 @@
           <van-radio
             v-if="field.other_option"
             checked-color="#fd7d58"
-            @click="onOtherValue"
+            :name="0"
+            @click="onOtherValue()"
           >
             <span>{{ field.other_option }}</span>
             <input
@@ -64,7 +65,7 @@
         @click="show = false"
       />
       <div class="popup">
-        <van-radio-group v-model="selectedValue">
+        <van-radio-group v-model="radioValue">
           <van-cell-group>
             <!-- <van-cell
               class="other-option"
@@ -93,7 +94,7 @@
             >
               <template #right-icon>
                 <van-radio
-                  :name="option"
+                  :name="option.id"
                   checked-color="#fd7d58"
                 />
               </template>
@@ -125,11 +126,12 @@ export const RadioButton = {
     return {
       radio: '',
       show: false,
-      otherValue: '',
-      otherArr: [],
+      radioValue: '',
       selectedValue: '',
       hasChosen: [],
       error: '',
+      otherArr: [],
+      otherValue: '',
     }
   },
   computed: {
@@ -165,7 +167,8 @@ export const RadioButton = {
   watch: {
     initalValue: {
       handler(value) {
-        this.selectedValue = value
+        // this.selectedValue = value
+        this.radioValue = value.option_id
       },
       immediate: true,
     },
@@ -194,30 +197,35 @@ export const RadioButton = {
       },
     },
   },
-  methods: {
 
+  methods: {
     onConfirm(target) {
       if (this.hasChosen[0] === target.id) {
         this.radio = ''
         this.selectedValue = {}
+        this.radioValue = {}
         this.hasChosen = []
       } else {
+        this.otherArr = []
         this.radio = target.value
         this.value = true
         this.selectedValue = target
+        this.radioValue = target.id
         this.hasChosen.unshift(target.id)
       }
     },
     onOtherValue() {
-      if (this.otherArr[0] === '其他') {
+      if (this.otherArr.includes('其他')) {
         this.radio = ''
-        this.selectedValue = {}
-        this.otherArr = []
-        this.error = '必填字段不能为空'
+        this.otherArr.length = 0
+        this.radioValue = {}
       } else {
-        this.radio = this.otherValue
-        this.otherArr.unshift('其他')
         this.valid = false
+        this.value = false
+        this.radioValue = 0
+        this.hasChosen = []
+        this.otherArr.unshift('其他')
+        this.radio = this.otherValue
         this.error = '其他选项不能为空'
       }
     },

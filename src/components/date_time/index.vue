@@ -107,6 +107,12 @@ export const DateTime = {
         this.errorMessageBlur()
       },
     },
+    initalValue: {
+      handler(value) {
+        this.value = value
+      },
+      immediate: true,
+    },
   },
   mounted() {
     this.maxDate = new Date(this.nowYear + 100, 12, 31)

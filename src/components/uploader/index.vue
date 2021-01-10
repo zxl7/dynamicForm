@@ -49,8 +49,11 @@ export const Upload = {
   watch: {
     initalValue: {
       handler(value) {
-        console.log(value)
-        this.imageUrlToBase64(value)
+        let arr = []
+        arr = value.split('|')
+        arr.forEach((res) => {
+          this.imageUrlToBase64(res)
+        })
       },
       immediate: true,
     },
@@ -61,8 +64,9 @@ export const Upload = {
       fileList: [],
     }
   },
-  mounted() {},
+
   methods: {
+    // 图片转base64
     imageUrlToBase64(imageUrl) {
       const image = new Image()
       image.setAttribute('crossOrigin', 'anonymous')
@@ -78,23 +82,46 @@ export const Upload = {
         const dataURL = canvas.toDataURL('image/jpeg', quality)
         // 图片的显示
         this.fileList.push({ content: dataURL, file: 'File' })
+        this.base64ToFile(dataURL, '资源名字')
       }
+    },
+    // 转文件
+    base64ToFile(dataURL, fileName) {
+      const arr = dataURL.split(',')
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bytes = atob(arr[1]) // 解码base64
+      let n = bytes.length
+      const ia = new Uint8Array(n)
+      // eslint-disable-next-line no-plusplus
+      while (n--) {
+        ia[n] = bytes.charCodeAt(n)
+      }
+      const file = { file: new File([ia], fileName, { type: mime }) }
+      console.log(file)
+      this.afterRead(file)
     },
     afterRead(file) {
       this.beforeUploadFunc(file)
     },
     getEntries() {
       // 发给流程
-      console.log(this.fileParams)
       this.files = this.fileParams.files
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
-        value: item.name,
         value_id: item.id,
         field_id: this.field.id,
       }))
+      const valueArr = []
+      this.files.forEach((res) => {
+        valueArr.push(res.download_url)
+      })
+      entries.forEach((arr) => {
+        // eslint-disable-next-line no-param-reassign
+        arr.value = valueArr.join('|')
+      })
       return entries
     },
+
     getValid() {
       if (this.files.length <= 0 && this.required) {
         this.valid = false

@@ -1,41 +1,32 @@
 <template>
-  <van-field
-    :id="field.identity_key"
-    :label="field.title"
-    :class="[statusClass, field.customClass]"
-    :disabled="disabled"
-    :error-message="errorMessage"
-    class="no-border"
-  >
-    <template #input>
-      <upload
-        :data="fileParams"
-        :on-success="successFunc"
-        :on-error="errorFunc"
-        :action="action"
-      >
-        <slot name="upload-btn">
-          <i-button
-            icon="ios-cloud-upload-outline"
-            :disabled="disabled"
-            @click="beforeUploadClickedFunc"
-          >
-            上传文件
-          </i-button>
-        </slot>
-      </upload>
-    </template>
-  </van-field>
+  <div class="uploader">
+    <van-field
+      :id="field.identity_key"
+      :label="field.title"
+      :class="[statusClass, field.customClass]"
+      :disabled="disabled"
+      :error-message="errorMessage"
+      class="no-border"
+    >
+      <template #input>
+        <van-uploader
+          v-model="fileList"
+          multiple
+          :after-read="afterRead"
+          accept="*"
+        />
+      </template>
+    </van-field>
+  </div>
 </template>
 
 <script>
-import { Upload, Button } from 'iview'
-import { Toast } from 'vant'
+import { Button } from 'iview'
+import { Toast, Uploader } from 'vant'
 import FieldMixin from '../mixin'
 
-export const Uploader = {
+export const Upload = {
   mixins: [FieldMixin],
-
   props: {
     action: {
       type: String,
@@ -50,32 +41,87 @@ export const Uploader = {
       required: true,
     },
   },
-
   components: {
-    Upload,
+    'van-uploader': Uploader,
     'i-button': Button,
     Toast,
   },
-
+  watch: {
+    initalValue: {
+      handler(value) {
+        let arr = []
+        arr = value.split('|')
+        arr.forEach((res) => {
+          this.imageUrlToBase64(res)
+        })
+      },
+      immediate: true,
+    },
+  },
   data() {
     return {
       files: [],
+      fileList: [],
     }
   },
 
   methods: {
-    beforeUploadClickedFunc() {
-      this.beforeUploadFunc()
+    // 图片转base64
+    imageUrlToBase64(imageUrl) {
+      const image = new Image()
+      image.setAttribute('crossOrigin', 'anonymous')
+      image.src = imageUrl
+      image.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+        const context = canvas.getContext('2d')
+        context.drawImage(image, 0, 0, image.width, image.height)
+        const quality = 0.8
+        // base64类型
+        const dataURL = canvas.toDataURL('image/jpeg', quality)
+        // 图片的显示
+        this.fileList.push({ content: dataURL, file: 'File' })
+        this.base64ToFile(dataURL, '资源名字')
+      }
+    },
+    // 转文件
+    base64ToFile(dataURL, fileName) {
+      const arr = dataURL.split(',')
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bytes = atob(arr[1]) // 解码base64
+      let n = bytes.length
+      const ia = new Uint8Array(n)
+      // eslint-disable-next-line no-plusplus
+      while (n--) {
+        ia[n] = bytes.charCodeAt(n)
+      }
+      const file = { file: new File([ia], fileName, { type: mime }) }
+      console.log(file)
+      this.afterRead(file)
+    },
+    afterRead(file) {
+      this.beforeUploadFunc(file)
     },
     getEntries() {
+      // 发给流程
+      this.files = this.fileParams.files
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
-        value: item.name,
         value_id: item.id,
         field_id: this.field.id,
       }))
+      const valueArr = []
+      this.files.forEach((res) => {
+        valueArr.push(res.download_url)
+      })
+      entries.forEach((arr) => {
+        // eslint-disable-next-line no-param-reassign
+        arr.value = valueArr.join('|')
+      })
       return entries
     },
+
     getValid() {
       if (this.files.length <= 0 && this.required) {
         this.valid = false
@@ -84,14 +130,12 @@ export const Uploader = {
       }
       return this.valid
     },
-    successFunc(data) {
-      this.files.push(data)
-    },
-    errorFunc() {
-      Toast.fail('上传文件失败，请重试')
-    },
   },
 }
 
-export default Uploader
+export default Upload
 </script>
+
+<style lang="scss">
+@import './index.scss';
+</style>

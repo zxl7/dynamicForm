@@ -90,12 +90,14 @@ export default {
     },
     // blur判断
     errorMessageBlur() {
-      if (this.required && !this.value) {
-        this.error = '必填字段不能为空'
-        this.valid = false
-      } else {
-        this.error = ''
-        this.valid = true
+      if (this.required) {
+        if (!this.value) {
+          this.error = '必填字段不能为空'
+          this.valid = false
+        } else {
+          this.error = ''
+          this.valid = true
+        }
       }
     },
   },

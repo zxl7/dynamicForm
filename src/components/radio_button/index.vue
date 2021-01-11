@@ -12,12 +12,12 @@
         <p class="description">
           {{ field.description }}
         </p>
-        <van-radio-group v-model="selectedValue">
+        <van-radio-group v-model="chooseValue">
           <van-radio
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
-            :name="option"
+            :name="option.id"
             @click="onConfirm(option)"
           >
             {{ option.value }}
@@ -25,7 +25,8 @@
           <van-radio
             v-if="field.other_option"
             checked-color="#fd7d58"
-            @click="onOtherValue"
+            :name="0"
+            @click="onOtherValue()"
           >
             <span>{{ field.other_option }}</span>
             <input
@@ -64,15 +65,16 @@
         @click="show = false"
       />
       <div class="popup">
-        <van-radio-group v-model="selectedValue">
+        <van-radio-group v-model="chooseValue">
           <van-cell-group>
-            <!-- <van-cell
+            <van-cell
               class="other-option"
               @click="onOtherValue()"
             >
               <template #right-icon>
                 <van-radio
                   v-if="field.other_option"
+                  :name="0"
                   checked-color="#fd7d58"
                 >
                   <input
@@ -84,7 +86,7 @@
                   >
                 </van-radio>
               </template>
-            </van-cell> -->
+            </van-cell>
             <van-cell
               v-for="option in field.options"
               :key="option.id"
@@ -93,7 +95,7 @@
             >
               <template #right-icon>
                 <van-radio
-                  :name="option"
+                  :name="option.id"
                   checked-color="#fd7d58"
                 />
               </template>
@@ -109,7 +111,6 @@
 import {
   RadioGroup, Radio, Cell, CellGroup, Popup,
 } from 'vant'
-import _ from 'lodash'
 import FieldMixin from '../mixin'
 
 export const RadioButton = {
@@ -125,35 +126,34 @@ export const RadioButton = {
     return {
       radio: '',
       show: false,
-      otherValue: '',
-      otherArr: [],
-      selectedValue: '',
-      hasChosen: [],
+      chooseValue: '',
+      selectedValue: {},
+      haveChoose: [],
       error: '',
+      otherValue: '',
     }
   },
   computed: {
     initalValue() {
       const entry = this.entries.find(item => !item._destroy)
       if (!entry) return null
+      this.radio = entry.value
       return {
         ...entry,
         id: entry.option_id,
-        label: entry.value,
+        value: entry.value,
       }
     },
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
         id: option.id,
-        label: option.value,
         value: option.value,
       }))
       if (otherOption) {
         const option = {
           id: 0,
           name: otherOption,
-          label: this.otherValue,
           value: otherOption,
           other_option: true,
         }
@@ -165,15 +165,26 @@ export const RadioButton = {
   watch: {
     initalValue: {
       handler(value) {
-        this.selectedValue = value
+        if (value) {
+          this.options.forEach((res) => {
+            if (value.value === res.value) {
+              this.chooseValue = res.id
+              // 获取选中对象
+              this.field.options.forEach((option) => {
+                if (this.chooseValue === option.id) {
+                  this.selectedValue = option
+                }
+              })
+            }
+          })
+        }
       },
       immediate: true,
     },
-    hasChosen: {
+    haveChoose: {
       handler() {
-        if (this.hasChosen.length === 0) {
+        if (this.haveChoose.length === 0) {
           this.value = false
-          this.error = '必填字段不能为空'
           this.errorMessageBlur()
         } else {
           this.errorMessageBlur()
@@ -183,6 +194,8 @@ export const RadioButton = {
     otherValue: {
       handler(otherValue) {
         if (otherValue) {
+          this.radio = this.otherValue
+          this.selectedValue.value = this.otherValue
           this.valid = true
           this.value = true
           this.error = ''
@@ -194,49 +207,39 @@ export const RadioButton = {
       },
     },
   },
-  methods: {
 
+  methods: {
     onConfirm(target) {
-      if (this.hasChosen[0] === target.id) {
+      if (this.haveChoose[0] === target.id) {
         this.radio = ''
+        this.chooseValue = ''
         this.selectedValue = {}
-        this.hasChosen = []
+        this.haveChoose = []
       } else {
+        this.error = ''
+        this.valid = true
         this.radio = target.value
         this.value = true
         this.selectedValue = target
-        this.hasChosen.unshift(target.id)
+        this.chooseValue = target.id
+        this.haveChoose.unshift(target.id)
       }
     },
     onOtherValue() {
-      if (this.otherArr[0] === '其他') {
-        this.radio = ''
-        this.selectedValue = {}
-        this.otherArr = []
-        this.error = '必填字段不能为空'
-      } else {
+      if (!this.otherValue) {
         this.radio = this.otherValue
-        this.otherArr.unshift('其他')
-        this.valid = false
         this.error = '其他选项不能为空'
+        this.valid = false
+        this.value = false
+        this.chooseValue = 0
+        this.haveChoose = []
+        this.selectedValue = {}
       }
     },
     getEntries() {
-      const entry = _.first(this.entries)
       const option = this.selectedValue
       const entries = []
-      if (entry) {
-        if (option) {
-          if (option.id !== 0 && option.id === entry.option_id) {
-            entries.push(_.clone(entry))
-          } else {
-            entries.push(_.extend(_.clone(entry), { _destroy: true }))
-            entries.push(this._generateEntryFromOption(option))
-          }
-        } else {
-          entries.push(_.extend(_.clone(entry), { _destroy: true }))
-        }
-      } else if (option) {
+      if (this.chooseValue === 0 || this.haveChoose.length > 0) {
         entries.push(this._generateEntryFromOption(option))
       }
       return entries

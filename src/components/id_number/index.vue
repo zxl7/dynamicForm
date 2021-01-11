@@ -14,6 +14,8 @@ export const IdNumber = {
       handler: _.debounce(function debounceFunc(value) {
         this.$emit('valueChanged', value)
         this.valid = true
+        this.error = ''
+
         if (!value) return
         const sum = _.reduce(
           FACTOR,
@@ -27,6 +29,7 @@ export const IdNumber = {
         const validRegex = ID_NUMBER_REGEX.test(value)
         if (!(validRegex && PARITY[sum % 11].toString() === value.substr(17, 1).toString())) {
           this.valid = false
+          this.error = '身份证格式错误'
         }
       }, 500),
       immediate: true,

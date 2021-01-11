@@ -1,15 +1,15 @@
 <template>
-  <div class="text">
+  <div class="location">
     <van-field
       :id="field.identity_key"
       v-model="value"
       :label="field.title"
-      :class="[statusClass, field.customClass, field.settings.layout]"
+      :class="[statusClass, field.customCla, field.settings.layout]"
       :disabled="disabled"
       :error-message="error"
       autocomplete="off"
       placeholder="请输入"
-      type="text"
+      type="textarea"
       @blur="errorMessageBlur(value)"
     />
   </div>
@@ -18,16 +18,14 @@
 <script>
 import FieldMixin from '../mixin'
 
-export const TextField = {
+export const Location = {
   mixins: [FieldMixin],
-
   data() {
     return {
       value: '',
       error: '',
     }
   },
-
   watch: {
     initalValue: {
       handler(value) {
@@ -56,12 +54,8 @@ export const TextField = {
   },
 }
 
-export default TextField
+export default Location
 </script>
-
 <style lang="scss" scoped>
-// inline
-.van-cell.van-field.inline {
-  flex-direction: row;
-}
+@import './style.scss';
 </style>

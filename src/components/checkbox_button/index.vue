@@ -20,7 +20,7 @@
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
-            :name="option"
+            :name="option.id"
             shape="square"
           >
             {{ option.value }}
@@ -42,7 +42,7 @@
     <!-- 多选下拉组件 -->
     <van-field
       v-else
-      v-model="checkboxValue"
+      v-model="selectedShowValue"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
@@ -77,7 +77,7 @@
               <template #right-icon>
                 <van-checkbox
                   ref="checkboxes"
-                  :name="option"
+                  :name="option.id"
                   checked-color="#fd7d58"
                   shape="square"
                 />
@@ -111,7 +111,9 @@ export const CheckboxButton = {
   data() {
     return {
       selectedValue: [],
-      checkboxValue: '',
+      selectedCacheValue: [],
+      selectedShowValue: '',
+      selectedShowMiddle: [],
       showCheck: false,
       error: '',
     }
@@ -121,7 +123,6 @@ export const CheckboxButton = {
       return this.entries.map(item => ({
         ...item,
         value: item.value,
-        label: item.value,
       }))
     },
     options() {
@@ -145,21 +146,44 @@ export const CheckboxButton = {
     },
   },
   watch: {
-    selectedValue: {
+    initalValue: {
       handler(value) {
-        this.checkboxValue = ''
-        value.forEach((select) => {
-          this.checkboxValue = `${this.checkboxValue}${select.value}、`
-        })
-        if (this.selectedValue.length === 0) {
-          this.value = false
-          this.error = '必填字段不能为空'
-          this.errorMessageBlur()
-        } else {
-          this.value = true
-          this.errorMessageBlur()
+        if (value.length > 0) {
+          let arr = []
+          arr = value[0].value.split('、')
+          this.field.options.forEach((option) => {
+            arr.forEach((res) => {
+              if (res === option.value) {
+                this.selectedValue.push(option.id)
+              }
+            })
+          })
+          this.selectedValue = Array.from([...new Set(this.selectedValue)])
         }
       },
+      immediate: true,
+    },
+    selectedValue: {
+      handler() {
+        this.selectedShowMiddle = []
+        this.field.options.forEach((option) => {
+          this.selectedValue.forEach((res) => {
+            if (res === option.id) {
+              this.selectedShowMiddle.push(option.value)
+            }
+          })
+        })
+        this.selectedShowValue = this.selectedShowMiddle.join('、')
+        if (this.required && !this.selectedValue.length > 0) {
+          this.error = '必填字段不能为空'
+          this.value = false
+        } else {
+          this.error = ''
+          this.value = true
+        }
+        this.errorMessageBlur()
+      },
+      deep: true,
     },
   },
   methods: {
@@ -167,10 +191,19 @@ export const CheckboxButton = {
       this.$refs.checkboxes[index].toggle()
     },
     getEntries() {
+      // 获取选中对象
+      this.selectedCacheValue = []
+      this.field.options.forEach((option) => {
+        this.selectedValue.forEach((res) => {
+          if (res === option.id) {
+            this.selectedCacheValue.push(option)
+          }
+        })
+      })
       const fieldId = this.field.id
       const oldEntries = this.entries.slice()
       let result = []
-      this.selectedValue.forEach((option) => {
+      this.selectedCacheValue.forEach((option) => {
         const oldEntryIndex = _.findIndex(oldEntries, (entry) => {
           if (option.id) {
             const optionId = entry.option_id ? entry.option_id.toString() : ''
@@ -193,6 +226,10 @@ export const CheckboxButton = {
           result.push(oldEntry)
         }
       })
+      result.forEach((res) => {
+        // eslint-disable-next-line no-param-reassign
+        res.checkboxText = this.selectedShowValue
+      })
       const deletedOldEntries = []
       _.each(oldEntries, (entry) => {
         if (entry.id) {
@@ -202,7 +239,7 @@ export const CheckboxButton = {
         }
       })
       result = result.concat(deletedOldEntries)
-      return result.concat(deletedOldEntries)
+      return result
     },
     getValid() {
       if (this.selectedValue.length <= 0 && this.required) {

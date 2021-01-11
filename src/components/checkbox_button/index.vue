@@ -149,8 +149,14 @@ export const CheckboxButton = {
     initalValue: {
       handler(value) {
         if (value.length > 0) {
-          value.forEach((res) => {
-            this.checkboxArr.push(res.option_id)
+          let arr = []
+          arr = value[0].value.split('、')
+          this.field.options.forEach((option) => {
+            arr.forEach((res) => {
+              if (res === option.value) {
+                this.checkboxArr.push(option.id)
+              }
+            })
           })
           this.checkboxArr = Array.from([...new Set(this.checkboxArr)])
         }
@@ -220,6 +226,10 @@ export const CheckboxButton = {
           result.push(oldEntry)
         }
       })
+      result.forEach((res) => {
+        // eslint-disable-next-line no-param-reassign
+        res.checkboxText = this.checkboxTextValue
+      })
       const deletedOldEntries = []
       _.each(oldEntries, (entry) => {
         if (entry.id) {
@@ -229,7 +239,7 @@ export const CheckboxButton = {
         }
       })
       result = result.concat(deletedOldEntries)
-      return result.concat(deletedOldEntries)
+      return result
     },
     getValid() {
       if (this.checkboxArr.length <= 0 && this.required) {

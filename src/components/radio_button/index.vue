@@ -131,7 +131,6 @@ export const RadioButton = {
       selectedValue: {},
       hasChosen: [],
       error: '',
-      otherArr: [],
       otherValue: '',
     }
   },
@@ -216,7 +215,7 @@ export const RadioButton = {
         this.selectedValue = {}
         this.hasChosen = []
       } else {
-        this.otherArr = []
+        this.error = ''
         this.radio = target.value
         this.value = true
         this.selectedValue = target
@@ -233,7 +232,6 @@ export const RadioButton = {
         this.radioValue = 0
         this.hasChosen = []
         this.selectedValue = {}
-        this.otherArr.unshift('其他')
       }
     },
     getEntries() {

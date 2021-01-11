@@ -137,6 +137,7 @@ export const RadioButton = {
     initalValue() {
       const entry = this.entries.find(item => !item._destroy)
       if (!entry) return null
+      this.radio = entry.value
       return {
         ...entry,
         id: entry.option_id,

@@ -25,6 +25,7 @@ import { Upload } from '../uploader/index.vue'
 import { DateTime } from '../date_time/index.vue'
 import { Phone } from '../phone/index.vue'
 import { IdNumber } from '../id_number/index.vue'
+import { Location } from '../location/index.vue'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',
@@ -36,6 +37,7 @@ const FIELDS_MAP = {
   'Field::CheckBox': 'checkbox-button',
   'Field::DateTime': 'date-time',
   'Field::File': 'Upload',
+  'Field::Location': 'Location',
 }
 
 export const Fields = {
@@ -49,6 +51,7 @@ export const Fields = {
     DateTime,
     IdNumber,
     Phone,
+    Location,
   },
   props: {
     fields: {

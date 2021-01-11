@@ -42,7 +42,7 @@
     <!-- 多选下拉组件 -->
     <van-field
       v-else
-      v-model="checkboxArr"
+      v-model="checkboxTextValue"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
@@ -123,7 +123,6 @@ export const CheckboxButton = {
       return this.entries.map(item => ({
         ...item,
         value: item.value,
-        label: item.value,
       }))
     },
     options() {
@@ -149,30 +148,36 @@ export const CheckboxButton = {
   watch: {
     initalValue: {
       handler(value) {
-        console.log(value)
-        value.forEach((res) => {
-          this.checkboxArr.push(res.option_id)
-        })
-        this.checkboxArr = [...new Set(this.checkboxArr)]
+        if (value.length > 0) {
+          value.forEach((res) => {
+            this.checkboxArr.push(res.option_id)
+          })
+          this.checkboxArr = Array.from([...new Set(this.checkboxArr)])
+        }
       },
       immediate: true,
     },
-    selectedValue: {
-      handler(value) {
-        this.checkboxTextValue = ''
-        value.forEach((select) => {
-          this.checkboxTextArr.push(value)
-          this.checkboxTextValue = `${this.checkboxTextValue}${select.value}、`
+    checkboxArr: {
+      handler() {
+        this.checkboxTextArr = []
+        this.field.options.forEach((option) => {
+          this.checkboxArr.forEach((res) => {
+            if (res === option.id) {
+              this.checkboxTextArr.push(option.value)
+            }
+          })
         })
-        if (this.checkboxArr.length === 0) {
-          this.value = false
+        this.checkboxTextValue = this.checkboxTextArr.join('、')
+        if (this.required && !this.checkboxArr.length > 0) {
           this.error = '必填字段不能为空'
-          this.errorMessageBlur()
+          this.value = false
         } else {
+          this.error = ''
           this.value = true
-          this.errorMessageBlur()
         }
+        this.errorMessageBlur()
       },
+      deep: true,
     },
   },
   methods: {
@@ -181,6 +186,7 @@ export const CheckboxButton = {
     },
     getEntries() {
       // 获取选中对象
+      this.selectedValue = []
       this.field.options.forEach((option) => {
         this.checkboxArr.forEach((res) => {
           if (res === option.id) {
@@ -226,7 +232,7 @@ export const CheckboxButton = {
       return result.concat(deletedOldEntries)
     },
     getValid() {
-      if (this.selectedValue.length <= 0 && this.required) {
+      if (this.checkboxArr.length <= 0 && this.required) {
         this.valid = false
       } else {
         this.valid = true

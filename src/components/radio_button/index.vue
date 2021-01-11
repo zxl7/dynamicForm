@@ -111,7 +111,6 @@
 import {
   RadioGroup, Radio, Cell, CellGroup, Popup,
 } from 'vant'
-import _ from 'lodash'
 import FieldMixin from '../mixin'
 
 export const RadioButton = {
@@ -216,6 +215,7 @@ export const RadioButton = {
         this.hasChosen = []
       } else {
         this.error = ''
+        this.valid = true
         this.radio = target.value
         this.value = true
         this.selectedValue = target

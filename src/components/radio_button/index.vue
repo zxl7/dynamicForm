@@ -238,7 +238,9 @@ export const RadioButton = {
     getEntries() {
       const option = this.selectedValue
       const entries = []
-      entries.push(this._generateEntryFromOption(option))
+      if (this.radioValue === 0 || this.hasChosen.length > 0) {
+        entries.push(this._generateEntryFromOption(option))
+      }
       return entries
     },
     getValid() {

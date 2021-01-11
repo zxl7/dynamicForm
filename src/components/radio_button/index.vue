@@ -194,6 +194,7 @@ export const RadioButton = {
       handler(otherValue) {
         if (otherValue) {
           this.radio = this.otherValue
+          this.selectedValue.value = this.otherValue
           this.valid = true
           this.value = true
           this.error = ''
@@ -237,11 +238,7 @@ export const RadioButton = {
     getEntries() {
       const option = this.selectedValue
       const entries = []
-      if (this.radioValue === 0) {
-        entries.push({ value: this.radio, field_id: this.field.id })
-      } else {
-        entries.push(this._generateEntryFromOption(option))
-      }
+      entries.push(this._generateEntryFromOption(option))
       return entries
     },
     getValid() {

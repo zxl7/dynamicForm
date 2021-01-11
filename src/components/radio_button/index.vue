@@ -67,13 +67,14 @@
       <div class="popup">
         <van-radio-group v-model="radioValue">
           <van-cell-group>
-            <!-- <van-cell
+            <van-cell
               class="other-option"
               @click="onOtherValue()"
             >
               <template #right-icon>
                 <van-radio
                   v-if="field.other_option"
+                  :name="0"
                   checked-color="#fd7d58"
                 >
                   <input
@@ -85,7 +86,7 @@
                   >
                 </van-radio>
               </template>
-            </van-cell> -->
+            </van-cell>
             <van-cell
               v-for="option in field.options"
               :key="option.id"
@@ -127,7 +128,7 @@ export const RadioButton = {
       radio: '',
       show: false,
       radioValue: '',
-      selectedValue: '',
+      selectedValue: {},
       hasChosen: [],
       error: '',
       otherArr: [],
@@ -136,24 +137,24 @@ export const RadioButton = {
   },
   computed: {
     initalValue() {
-      // return this.entries.map(item => ({
-      //   ...item,
-      //   value: item.value,
-      // }))
-      return this.entries[0]
+      const entry = this.entries.find(item => !item._destroy)
+      if (!entry) return null
+      return {
+        ...entry,
+        id: entry.option_id,
+        value: entry.value,
+      }
     },
     options() {
       const { other_option: otherOption } = this.field
       const options = this.field.options.map(option => ({
         id: option.id,
-        label: option.value,
         value: option.value,
       }))
       if (otherOption) {
         const option = {
           id: 0,
           name: otherOption,
-          label: this.otherValue,
           value: otherOption,
           other_option: true,
         }
@@ -165,7 +166,19 @@ export const RadioButton = {
   watch: {
     initalValue: {
       handler(value) {
-        this.radioValue = value.value - 0
+        if (value) {
+          this.options.forEach((res) => {
+            if (value.value === res.value) {
+              this.radioValue = res.id
+              // 获取选中对象
+              this.field.options.forEach((option) => {
+                if (this.radioValue === option.id) {
+                  this.selectedValue = option
+                }
+              })
+            }
+          })
+        }
       },
       immediate: true,
     },
@@ -173,7 +186,6 @@ export const RadioButton = {
       handler() {
         if (this.hasChosen.length === 0) {
           this.value = false
-          this.error = '必填字段不能为空'
           this.errorMessageBlur()
         } else {
           this.errorMessageBlur()
@@ -183,6 +195,7 @@ export const RadioButton = {
     otherValue: {
       handler(otherValue) {
         if (otherValue) {
+          this.radio = this.otherValue
           this.valid = true
           this.value = true
           this.error = ''
@@ -199,8 +212,8 @@ export const RadioButton = {
     onConfirm(target) {
       if (this.hasChosen[0] === target.id) {
         this.radio = ''
+        this.radioValue = ''
         this.selectedValue = {}
-        this.radioValue = {}
         this.hasChosen = []
       } else {
         this.otherArr = []
@@ -212,42 +225,23 @@ export const RadioButton = {
       }
     },
     onOtherValue() {
-      if (this.otherArr.includes('其他')) {
-        this.radio = ''
-        this.otherArr.length = 0
-        this.radioValue = {}
-      } else {
+      if (!this.otherValue) {
+        this.radio = this.otherValue
+        this.error = '其他选项不能为空'
         this.valid = false
         this.value = false
         this.radioValue = 0
         this.hasChosen = []
+        this.selectedValue = {}
         this.otherArr.unshift('其他')
-        this.radio = this.otherValue
-        this.error = '其他选项不能为空'
       }
     },
     getEntries() {
-      // 获取选中对象
-      this.field.options.forEach((option) => {
-        if (this.radioValue === option.id) {
-          this.selectedValue = option
-        }
-      })
-      const entry = _.first(this.entries)
       const option = this.selectedValue
       const entries = []
-      if (entry) {
-        if (option) {
-          if (option.id !== 0 && option.id === entry.option_id) {
-            entries.push(_.clone(entry))
-          } else {
-            entries.push(_.extend(_.clone(entry), { _destroy: true }))
-            entries.push(this._generateEntryFromOption(option))
-          }
-        } else {
-          entries.push(_.extend(_.clone(entry), { _destroy: true }))
-        }
-      } else if (option) {
+      if (this.radioValue === 0) {
+        entries.push({ value: this.radio, field_id: this.field.id })
+      } else {
         entries.push(this._generateEntryFromOption(option))
       }
       return entries
@@ -262,7 +256,7 @@ export const RadioButton = {
     },
     _generateEntryFromOption(option) {
       return {
-        value: option.id,
+        value: option.value,
         field_id: this.field.id,
         option_id: option.id,
       }

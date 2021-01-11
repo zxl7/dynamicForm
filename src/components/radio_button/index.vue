@@ -136,13 +136,11 @@ export const RadioButton = {
   },
   computed: {
     initalValue() {
-      const entry = this.entries.find(item => !item._destroy)
-      if (!entry) return null
-      return {
-        ...entry,
-        id: entry.option_id,
-        label: entry.value,
-      }
+      // return this.entries.map(item => ({
+      //   ...item,
+      //   value: item.value,
+      // }))
+      return this.entries[0]
     },
     options() {
       const { other_option: otherOption } = this.field
@@ -167,8 +165,7 @@ export const RadioButton = {
   watch: {
     initalValue: {
       handler(value) {
-        // this.selectedValue = value
-        this.radioValue = value.option_id
+        this.radioValue = value.value - 0
       },
       immediate: true,
     },
@@ -230,6 +227,12 @@ export const RadioButton = {
       }
     },
     getEntries() {
+      // 获取选中对象
+      this.field.options.forEach((option) => {
+        if (this.radioValue === option.id) {
+          this.selectedValue = option
+        }
+      })
       const entry = _.first(this.entries)
       const option = this.selectedValue
       const entries = []
@@ -259,7 +262,7 @@ export const RadioButton = {
     },
     _generateEntryFromOption(option) {
       return {
-        value: option.value,
+        value: option.id,
         field_id: this.field.id,
         option_id: option.id,
       }

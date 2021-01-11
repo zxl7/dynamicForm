@@ -12,7 +12,7 @@
         <p class="description">
           {{ field.description }}
         </p>
-        <van-radio-group v-model="radioValue">
+        <van-radio-group v-model="chooseValue">
           <van-radio
             v-for="option in field.options"
             :key="option.id"
@@ -65,7 +65,7 @@
         @click="show = false"
       />
       <div class="popup">
-        <van-radio-group v-model="radioValue">
+        <van-radio-group v-model="chooseValue">
           <van-cell-group>
             <van-cell
               class="other-option"
@@ -126,9 +126,9 @@ export const RadioButton = {
     return {
       radio: '',
       show: false,
-      radioValue: '',
+      chooseValue: '',
       selectedValue: {},
-      hasChosen: [],
+      haveChoose: [],
       error: '',
       otherValue: '',
     }
@@ -168,10 +168,10 @@ export const RadioButton = {
         if (value) {
           this.options.forEach((res) => {
             if (value.value === res.value) {
-              this.radioValue = res.id
+              this.chooseValue = res.id
               // 获取选中对象
               this.field.options.forEach((option) => {
-                if (this.radioValue === option.id) {
+                if (this.chooseValue === option.id) {
                   this.selectedValue = option
                 }
               })
@@ -181,9 +181,9 @@ export const RadioButton = {
       },
       immediate: true,
     },
-    hasChosen: {
+    haveChoose: {
       handler() {
-        if (this.hasChosen.length === 0) {
+        if (this.haveChoose.length === 0) {
           this.value = false
           this.errorMessageBlur()
         } else {
@@ -210,19 +210,19 @@ export const RadioButton = {
 
   methods: {
     onConfirm(target) {
-      if (this.hasChosen[0] === target.id) {
+      if (this.haveChoose[0] === target.id) {
         this.radio = ''
-        this.radioValue = ''
+        this.chooseValue = ''
         this.selectedValue = {}
-        this.hasChosen = []
+        this.haveChoose = []
       } else {
         this.error = ''
         this.valid = true
         this.radio = target.value
         this.value = true
         this.selectedValue = target
-        this.radioValue = target.id
-        this.hasChosen.unshift(target.id)
+        this.chooseValue = target.id
+        this.haveChoose.unshift(target.id)
       }
     },
     onOtherValue() {
@@ -231,15 +231,15 @@ export const RadioButton = {
         this.error = '其他选项不能为空'
         this.valid = false
         this.value = false
-        this.radioValue = 0
-        this.hasChosen = []
+        this.chooseValue = 0
+        this.haveChoose = []
         this.selectedValue = {}
       }
     },
     getEntries() {
       const option = this.selectedValue
       const entries = []
-      if (this.radioValue === 0 || this.hasChosen.length > 0) {
+      if (this.chooseValue === 0 || this.haveChoose.length > 0) {
         entries.push(this._generateEntryFromOption(option))
       }
       return entries

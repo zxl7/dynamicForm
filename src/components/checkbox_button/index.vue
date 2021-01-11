@@ -13,7 +13,7 @@
           {{ field.description }}
         </p>
         <van-checkbox-group
-          v-model="checkboxArr"
+          v-model="selectedValue"
           :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
         >
           <van-checkbox
@@ -42,7 +42,7 @@
     <!-- 多选下拉组件 -->
     <van-field
       v-else
-      v-model="checkboxTextValue"
+      v-model="selectedShowValue"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
@@ -65,7 +65,7 @@
         @click="showCheck = false"
       />
       <div class="popup">
-        <van-checkbox-group v-model="checkboxArr">
+        <van-checkbox-group v-model="selectedValue">
           <van-cell-group>
             <van-cell
               v-for="(option, index) in field.options"
@@ -110,10 +110,10 @@ export const CheckboxButton = {
 
   data() {
     return {
-      checkboxArr: [],
       selectedValue: [],
-      checkboxTextValue: '',
-      checkboxTextArr: [],
+      selectedCacheValue: [],
+      selectedShowValue: '',
+      selectedShowMiddle: [],
       showCheck: false,
       error: '',
     }
@@ -154,27 +154,27 @@ export const CheckboxButton = {
           this.field.options.forEach((option) => {
             arr.forEach((res) => {
               if (res === option.value) {
-                this.checkboxArr.push(option.id)
+                this.selectedValue.push(option.id)
               }
             })
           })
-          this.checkboxArr = Array.from([...new Set(this.checkboxArr)])
+          this.selectedValue = Array.from([...new Set(this.selectedValue)])
         }
       },
       immediate: true,
     },
-    checkboxArr: {
+    selectedValue: {
       handler() {
-        this.checkboxTextArr = []
+        this.selectedShowMiddle = []
         this.field.options.forEach((option) => {
-          this.checkboxArr.forEach((res) => {
+          this.selectedValue.forEach((res) => {
             if (res === option.id) {
-              this.checkboxTextArr.push(option.value)
+              this.selectedShowMiddle.push(option.value)
             }
           })
         })
-        this.checkboxTextValue = this.checkboxTextArr.join('、')
-        if (this.required && !this.checkboxArr.length > 0) {
+        this.selectedShowValue = this.selectedShowMiddle.join('、')
+        if (this.required && !this.selectedValue.length > 0) {
           this.error = '必填字段不能为空'
           this.value = false
         } else {
@@ -192,18 +192,18 @@ export const CheckboxButton = {
     },
     getEntries() {
       // 获取选中对象
-      this.selectedValue = []
+      this.selectedCacheValue = []
       this.field.options.forEach((option) => {
-        this.checkboxArr.forEach((res) => {
+        this.selectedValue.forEach((res) => {
           if (res === option.id) {
-            this.selectedValue.push(option)
+            this.selectedCacheValue.push(option)
           }
         })
       })
       const fieldId = this.field.id
       const oldEntries = this.entries.slice()
       let result = []
-      this.selectedValue.forEach((option) => {
+      this.selectedCacheValue.forEach((option) => {
         const oldEntryIndex = _.findIndex(oldEntries, (entry) => {
           if (option.id) {
             const optionId = entry.option_id ? entry.option_id.toString() : ''
@@ -228,7 +228,7 @@ export const CheckboxButton = {
       })
       result.forEach((res) => {
         // eslint-disable-next-line no-param-reassign
-        res.checkboxText = this.checkboxTextValue
+        res.checkboxText = this.selectedShowValue
       })
       const deletedOldEntries = []
       _.each(oldEntries, (entry) => {
@@ -242,7 +242,7 @@ export const CheckboxButton = {
       return result
     },
     getValid() {
-      if (this.checkboxArr.length <= 0 && this.required) {
+      if (this.selectedValue.length <= 0 && this.required) {
         this.valid = false
       } else {
         this.valid = true

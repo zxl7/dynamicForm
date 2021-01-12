@@ -233,6 +233,7 @@ export const CheckboxButton = {
   },
   methods: {
     onBlur() {
+      this.selectedShowValue = this.selectedShowMiddle.join('、')
       if (this.selectedShowMiddle.length > 0) {
         this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
       } else {

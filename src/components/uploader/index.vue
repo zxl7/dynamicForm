@@ -12,6 +12,7 @@
         <van-uploader
           v-model="fileList"
           multiple
+          :before-delete="beforeDelete"
           :after-read="afterRead"
           accept="*"
         />
@@ -52,7 +53,7 @@ export const Upload = {
         let arr = []
         arr = value.split('|')
         arr.forEach((res) => {
-          this.imageUrlToBase64(res)
+          this.imageUrlToBase64(res, this.noRepeat)
         })
       },
       immediate: true,
@@ -62,12 +63,16 @@ export const Upload = {
     return {
       files: [],
       fileList: [],
+      noRepeat: true,
     }
   },
 
   methods: {
     // 图片转base64
     imageUrlToBase64(imageUrl) {
+      if (!this.noRepeat) {
+        return
+      }
       const image = new Image()
       image.setAttribute('crossOrigin', 'anonymous')
       image.src = imageUrl
@@ -82,7 +87,7 @@ export const Upload = {
         const dataURL = canvas.toDataURL('image/jpeg', quality)
         // 图片的显示
         this.fileList.push({ content: dataURL, file: 'File' })
-        this.base64ToFile(dataURL, '资源名字')
+        this.base64ToFile(dataURL, '附件.jpeg')
       }
     },
     // 转文件
@@ -97,15 +102,23 @@ export const Upload = {
         ia[n] = bytes.charCodeAt(n)
       }
       const file = { file: new File([ia], fileName, { type: mime }) }
-      console.log(file)
+      this.noRepeat = false
       this.afterRead(file)
     },
     afterRead(file) {
-      this.beforeUploadFunc(file)
+      if (Array.isArray(file)) {
+        file.forEach((res) => {
+          this.beforeUploadFunc(res, this.files)
+        })
+      }
+      this.beforeUploadFunc(file, this.files)
+    },
+    beforeDelete(file, detail) {
+      this.fileList.splice(detail.index, 1)
+      this.files.splice(detail.index, 1)
     },
     getEntries() {
-      // 发给流程
-      this.files = this.fileParams.files
+      // 解析给流程
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value_id: item.id,

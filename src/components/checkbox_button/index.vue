@@ -241,6 +241,9 @@ export const CheckboxButton = {
       }
     },
     checkboxOther() {
+      if (this.selectedValue.includes(0)) {
+        this.selectedValue.splice(this.selectedValue.indexOf(0), 1)
+      }
       this.selectedValue.push(0)
       if (!this.selectedOther) {
         this.error = '其他选项不能为空'

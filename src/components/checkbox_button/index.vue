@@ -25,17 +25,22 @@
           >
             {{ option.value }}
           </van-checkbox>
-          <!-- <van-checkbox
+          <van-checkbox
             v-if="field.other_option"
             shape="square"
+            :name="0"
             checked-color="#fd7d58"
+            @click="onOtherValue()"
           >
             {{ field.other_option }}
             <input
+              ref="focus"
+              v-model="selectedOther"
               class="other-option"
               type="text"
+              placeholder="请输入"
             >
-          </van-checkbox> -->
+          </van-checkbox>
         </van-checkbox-group>
       </template>
     </van-field>
@@ -83,6 +88,27 @@
                 />
               </template>
             </van-cell>
+            <van-cell
+              :title="field.other_option"
+              clickable
+              @click="checkboxOther"
+            >
+              <template #right-icon>
+                <input
+                  ref="focus"
+                  v-model="selectedOther"
+                  class="other-option"
+                  type="text"
+                  placeholder="请输入"
+                  @blur="onBlur"
+                >
+                <van-checkbox
+                  :name="0"
+                  checked-color="#fd7d58"
+                  shape="square"
+                />
+              </template>
+            </van-cell>
           </van-cell-group>
         </van-checkbox-group>
       </div>
@@ -114,6 +140,7 @@ export const CheckboxButton = {
       selectedCacheValue: [],
       selectedShowValue: '',
       selectedShowMiddle: [],
+      selectedOther: '',
       showCheck: false,
       error: '',
     }
@@ -146,6 +173,19 @@ export const CheckboxButton = {
     },
   },
   watch: {
+    selectedOther: {
+      handler(value) {
+        if (value) {
+          this.valid = true
+          this.value = true
+          this.error = ''
+        } else {
+          this.error = '其他选项不能为空'
+          this.value = false
+          this.valid = false
+        }
+      },
+    },
     initalValue: {
       handler(value) {
         if (value.length > 0) {
@@ -174,6 +214,11 @@ export const CheckboxButton = {
           })
         })
         this.selectedShowValue = this.selectedShowMiddle.join('、')
+        if (this.selectedShowMiddle.length > 0) {
+          this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
+        } else {
+          this.selectedShowValue = this.selectedOther
+        }
         if (this.required && !this.selectedValue.length > 0) {
           this.error = '必填字段不能为空'
           this.value = false
@@ -187,6 +232,30 @@ export const CheckboxButton = {
     },
   },
   methods: {
+    onBlur() {
+      if (this.selectedShowMiddle.length > 0) {
+        this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
+      } else {
+        this.selectedShowValue = this.selectedOther
+      }
+    },
+    checkboxOther() {
+      this.selectedValue.push(0)
+      if (!this.selectedOther) {
+        this.error = '其他选项不能为空'
+        this.valid = false
+        this.value = false
+      }
+      this.$refs.focus.focus()
+    },
+    onOtherValue() {
+      if (!this.selectedOther) {
+        this.error = '其他选项不能为空'
+        this.valid = false
+        this.value = false
+      }
+      this.$refs.focus.focus()
+    },
     toggle(index) {
       this.$refs.checkboxes[index].toggle()
     },
@@ -239,6 +308,10 @@ export const CheckboxButton = {
         }
       })
       result = result.concat(deletedOldEntries)
+      // 其他传值
+      if (this.selectedOther) {
+        result.push({ field_id: this.field.id, value: this.selectedOther })
+      }
       return result
     },
     getValid() {

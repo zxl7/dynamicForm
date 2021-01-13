@@ -48,13 +48,15 @@ export const Upload = {
     Toast,
   },
   watch: {
-    initalValue: {
-      handler(value) {
-        let arr = []
-        arr = value.split('|')
-        arr.forEach((res) => {
-          this.imageUrlToBase64(res, this.noRepeat)
-        })
+    dataList: {
+      handler(dataList) {
+        if (dataList.length > 0) {
+          dataList.forEach((res) => {
+            if (this.noRepeat) {
+              this.imageUrlToBase64(res.attachment.download_url, res.attachment.name)
+            }
+          })
+        }
       },
       immediate: true,
     },
@@ -66,13 +68,10 @@ export const Upload = {
       noRepeat: true,
     }
   },
-
+  mounted() {},
   methods: {
     // 图片转base64
-    imageUrlToBase64(imageUrl) {
-      if (!this.noRepeat) {
-        return
-      }
+    imageUrlToBase64(imageUrl, fileName) {
       const image = new Image()
       image.setAttribute('crossOrigin', 'anonymous')
       image.src = imageUrl
@@ -86,8 +85,8 @@ export const Upload = {
         // base64类型
         const dataURL = canvas.toDataURL('image/jpeg', quality)
         // 图片的显示
-        this.fileList.push({ content: dataURL, file: 'File' })
-        this.base64ToFile(dataURL, '附件.jpeg')
+        this.fileList.push({ content: dataURL, file: 'File', name: fileName })
+        this.base64ToFile(dataURL, fileName)
       }
     },
     // 转文件
@@ -102,37 +101,70 @@ export const Upload = {
         ia[n] = bytes.charCodeAt(n)
       }
       const file = { file: new File([ia], fileName, { type: mime }) }
-      this.noRepeat = false
       this.afterRead(file)
+      this.noRepeat = false
     },
     afterRead(file) {
       if (Array.isArray(file)) {
         file.forEach((res) => {
-          this.beforeUploadFunc(res, this.files)
+          // eslint-disable-next-line no-plusplus
+          for (let i = 0; i < 2; i++) {
+            this.beforeUploadFunc(res, this.files)
+          }
         })
+      } else {
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < 2; i++) {
+          this.beforeUploadFunc(file, this.files)
+        }
       }
-      this.beforeUploadFunc(file, this.files)
     },
     beforeDelete(file, detail) {
       this.fileList.splice(detail.index, 1)
-      this.files.splice(detail.index, 1)
+      // 上传成功会返回 name
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < 2; i++) {
+        this.files.forEach((res, index) => {
+          if (file.name === res.name) {
+            this.files.splice(index, 1)
+          }
+        })
+      }
     },
     getEntries() {
       // 解析给流程
+      this.files = this.setEntries(this.files)
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value_id: item.id,
+        form_id: item.form_id,
         field_id: this.field.id,
       }))
-      const valueArr = []
-      this.files.forEach((res) => {
-        valueArr.push(res.download_url)
-      })
-      entries.forEach((arr) => {
-        // eslint-disable-next-line no-param-reassign
-        arr.value = valueArr.join('|')
-      })
       return entries
+    },
+    // 相同附件 ID 合并
+    setEntries(files) {
+      let array = []
+      files.forEach((file) => {
+        array.push(file.name)
+      })
+      // 去重
+      array = Array.from(new Set(array))
+      const fileList = []
+      array.forEach((name) => {
+        files.forEach((file) => {
+          if (name === file.name) {
+            fileList.push(file)
+          }
+        })
+      })
+      const arr = []
+      // eslint-disable-next-line no-plusplus
+      for (let index = 0; index < fileList.length; index += 2) {
+        fileList[index].form_id = fileList[index + 1].id
+        arr.push(fileList[index])
+      }
+      return arr
     },
 
     getValid() {

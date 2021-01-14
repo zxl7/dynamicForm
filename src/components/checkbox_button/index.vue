@@ -220,9 +220,9 @@ export const CheckboxButton = {
           })
         })
         this.selectedShowValue = this.selectedShowMiddle.join('、')
-        if (this.selectedShowMiddle.length > 0) {
+        if (this.selectedShowMiddle.length > 0 && this.selectedValue.includes(0)) {
           this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
-        } else {
+        } else if (this.selectedValue.includes(0)) {
           this.selectedShowValue = this.selectedOther
         }
         if (this.required && !this.selectedValue.length > 0) {
@@ -232,6 +232,7 @@ export const CheckboxButton = {
           this.error = ''
           this.value = true
         }
+
         this.errorMessageBlur()
       },
       deep: true,
@@ -242,7 +243,7 @@ export const CheckboxButton = {
       if (disabled) {
         return
       }
-      this.showPicker = !this.showPicker
+      this.showCheck = !this.showCheck
     },
     onBlur() {
       this.selectedShowValue = this.selectedShowMiddle.join('、')

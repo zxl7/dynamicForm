@@ -112,7 +112,7 @@ export default Fields
 .fields-group {
   background-color: white;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  padding: 16px 0;
+  padding: 16px 0 70px;
   margin-top: 24px;
 }
 </style>

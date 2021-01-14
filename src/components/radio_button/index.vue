@@ -12,13 +12,16 @@
         <p class="description">
           {{ field.description }}
         </p>
-        <van-radio-group v-model="chooseValue">
+        <van-radio-group
+          v-model="chooseValue"
+          :disabled="disabled"
+        >
           <van-radio
             v-for="option in field.options"
             :key="option.id"
             checked-color="#fd7d58"
             :name="option.id"
-            @click="onConfirm(option)"
+            @click="onConfirm(option,disabled)"
           >
             {{ option.value }}
           </van-radio>
@@ -26,11 +29,12 @@
             v-if="field.other_option"
             checked-color="#fd7d58"
             :name="0"
-            @click="onOtherValue()"
+            @click="onOtherValue(disabled)"
           >
             <span>{{ field.other_option }}</span>
             <input
               v-model="otherValue"
+              :readonly="disabled"
               class="other-input"
               type="text"
               placeholder="请输入"
@@ -50,7 +54,7 @@
       placeholder="请选择"
       readonly
       right-icon="arrow-down"
-      @click="show = true"
+      @click="onCancel(disabled)"
     />
     <van-popup
       v-model="show"
@@ -62,14 +66,17 @@
         class="popup-head"
         title="取消"
         value="确定"
-        @click="show = false"
+        @click="onCancel(disabled)"
       />
       <div class="popup">
-        <van-radio-group v-model="chooseValue">
+        <van-radio-group
+          v-model="chooseValue"
+          :disabled="disabled"
+        >
           <van-cell-group>
             <van-cell
               class="other-option"
-              @click="onOtherValue()"
+              @click="onOtherValue(disabled)"
             >
               <template #right-icon>
                 <van-radio
@@ -79,6 +86,7 @@
                 >
                   <input
                     v-model="otherValue"
+                    :readonly="disabled"
                     class="other-input"
                     type="text"
                     placeholder="请输入"
@@ -91,7 +99,7 @@
               v-for="option in field.options"
               :key="option.id"
               :title="option.value"
-              @click="onConfirm(option)"
+              @click="onConfirm(option,disabled)"
             >
               <template #right-icon>
                 <van-radio
@@ -209,7 +217,16 @@ export const RadioButton = {
   },
 
   methods: {
-    onConfirm(target) {
+    onCancel(disabled) {
+      if (disabled) {
+        return
+      }
+      this.show = !this.show
+    },
+    onConfirm(target, disabled) {
+      if (disabled) {
+        return
+      }
       if (this.haveChoose[0] === target.id) {
         this.radio = ''
         this.chooseValue = ''
@@ -225,7 +242,10 @@ export const RadioButton = {
         this.haveChoose.unshift(target.id)
       }
     },
-    onOtherValue() {
+    onOtherValue(disabled) {
+      if (disabled) {
+        return
+      }
       if (!this.otherValue) {
         this.radio = this.otherValue
         this.error = '其他选项不能为空'

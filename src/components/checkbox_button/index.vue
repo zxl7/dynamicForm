@@ -14,6 +14,7 @@
         </p>
         <van-checkbox-group
           v-model="selectedValue"
+          :disabled="disabled"
           :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
         >
           <van-checkbox
@@ -30,7 +31,7 @@
             shape="square"
             :name="0"
             checked-color="#fd7d58"
-            @click="onOtherValue()"
+            @click="onOtherValue(disabled)"
           >
             {{ field.other_option }}
             <input
@@ -38,6 +39,7 @@
               v-model="selectedOther"
               class="other-option"
               type="text"
+              :readonly="disabled"
               placeholder="请输入"
             >
           </van-checkbox>
@@ -55,7 +57,7 @@
       readonly
       right-icon="arrow-down"
       :error-message="error"
-      @click="showCheck = true"
+      @click="onCancel(disabled)"
     />
     <van-popup
       v-model="showCheck"
@@ -67,17 +69,20 @@
         class="popup-head"
         title="取消"
         value="确定"
-        @click="showCheck = false"
+        @click="onCancel(disabled)"
       />
       <div class="popup">
-        <van-checkbox-group v-model="selectedValue">
+        <van-checkbox-group
+          v-model="selectedValue"
+          :disabled="disabled"
+        >
           <van-cell-group>
             <van-cell
               v-for="(option, index) in field.options"
               :key="option.id"
               :title="option.value"
               clickable
-              @click="toggle(index)"
+              @click="toggle(index, disabled)"
             >
               <template #right-icon>
                 <van-checkbox
@@ -91,7 +96,7 @@
             <van-cell
               :title="field.other_option"
               clickable
-              @click="checkboxOther"
+              @click="checkboxOther(disabled)"
             >
               <template #right-icon>
                 <input
@@ -99,6 +104,7 @@
                   v-model="selectedOther"
                   class="other-option"
                   type="text"
+                  :readonly="disabled"
                   placeholder="请输入"
                   @blur="onBlur"
                 >
@@ -232,6 +238,12 @@ export const CheckboxButton = {
     },
   },
   methods: {
+    onCancel(disabled) {
+      if (disabled) {
+        return
+      }
+      this.showPicker = !this.showPicker
+    },
     onBlur() {
       this.selectedShowValue = this.selectedShowMiddle.join('、')
       if (this.selectedShowMiddle.length > 0) {
@@ -240,7 +252,10 @@ export const CheckboxButton = {
         this.selectedShowValue = this.selectedOther
       }
     },
-    checkboxOther() {
+    checkboxOther(disabled) {
+      if (disabled) {
+        return
+      }
       if (this.selectedValue.includes(0)) {
         this.selectedValue.splice(this.selectedValue.indexOf(0), 1)
       }
@@ -252,7 +267,10 @@ export const CheckboxButton = {
       }
       this.$refs.focus.focus()
     },
-    onOtherValue() {
+    onOtherValue(disabled) {
+      if (disabled) {
+        return
+      }
       if (!this.selectedOther) {
         this.error = '其他选项不能为空'
         this.valid = false
@@ -260,7 +278,10 @@ export const CheckboxButton = {
       }
       this.$refs.focus.focus()
     },
-    toggle(index) {
+    toggle(index, disabled) {
+      if (disabled) {
+        return
+      }
       this.$refs.checkboxes[index].toggle()
     },
     getEntries() {

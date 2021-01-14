@@ -12,6 +12,8 @@
         <van-uploader
           v-model="fileList"
           multiple
+          :disabled="disabled"
+          :deletable="!disabled"
           :before-delete="beforeDelete"
           :after-read="afterRead"
           accept="*"
@@ -68,7 +70,8 @@ export const Upload = {
       noRepeat: true,
     }
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     // 图片转base64
     imageUrlToBase64(imageUrl, fileName) {
@@ -132,6 +135,7 @@ export const Upload = {
       }
     },
     getEntries() {
+      localStorage.setItem('dataList', JSON.stringify(this.dataList))
       // 解析给流程
       this.files = this.setEntries(this.files)
       if (this.files.length <= 0) return []

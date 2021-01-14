@@ -16,7 +16,10 @@
           :deletable="!disabled"
           :before-delete="beforeDelete"
           :after-read="afterRead"
-          accept="*"
+          :accept="fileParams.accept"
+          :max-count="fileParams.count"
+          :max-size="fileParams.size*1024*1024"
+          @oversize="onOversize"
         />
       </template>
     </van-field>
@@ -73,6 +76,9 @@ export const Upload = {
   mounted() {
   },
   methods: {
+    onOversize() {
+      Toast.fail(`文件大小不能超过 ${this.fileParams.size} M`)
+    },
     // 图片转base64
     imageUrlToBase64(imageUrl, fileName) {
       const image = new Image()

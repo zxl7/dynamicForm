@@ -9,6 +9,12 @@
       class="no-border"
     >
       <template #input>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
         <van-uploader
           v-model="fileList"
           multiple
@@ -18,7 +24,7 @@
           :after-read="afterRead"
           :accept="fileParams.accept"
           :max-count="fileParams.count"
-          :max-size="fileParams.size*1024*1024"
+          :max-size="fileParams.size * 1024 * 1024"
           @oversize="onOversize"
         />
       </template>
@@ -73,8 +79,7 @@ export const Upload = {
       noRepeat: true,
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     onOversize() {
       Toast.fail(`文件大小不能超过 ${this.fileParams.size} M`)

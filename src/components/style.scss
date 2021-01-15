@@ -129,3 +129,24 @@
     justify-content: space-between;
   }
 }
+// 下拉,描述排序
+.select {
+  display: flex;
+  flex-direction: column;
+
+  .van-cell__title {
+    order: 0;
+  }
+  .description {
+    order: 1;
+    margin-top: 10px;
+  }
+  .van-cell__value {
+    order: 2;
+  }
+}
+
+// 平铺,描述隐藏
+.inline .description {
+  display: none;
+}

@@ -19,4 +19,9 @@
     margin: 10px 0px;
     justify-self: center;
   }
+
+  .van-field__control {
+    display: flex;
+    flex-direction: column;
+  }
 }

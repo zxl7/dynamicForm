@@ -1,4 +1,17 @@
 .date {
+  display: flex;
+  flex-direction: column;
+  .van-cell__title {
+    order: 0;
+  }
+  .description {
+    order: 1;
+    margin-top: 10px;
+  }
+  .van-cell__value {
+    order: 2;
+  }
+
   .van-field__control {
     display: flex;
     flex-direction: column;
@@ -27,7 +40,11 @@
       color: #fd7d58;
     }
   }
-  .van-field--disabled .van-field__right-icon{
+  .van-field--disabled .van-field__right-icon {
     color: #c8c9cc;
+  }
+
+  .inline .description {
+    display: none;
   }
 }

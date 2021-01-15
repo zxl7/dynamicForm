@@ -15,7 +15,16 @@
       @blur="errorMessageBlur"
       @click="onCancel(disabled)"
       @click-right-icon.stop="clearValue(disabled)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
     <van-popup
       v-model="showPicker"
       position="bottom"

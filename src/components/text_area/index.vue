@@ -11,7 +11,16 @@
       placeholder="请输入"
       type="textarea"
       @blur="errorMessageBlur(value)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
   </div>
 </template>
 
@@ -56,6 +65,6 @@ export const SlpTextArea = {
 
 export default SlpTextArea
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import './style.scss';
 </style>

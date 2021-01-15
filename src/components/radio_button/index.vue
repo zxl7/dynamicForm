@@ -9,7 +9,10 @@
       :error-message="error"
     >
       <template #input>
-        <p class="description">
+        <p
+          v-if="field.description"
+          class="description"
+        >
           {{ field.description }}
         </p>
         <van-radio-group
@@ -55,7 +58,16 @@
       readonly
       right-icon="arrow-down"
       @click="onCancel(disabled)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
     <van-popup
       v-model="show"
       position="bottom"

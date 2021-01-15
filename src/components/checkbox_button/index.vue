@@ -9,7 +9,10 @@
       :error-message="error"
     >
       <template #input>
-        <p class="description">
+        <p
+          v-if="field.description"
+          class="description"
+        >
           {{ field.description }}
         </p>
         <van-checkbox-group
@@ -58,7 +61,16 @@
       right-icon="arrow-down"
       :error-message="error"
       @click="onCancel(disabled)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
     <van-popup
       v-model="showCheck"
       position="bottom"

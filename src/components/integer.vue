@@ -4,14 +4,23 @@
       :id="field.identity_key"
       v-model="value"
       :label="field.title"
-      :class="[statusClass, field.customClass]"
+      :class="[statusClass, field.customClass, field.settings.layout]"
       :disabled="disabled"
       :error-message="error"
       autocomplete="off"
       placeholder="请输入"
       type="number"
       @blur="errorMessageBlur(value)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
   </div>
 </template>
 

@@ -8,4 +8,22 @@
       margin: 7px 7px 7px 0px;
     }
   }
+  .other-option {
+      border: none;
+      margin-left: 10px;
+      background: transparent;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  .select {
+    .other-option {
+      @extend .other-option;
+      position: absolute;
+      left: 60px;
+    }
+  }
+
+  .other-option::-webkit-input-placeholder {
+    color: #cccbcb;
+    font-size: 0.7rem;
+  }
 }

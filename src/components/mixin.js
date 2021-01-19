@@ -29,6 +29,9 @@ export default {
       if (!entry) return ''
       return entry.value
     },
+    dataList() {
+      return this.entries
+    },
 
     required() {
       return this.field.validations.includes('presence')

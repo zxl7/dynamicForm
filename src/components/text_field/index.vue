@@ -11,7 +11,16 @@
       placeholder="请输入"
       type="text"
       @blur="errorMessageBlur(value)"
-    />
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
   </div>
 </template>
 
@@ -59,9 +68,8 @@ export const TextField = {
 export default TextField
 </script>
 
-<style lang="scss" scoped>
-// inline
-.van-cell.van-field.inline {
-  flex-direction: row;
-}
+<style lang="scss">
+@import '/style.scss';
+
+
 </style>

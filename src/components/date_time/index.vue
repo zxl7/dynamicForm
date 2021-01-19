@@ -9,12 +9,22 @@
       :value="value"
       readonly
       clickable
+      :disabled="disabled"
       name="datetimePicker"
       :right-icon="value ? 'clear' : 'play'"
       @blur="errorMessageBlur"
-      @click="showPicker = true"
-      @click-right-icon.stop="clearValue"
-    />
+      @click="onCancel(disabled)"
+      @click-right-icon.stop="clearValue(disabled)"
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
     <van-popup
       v-model="showPicker"
       position="bottom"
@@ -120,11 +130,17 @@ export const DateTime = {
   },
 
   methods: {
-    onCancel() {
-      this.showPicker = false
+    onCancel(disabled) {
+      if (disabled) {
+        return
+      }
+      this.showPicker = !this.showPicker
     },
     // 清除值
-    clearValue() {
+    clearValue(disabled) {
+      if (disabled) {
+        return
+      }
       this.value = ''
     },
     // 赋值

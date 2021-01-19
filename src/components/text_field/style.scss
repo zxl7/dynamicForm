@@ -1,4 +1,4 @@
-.text-area {
+.text {
   display: flex;
   flex-direction: column;
   .van-cell__title {
@@ -12,13 +12,8 @@
     order: 2;
   }
 
-  /deep/ .van-field__control {
-    border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
-  }
-  .inline {
+  // inline
+  .van-cell.van-field.inline {
     flex-direction: row;
-    .description {
-      display: none;
-    }
   }
 }

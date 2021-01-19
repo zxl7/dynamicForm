@@ -9,11 +9,15 @@
       :error-message="error"
     >
       <template #input>
-        <p class="description">
+        <p
+          v-if="field.description"
+          class="description"
+        >
           {{ field.description }}
         </p>
         <van-checkbox-group
           v-model="selectedValue"
+          :disabled="disabled"
           :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
         >
           <van-checkbox
@@ -25,17 +29,23 @@
           >
             {{ option.value }}
           </van-checkbox>
-          <!-- <van-checkbox
+          <van-checkbox
             v-if="field.other_option"
             shape="square"
+            :name="0"
             checked-color="#fd7d58"
+            @click="onOtherValue(disabled)"
           >
             {{ field.other_option }}
             <input
+              ref="focus"
+              v-model="selectedOther"
               class="other-option"
               type="text"
+              :readonly="disabled"
+              placeholder="请输入"
             >
-          </van-checkbox> -->
+          </van-checkbox>
         </van-checkbox-group>
       </template>
     </van-field>
@@ -50,8 +60,17 @@
       readonly
       right-icon="arrow-down"
       :error-message="error"
-      @click="showCheck = true"
-    />
+      @click="onCancel(disabled)"
+    >
+      <template #extra>
+        <p
+          v-if="field.description"
+          class="description"
+        >
+          {{ field.description }}
+        </p>
+      </template>
+    </van-field>
     <van-popup
       v-model="showCheck"
       position="bottom"
@@ -62,22 +81,47 @@
         class="popup-head"
         title="取消"
         value="确定"
-        @click="showCheck = false"
+        @click="onCancel(disabled)"
       />
       <div class="popup">
-        <van-checkbox-group v-model="selectedValue">
+        <van-checkbox-group
+          v-model="selectedValue"
+          :disabled="disabled"
+        >
           <van-cell-group>
             <van-cell
               v-for="(option, index) in field.options"
               :key="option.id"
               :title="option.value"
               clickable
-              @click="toggle(index)"
+              @click="toggle(index, disabled)"
             >
               <template #right-icon>
                 <van-checkbox
                   ref="checkboxes"
                   :name="option.id"
+                  checked-color="#fd7d58"
+                  shape="square"
+                />
+              </template>
+            </van-cell>
+            <van-cell
+              :title="field.other_option"
+              clickable
+              @click="checkboxOther(disabled)"
+            >
+              <template #right-icon>
+                <input
+                  ref="focus"
+                  v-model="selectedOther"
+                  class="other-option"
+                  type="text"
+                  :readonly="disabled"
+                  placeholder="请输入"
+                  @blur="onBlur"
+                >
+                <van-checkbox
+                  :name="0"
                   checked-color="#fd7d58"
                   shape="square"
                 />
@@ -114,6 +158,7 @@ export const CheckboxButton = {
       selectedCacheValue: [],
       selectedShowValue: '',
       selectedShowMiddle: [],
+      selectedOther: '',
       showCheck: false,
       error: '',
     }
@@ -146,6 +191,19 @@ export const CheckboxButton = {
     },
   },
   watch: {
+    selectedOther: {
+      handler(value) {
+        if (value) {
+          this.valid = true
+          this.value = true
+          this.error = ''
+        } else {
+          this.error = '其他选项不能为空'
+          this.value = false
+          this.valid = false
+        }
+      },
+    },
     initalValue: {
       handler(value) {
         if (value.length > 0) {
@@ -174,6 +232,11 @@ export const CheckboxButton = {
           })
         })
         this.selectedShowValue = this.selectedShowMiddle.join('、')
+        if (this.selectedShowMiddle.length > 0 && this.selectedValue.includes(0)) {
+          this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
+        } else if (this.selectedValue.includes(0)) {
+          this.selectedShowValue = this.selectedOther
+        }
         if (this.required && !this.selectedValue.length > 0) {
           this.error = '必填字段不能为空'
           this.value = false
@@ -181,13 +244,57 @@ export const CheckboxButton = {
           this.error = ''
           this.value = true
         }
+
         this.errorMessageBlur()
       },
       deep: true,
     },
   },
   methods: {
-    toggle(index) {
+    onCancel(disabled) {
+      if (disabled) {
+        return
+      }
+      this.showCheck = !this.showCheck
+    },
+    onBlur() {
+      this.selectedShowValue = this.selectedShowMiddle.join('、')
+      if (this.selectedShowMiddle.length > 0) {
+        this.selectedShowValue = `${this.selectedShowValue}、${this.selectedOther}`
+      } else {
+        this.selectedShowValue = this.selectedOther
+      }
+    },
+    checkboxOther(disabled) {
+      if (disabled) {
+        return
+      }
+      if (this.selectedValue.includes(0)) {
+        this.selectedValue.splice(this.selectedValue.indexOf(0), 1)
+      }
+      this.selectedValue.push(0)
+      if (!this.selectedOther) {
+        this.error = '其他选项不能为空'
+        this.valid = false
+        this.value = false
+      }
+      this.$refs.focus.focus()
+    },
+    onOtherValue(disabled) {
+      if (disabled) {
+        return
+      }
+      if (!this.selectedOther) {
+        this.error = '其他选项不能为空'
+        this.valid = false
+        this.value = false
+      }
+      this.$refs.focus.focus()
+    },
+    toggle(index, disabled) {
+      if (disabled) {
+        return
+      }
       this.$refs.checkboxes[index].toggle()
     },
     getEntries() {
@@ -239,6 +346,10 @@ export const CheckboxButton = {
         }
       })
       result = result.concat(deletedOldEntries)
+      // 其他传值
+      if (this.selectedOther) {
+        result.push({ field_id: this.field.id, value: this.selectedOther })
+      }
       return result
     },
     getValid() {

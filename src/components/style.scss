@@ -43,8 +43,7 @@
   }
 
   .van-field__value {
-    margin-top: 8px;
-    line-height: $field-value-line-height;
+    line-height: 2em;
   }
 
   .van-field__right-icon {
@@ -54,12 +53,6 @@
     .van-icon-play::before {
       transform: rotate(90deg);
     }
-  }
-}
-
-.text {
-  /deep/ .van-field__control {
-    border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
   }
 }
 
@@ -82,7 +75,7 @@
 
 // 描述
 .description {
-  font-size: $field-radio-value-font-size;
+  font-size: 16px;
   color: #888;
   line-height: $field-value-line-height;
 }
@@ -95,7 +88,7 @@
 }
 .other-input::-webkit-input-placeholder {
   color: #cccbcb;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .other-option {
@@ -114,10 +107,12 @@
 
   .other-input::-webkit-input-placeholder {
     color: #cccbcb;
+    font-size: 0.8rem;
   }
 }
 ::-webkit-input-placeholder {
   color: red;
+  font-size: 0.8rem;
 }
 
 .popup {

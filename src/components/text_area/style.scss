@@ -14,6 +14,7 @@
 
   /deep/ .van-field__control {
     border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
+    padding: 4px 0;
   }
   .inline {
     flex-direction: row;

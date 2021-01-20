@@ -36,7 +36,7 @@
             checked-color="#fd7d58"
             @click="onOtherValue(disabled)"
           >
-            {{ field.other_option }}
+            <span>{{ field.other_option }}</span>
             <input
               ref="focus"
               v-model="selectedOther"

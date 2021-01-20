@@ -38,7 +38,7 @@
             <input
               v-model="otherValue"
               :readonly="disabled"
-              class="other-input"
+              class="other-option"
               type="text"
               placeholder="请输入"
             >
@@ -87,7 +87,7 @@
         >
           <van-cell-group>
             <van-cell
-              class="other-option"
+              class="other-radio"
               @click="onOtherValue(disabled)"
             >
               <template #right-icon>
@@ -99,7 +99,7 @@
                   <input
                     v-model="otherValue"
                     :readonly="disabled"
-                    class="other-input"
+                    class="other-option"
                     type="text"
                     placeholder="请输入"
                     @blur="onOtherValue"

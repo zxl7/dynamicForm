@@ -81,43 +81,46 @@
 }
 
 // 其他选项
-.other-input {
-  border: none;
-  margin-left: 10px;
-  border-bottom: 1px solid #e0e0e0;
-}
-.other-input::-webkit-input-placeholder {
-  color: #cccbcb;
-  font-size: 0.8rem;
-}
-
-.other-option {
-  .van-radio {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-  }
-
-  .other-input {
-    margin: 0;
-    margin-left: -8px;
+  .other-option {
     border: none;
+    margin-left: 10px;
+    background: transparent;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 0px;
   }
-
-  .other-input::-webkit-input-placeholder {
+  .other-option::placeholder {
     color: #cccbcb;
     font-size: 0.8rem;
   }
-}
-::-webkit-input-placeholder {
-  color: red;
-  font-size: 0.8rem;
-}
+  .select {
+    .other-option {
+      @extend .other-option;
+      position: absolute;
+      left: 60px;
+    }
+  }
+// .other-input {
+//   border: none;
+//   margin-left: 10px;
+//   border-bottom: 1px solid #e0e0e0;
+// }
+
+// .other-input::placeholder {
+//   color: #cccbcb;
+//   font-size: 0.8rem;
+// }
 
 .popup {
   height: 82%;
   overflow: scroll;
+
+  .van-cell {
+    font-size: 16px;
+  }
+  .other-option::placeholder {
+    color: #cccbcb;
+    font-size: 0.8rem;
+  }
   .van-cell--clickable {
     display: flex;
     align-items: center;
@@ -132,6 +135,7 @@
   .van-cell__title {
     order: 0;
   }
+
   .description {
     order: 1;
     margin-top: 10px;

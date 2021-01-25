@@ -95,7 +95,7 @@ export const Upload = {
         if (!/\.(jpg|jpeg|png|GIF|JPG|PNG)$/.test(file.file.name)) {
           this.fileList.push({ file: file.file, name: blob.name })
         } else {
-          this.fileList.push({ content: base64Data, file: file.file, name: blob.name })
+          this.fileList.push({ content: `data:${attachment.mime_type};base64,${base64Data}`, file: file.file, name: blob.name })
         }
         this.afterRead(file)
         this.noRepeat = false

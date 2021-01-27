@@ -181,6 +181,7 @@ export const Upload = {
     getValid() {
       if (this.files.length <= 0 && this.required) {
         this.valid = false
+        this.error = '必填字段不能为空'
       } else {
         this.valid = true
       }

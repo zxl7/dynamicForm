@@ -50,6 +50,7 @@ export const Integer = {
     getValid() {
       if (!this.value && this.required) {
         this.valid = false
+        this.error = '必填字段不能为空'
       } else {
         this.valid = true
       }

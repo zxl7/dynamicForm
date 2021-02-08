@@ -41,6 +41,7 @@ export const Phone = {
     getValid() {
       if (!this.value && this.required) {
         this.valid = false
+        this.error = '必填字段不能为空'
       }
       return this.valid
     },

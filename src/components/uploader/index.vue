@@ -33,10 +33,10 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { Button } from 'iview'
 import { Toast, Uploader } from 'vant'
 import FieldMixin from '../mixin'
-
 
 export const Upload = {
   mixins: [FieldMixin],
@@ -139,6 +139,13 @@ export const Upload = {
             this.files.splice(index, 1)
           }
         })
+      }
+    },
+    addFile(file) {
+      if (_.isArray(file)) {
+        this.fileList.concat(file)
+      } else {
+        this.fileList.push(file)
       }
     },
     getEntries() {

@@ -143,7 +143,7 @@ export const Upload = {
     },
     addFile(file) {
       if (_.isArray(file)) {
-        this.fileList.concat(file)
+        this.fileList = this.fileList.concat(file)
       } else {
         this.fileList.push(file)
       }

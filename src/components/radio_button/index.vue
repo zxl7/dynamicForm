@@ -193,6 +193,7 @@ export const RadioButton = {
               this.field.options.forEach((option) => {
                 if (this.chooseValue === option.id) {
                   this.selectedValue = option
+                  this.haveChoose.unshift(option.id)
                 }
               })
             }

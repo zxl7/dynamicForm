@@ -24,7 +24,7 @@
             :key="option.id"
             checked-color="#fd7d58"
             :name="option.id"
-            @click="onConfirm(option,disabled)"
+            @click="onConfirm(option, disabled)"
           >
             {{ option.value }}
           </van-radio>
@@ -111,7 +111,7 @@
               v-for="option in field.options"
               :key="option.id"
               :title="option.value"
-              @click="onConfirm(option,disabled)"
+              @click="onConfirm(option, disabled)"
             >
               <template #right-icon>
                 <van-radio
@@ -194,6 +194,7 @@ export const RadioButton = {
                 if (this.chooseValue === option.id) {
                   this.selectedValue = option
                   this.haveChoose.unshift(option.id)
+                  this.value = true
                 }
               })
             }

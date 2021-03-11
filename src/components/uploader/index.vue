@@ -34,7 +34,6 @@
 
 <script>
 import _ from 'lodash'
-import { Button } from 'iview'
 import { Toast, Uploader } from 'vant'
 import FieldMixin from '../mixin'
 
@@ -56,7 +55,6 @@ export const Upload = {
   },
   components: {
     'van-uploader': Uploader,
-    'i-button': Button,
     Toast,
   },
   watch: {
@@ -70,7 +68,7 @@ export const Upload = {
           })
         }
       },
-      immediate: true,
+      immediate: false,
     },
   },
   data() {

@@ -73,32 +73,25 @@
   overflow: visible;
 }
 
-// 描述
-.description {
-  font-size: 16px;
-  color: #888;
-  line-height: $field-value-line-height;
-}
-
 // 其他选项
+.other-option {
+  border: none;
+  margin-left: 10px;
+  background: transparent;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 0px;
+}
+.other-option::placeholder {
+  color: #cccbcb;
+  font-size: 16px;
+}
+.select {
   .other-option {
-    border: none;
-    margin-left: 10px;
-    background: transparent;
-    border-bottom: 1px solid #e0e0e0;
-    border-radius: 0px;
+    @extend .other-option;
+    position: absolute;
+    left: 60px;
   }
-  .other-option::placeholder {
-    color: #cccbcb;
-    font-size: 16px;
-  }
-  .select {
-    .other-option {
-      @extend .other-option;
-      position: absolute;
-      left: 60px;
-    }
-  }
+}
 
 .popup {
   height: 82%;
@@ -117,6 +110,16 @@
     justify-content: space-between;
   }
 }
+
+// 描述
+.description {
+  font-size: 16px;
+  color: #888;
+  line-height: $field-value-line-height;
+  text-align: left;
+  width: 100%;
+}
+
 // 下拉,描述排序
 .select {
   display: flex;

@@ -194,7 +194,7 @@ export const RadioButton = {
                 if (this.chooseValue === option.id) {
                   this.selectedValue = option
                   this.haveChoose.unshift(option.id)
-                  this.valid = true
+                  this.value = true
                 }
               })
             }

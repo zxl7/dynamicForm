@@ -90,9 +90,7 @@ export const Upload = {
         blob.lastModifiedDate = new Date()
         blob.name = attachment.name
         const file = { file: new File([blob], attachment.name, { type: attachment.mime_type }) }
-        if (!/\.(jpg|jpeg|png|GIF|JPG|PNG)$/.test(file.file.name)) {
-          this.fileList.push({ content: `data:${attachment.mime_type};base64,${base64Data}`, file: file.file, name: blob.name })
-        }
+        this.fileList.push({ content: `data:${attachment.mime_type};base64,${base64Data}`, file: file.file, name: blob.name })
         this.afterRead(file)
         this.noRepeat = false
       })

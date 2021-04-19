@@ -68,7 +68,7 @@ export const Upload = {
           })
         }
       },
-      immediate: false,
+      immediate: true,
     },
   },
   data() {

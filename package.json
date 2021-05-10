@@ -16,7 +16,6 @@
     "lint:script": "vue-cli-service lint"
   },
   "dependencies": {
-    "@byzanteam/slp-fields": "^0.1.6",
     "@byzanteam/vis-components": "^0.1.7",
     "iview": "^3.5.4",
     "lodash": "^4.17.15",

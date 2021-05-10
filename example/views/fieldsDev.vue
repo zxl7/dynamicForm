@@ -1,5 +1,5 @@
 <template>
-  <fields
+  <Fields
     :fields="flow.fields"
     :entries="entries"
     :before-upload-func="beforeUploadFunc"
@@ -187,6 +187,29 @@ export default {
       },
       identity_vertify_type: 'off',
       fields: [
+        {
+          id: 10785,
+          userID: 1,
+          title: '文件上传',
+          description:
+            '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
+          type: 'Field::File',
+          position: 4,
+          validations: [],
+          other_option: null,
+          visibility: 'public_visibility',
+          marked: false,
+          settings: {
+            layout: 'block',
+            other_option_settings: { limit: {} },
+            length_limit: {},
+            limit_settings: {},
+            char_size_limit_settings: {},
+          },
+          detail_id: null,
+          identity_key: 'file',
+          data: {},
+        },
         {
           id: 10181,
           title: '姓名',
@@ -387,28 +410,7 @@ export default {
             },
           ],
         },
-        {
-          id: 10785,
-          title: '文件上传',
-          description:
-            '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
-          type: 'Field::File',
-          position: 4,
-          validations: [],
-          other_option: null,
-          visibility: 'public_visibility',
-          marked: false,
-          settings: {
-            layout: 'block',
-            other_option_settings: { limit: {} },
-            length_limit: {},
-            limit_settings: {},
-            char_size_limit_settings: {},
-          },
-          detail_id: null,
-          identity_key: 'file',
-          data: {},
-        },
+
         {
           id: 10724,
           title: '多选（平铺）',

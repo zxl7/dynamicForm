@@ -189,7 +189,6 @@ export default {
       fields: [
         {
           id: 10785,
-          userID: 1,
           title: '文件上传',
           description:
             '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
@@ -209,6 +208,10 @@ export default {
           detail_id: null,
           identity_key: 'file',
           data: {},
+          USERID: 1,
+          URL: 'https://beta.skylarkly.com',
+          Authorization:
+            'b01110629541b3eb51697db5a05dd2388aed11a58c81a75e9c08347bc30a09e6:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lc3BhY2VfaWQiOjF9.wj9V0ZVOOzSPuRYztizJL_5w0u8aJKb05Z73tEV_HuY',
         },
         {
           id: 10181,

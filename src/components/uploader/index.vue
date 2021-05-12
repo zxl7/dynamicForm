@@ -36,6 +36,7 @@
 <script>
 import _ from 'lodash'
 import { Toast, Uploader } from 'vant'
+import axios from 'axios'
 import FieldMixin from '../mixin'
 
 export const Upload = {
@@ -63,7 +64,6 @@ export const Upload = {
       Toast.fail(`文件大小不能超过 ${this.field.size ? this.field.size : 10} M`)
     },
     afterRead(file) {
-      console.log('%c 🍍 file: ', 'font-size:20px;background-color: #B03734;color:#fff;', file)
       if (Array.isArray(file)) {
         file.forEach((res) => {
           this.beforeUploadFunc(res, this.files)
@@ -78,12 +78,15 @@ export const Upload = {
       file.status = 'uploading'
       // eslint-disable-next-line no-param-reassign
       file.message = '上传中...'
-      this.axios({
+      axios({
         method: 'get',
-        url: '/api/v4/attachments/uptoken',
+        url: `${this.field.URL}/api/v4/attachments/uptoken`,
+        headers: {
+          Authorization: `${this.field.Authorization}`,
+        },
         params: {
           purpose: 'create_responses',
-          user_id: this.field.userID,
+          user_id: this.field.USERID,
         },
       }).then(({ data }) => {
         const formData = new FormData()
@@ -91,7 +94,7 @@ export const Upload = {
         formData.append('token', data.uptoken)
         formData.append('x:key', new Date().getTime())
         const dataFile = formData
-        this.axios({
+        axios({
           method: 'post',
           url: 'https://up.qbox.me/',
           data: dataFile,
@@ -117,6 +120,7 @@ export const Upload = {
       })
     },
     beforeDelete(file, detail) {
+      // 删除
       this.fileList.splice(detail.index, 1)
       this.files.forEach((res, index) => {
         if (file.name === res.name) {
@@ -132,12 +136,11 @@ export const Upload = {
       }
     },
     getEntries() {
-      localStorage.setItem('dataList', JSON.stringify(this.dataList))
       // 解析给流程
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value_id: item.id,
-        form_id: item.form_id,
+        value: item.name,
         field_id: this.field.id,
       }))
       return entries

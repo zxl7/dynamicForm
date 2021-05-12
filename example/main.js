@@ -2,9 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
-import '@byzanteam/vis-components/dist/index.css'
-import 'vant/lib/index.css'
-import 'iview/dist/styles/iview.css'
+// import '@byzanteam/vis-components/dist/index.css'
 
 
 Vue.config.productionTip = false

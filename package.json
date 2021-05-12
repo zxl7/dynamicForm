@@ -1,6 +1,6 @@
 {
   "name": "@byzanteam/slp-fields",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "repository": "https://github.com/Byzanteam/slp-fields",
   "main": "dist/index.common.js",
   "files": [
@@ -16,8 +16,7 @@
     "lint:script": "vue-cli-service lint"
   },
   "dependencies": {
-    "@byzanteam/vis-components": "^0.1.7",
-    "iview": "^3.5.4",
+    "axios": "^0.21.1",
     "lodash": "^4.17.15",
     "vant": "^2.10.14",
     "vue": "^2.6.10",

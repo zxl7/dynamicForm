@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { Fields } from '@byzanteam/slp-fields'
+import Fields from '../../src/components/field/index.vue'
 
 export default {
   components: {

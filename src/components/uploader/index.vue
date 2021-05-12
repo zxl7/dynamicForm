@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 <template>
   <div class="uploader">
     <van-field
@@ -22,9 +23,9 @@
           :deletable="!disabled"
           :before-delete="beforeDelete"
           :after-read="afterRead"
-          :accept="fileParams.accept"
-          :max-count="fileParams.count"
-          :max-size="fileParams.size * 1024 * 1024"
+          :accept="field.accept?field.accept:'*'"
+          :max-count="field.count?field.count : '10'"
+          :max-size="field.size ? field.size * 1024 * 1024 : 10 * 1024 * 1024"
           @oversize="onOversize"
         />
       </template>
@@ -35,6 +36,7 @@
 <script>
 import _ from 'lodash'
 import { Toast, Uploader } from 'vant'
+import axios from 'axios'
 import FieldMixin from '../mixin'
 
 export const Upload = {
@@ -44,96 +46,87 @@ export const Upload = {
       type: String,
       default: 'https://up.qbox.me/',
     },
-    fileParams: {
-      type: Object,
-      default: () => {},
-    },
-    beforeUploadFunc: {
-      type: Function,
-      required: true,
-    },
   },
   components: {
     'van-uploader': Uploader,
     Toast,
   },
-  watch: {
-    dataList: {
-      handler(dataList) {
-        if (dataList.length > 0) {
-          dataList.forEach((res) => {
-            if (this.noRepeat) {
-              this.blobToFile(res.attachment)
-            }
-          })
-        }
-      },
-      immediate: true,
-    },
-  },
+
   data() {
     return {
       files: [],
       fileList: [],
-      noRepeat: true,
     }
   },
   mounted() {},
   methods: {
-    blobToFile(attachment) {
-      this.axios({
-        method: 'GET',
-        url: `/api/v4/attachments/${attachment.id}/base64_file`,
-      }).then(({ data }) => {
-        const base64Data = data
-        const blob = this.base64ToBlob(base64Data, attachment.mime_type)
-        blob.lastModifiedDate = new Date()
-        blob.name = attachment.name
-        const file = { file: new File([blob], attachment.name, { type: attachment.mime_type }) }
-        this.fileList.push({ content: `data:${attachment.mime_type};base64,${base64Data}`, file: file.file, name: blob.name })
-        this.afterRead(file)
-        this.noRepeat = false
-      })
-    },
-    base64ToBlob(dataUrl, type) {
-      const bstr = atob(dataUrl)
-      let n = bstr.length
-      const u8arr = new Uint8Array(n)
-      // eslint-disable-next-line no-plusplus
-      while (n--) {
-        u8arr[n] = bstr.charCodeAt(n)
-      }
-      return new Blob([u8arr], { type })
-    },
-
     onOversize() {
-      Toast.fail(`文件大小不能超过 ${this.fileParams.size} M`)
+      Toast.fail(`文件大小不能超过 ${this.field.size ? this.field.size : 10} M`)
     },
     afterRead(file) {
       if (Array.isArray(file)) {
         file.forEach((res) => {
-          // eslint-disable-next-line no-plusplus
-          for (let i = 0; i < 2; i++) {
-            this.beforeUploadFunc(res, this.files)
-          }
+          this.beforeUploadFunc(res, this.files)
         })
       } else {
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < 2; i++) {
-          this.beforeUploadFunc(file, this.files)
-        }
+        this.beforeUploadFunc(file, this.files)
       }
     },
-    beforeDelete(file, detail) {
-      this.fileList.splice(detail.index, 1)
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < 2; i++) {
-        this.files.forEach((res, index) => {
-          if (file.name === res.name) {
-            this.files.splice(index, 1)
-          }
+    // 上传附件
+    beforeUploadFunc(file, files) {
+      // eslint-disable-next-line no-param-reassign
+      file.status = 'uploading'
+      // eslint-disable-next-line no-param-reassign
+      file.message = '上传中...'
+      axios({
+        method: 'get',
+        url: `${this.field.URL}/api/v4/attachments/uptoken`,
+        headers: {
+          Authorization: `${this.field.Authorization}`,
+        },
+        params: {
+          purpose: 'create_responses',
+          user_id: this.field.USERID,
+        },
+      }).then(({ data }) => {
+        const formData = new FormData()
+        formData.append('file', file.file)
+        formData.append('token', data.uptoken)
+        formData.append('x:key', new Date().getTime())
+        const dataFile = formData
+        axios({
+          method: 'post',
+          url: 'https://up.qbox.me/',
+          data: dataFile,
+          headers: {
+            'content-type': false,
+          },
         })
-      }
+          // eslint-disable-next-line no-shadow
+          .then((data) => {
+            files.push(data.data)
+            // eslint-disable-next-line no-param-reassign
+            file.status = 'done'
+            // eslint-disable-next-line no-param-reassign
+            file.name = data.data.name
+          })
+          .catch(() => {
+            // eslint-disable-next-line no-param-reassign
+            file.status = 'failed'
+            // eslint-disable-next-line no-param-reassign
+            file.message = '上传失败'
+            Toast.fail('上传文件失败，请重试')
+          })
+      })
+    },
+    beforeDelete(file, detail) {
+      // 删除
+      this.fileList.splice(detail.index, 1)
+      this.files.forEach((res, index) => {
+        if (file.name === res.name) {
+          this.files.splice(index, 1)
+        }
+      })
     },
     addFile(file) {
       if (_.isArray(file)) {
@@ -143,42 +136,15 @@ export const Upload = {
       }
     },
     getEntries() {
-      localStorage.setItem('dataList', JSON.stringify(this.dataList))
       // 解析给流程
-      this.files = this.setEntries(this.files)
       if (this.files.length <= 0) return []
       const entries = this.files.map(item => ({
         value_id: item.id,
-        form_id: item.form_id,
+        value: item.name,
         field_id: this.field.id,
       }))
       return entries
     },
-    // 相同name附件，ID合并
-    setEntries(files) {
-      let array = []
-      files.forEach((file) => {
-        array.push(file.name)
-      })
-      // 去重
-      array = Array.from(new Set(array))
-      const fileList = []
-      array.forEach((name) => {
-        files.forEach((file) => {
-          if (name === file.name) {
-            fileList.push(file)
-          }
-        })
-      })
-      const arr = []
-      // eslint-disable-next-line no-plusplus
-      for (let index = 0; index < fileList.length; index += 2) {
-        fileList[index].form_id = fileList[index + 1].id
-        arr.push(fileList[index])
-      }
-      return arr
-    },
-
     getValid() {
       if (this.files.length <= 0 && this.required) {
         this.valid = false

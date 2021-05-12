@@ -26,6 +26,7 @@ import { DateTime } from '../date_time/index.vue'
 import { Phone } from '../phone/index.vue'
 import { IdNumber } from '../id_number/index.vue'
 import { Location } from '../location/index.vue'
+import 'vant/lib/index.css'
 
 const FIELDS_MAP = {
   'Field::TextField': 'text-field',

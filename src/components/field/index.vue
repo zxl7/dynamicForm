@@ -82,8 +82,8 @@ export const Fields = {
       fieldsMap: FIELDS_MAP,
     }
   },
-
   methods: {
+    // 输出填写的值
     getData() {
       const entries = []
       this.$refs.field.forEach((component) => {
@@ -92,12 +92,21 @@ export const Fields = {
       })
       return entries
     },
-
+    // 判断必填值是否全部输入
     getValid() {
       const valids = this.$refs.field.map(item => item.getValid())
       return _.every(valids)
     },
-
+    getValue() {
+      const valueObj = {}
+      valueObj.valid = this.getValid()
+      valueObj.entries = this.getData()
+      if (!valueObj.valid) {
+        // eslint-disable-next-line no-undef
+        Toast.fail('必填字段不能为空')
+      }
+      return valueObj
+    },
     getEntry(field) {
       return this.entries.filter(entry => entry.field_id === field.id)
     },
@@ -112,7 +121,7 @@ export default Fields
 
 .fields-group {
   background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   padding: 16px 0;
   margin: 24px 0px 80px;
 }

@@ -279,7 +279,7 @@ export const RadioButton = {
       return entries
     },
     getValid() {
-      if (!this.selectedValue && this.required) {
+      if (!this.selectedValue.id && this.required) {
         this.valid = false
         this.error = '必填字段不能为空'
       } else {

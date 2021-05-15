@@ -19,6 +19,33 @@ import '@byzanteam/slp-fields/index.css'
 - 附件上传（排版）
 - 手机号，身份证号码
 
+## 组件使用
+```HTML
+  <fields
+    ref="fields"
+    :fields="fields"
+    :entries="entries"
+  />
+
+  <!-- ref 为了拿到组件 -->
+  <!-- fields 传递对应的表单表项 -->
+  <!-- entries 传入缓存值 or 自定义的值 -->
+```
+
+### 判断字段是否为空
+```TS
+  const valid = this.$refs.fields.getValid()
+    if (!valid) {
+      this.show = false
+      Toast('必填字段不能为空')
+      return
+    }
+```
+
+### 获取填写的值
+```TS
+const entries = this.$refs.fields.getData()
+```
 
 ## 注意事项
 ### 附件上传
@@ -55,3 +82,4 @@ import '@byzanteam/slp-fields/index.css'
 ```
 
 - 也可以添加属性 `accept,count,size` 用于控制附件的格式，数量，大小
+

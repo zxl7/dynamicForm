@@ -32,19 +32,14 @@ import '@byzanteam/slp-fields/index.css'
   <!-- entries 传入缓存值 or 自定义的值 -->
 ```
 
-### 判断字段是否为空
+### 获取填写的值和必填字段是否都填写
 ```TS
-  const valid = this.$refs.fields.getValid()
-    if (!valid) {
-      this.show = false
-      Toast('必填字段不能为空')
-      return
-    }
-```
+const value = this.$refs.fields.getValue()
 
-### 获取填写的值
-```TS
-const entries = this.$refs.fields.getData()
+value {
+  valid: Boolean,
+  entries: Array
+}
 ```
 
 ## 注意事项

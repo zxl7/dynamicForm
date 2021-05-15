@@ -101,10 +101,6 @@ export const Fields = {
       const valueObj = {}
       valueObj.valid = this.getValid()
       valueObj.entries = this.getData()
-      if (!valueObj.valid) {
-        // eslint-disable-next-line no-undef
-        Toast.fail('必填字段不能为空')
-      }
       return valueObj
     },
     getEntry(field) {

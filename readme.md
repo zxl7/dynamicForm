@@ -1,34 +1,32 @@
 # slp-fields
-
 ## Project setup
 ```
 yarn add slp-fields
 ```
 
-## style import
-
-- 需要引入的样式文件
-```
+## 需要引入的样式文件
+```TS
 import '@byzanteam/slp-fields/index.css'
 ```
 
 ## 已开发组件
-- 单，多选（排版）
-- 单，多行文本（排版）
-- 时间选择（排版）
-- 附件上传（排版）
-- 手机号，身份证号码
+- 单，多选（布局）
+- 单，多行文本（布局）
+- 时间选择（布局）
+- 附件上传（布局）
+- 手机号，身份证号码（布局）
+- 级联选择（布局）
 
 ## 组件使用
 ```HTML
-  <fields
+  <Fields
     ref="fields"
     :fields="fields"
     :entries="entries"
   />
 
-  <!-- ref 为了拿到组件 -->
-  <!-- fields 传递对应的表单表项 -->
+  <!-- ref 为了使用组件内方法 -->
+  <!-- fields 传递需要渲染的表单表项 -->
   <!-- entries 传入缓存值 or 自定义的值 -->
 ```
 
@@ -44,8 +42,9 @@ value {
 
 ## 注意事项
 ### 附件上传
-- 使用附件上传的时候需要重新构建 files 对象
-- 需要新增：`USERID,URL,Authorization` 字段
+- 使用附件上传的时候需要重新构建附件的 files 对象
+- 必须新增：`USERID,URL,Authorization` 字段
+- 也可以添加属性 `accept,count,size` 用于控制附件的格式，数量，大小
 - 案例如下：
 ```TS
     {
@@ -76,5 +75,4 @@ value {
     },
 ```
 
-- 也可以添加属性 `accept,count,size` 用于控制附件的格式，数量，大小
 

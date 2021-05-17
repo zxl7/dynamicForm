@@ -8,7 +8,7 @@
       :disabled="disabled"
       :error-message="error"
       autocomplete="off"
-      placeholder="请输入"
+      :placeholder="field.placeholder?field.placeholder:'请输入'"
       type="text"
       @blur="errorMessageBlur(value)"
     >

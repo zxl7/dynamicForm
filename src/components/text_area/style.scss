@@ -12,9 +12,11 @@
     order: 2;
   }
 
-  /deep/ .van-field__control {
+  .van-field__control {
     border-bottom: $field-border-bottom-width solid $field-border-bottom-color;
     padding: 4px 0;
+    min-height: 100px !important;
+
   }
   .inline {
     flex-direction: row;

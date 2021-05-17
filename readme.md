@@ -1,9 +1,6 @@
 # slp-fields
 ## Project setup
-```
-yarn add slp-fields
-```
-
+- `yarn add slp-fields`
 ## 需要引入的样式文件
 ```TS
 import '@byzanteam/slp-fields/index.css'
@@ -21,7 +18,7 @@ import '@byzanteam/slp-fields/index.css'
 ```HTML
   <Fields
     ref="fields"
-    :fields="fields"
+    :fields="data.fields"
     :entries="entries"
   />
 
@@ -74,5 +71,52 @@ value {
         'b01110629541b3eb51697db5a05dd2388aed11a58c81a75e9c08347bc30a09e6:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lc3BhY2VfaWQiOjF9.wj9V0ZVOOzSPuRYztizJL_5w0u8aJKb05Z73tEV_HuY',
     },
 ```
+### 方法如下
+```TS
+    async requestForm() {
+      const { data } = await this.api.getRequestForm(FORM_ID)
+      common.processAttachmentField(data.fields)
+    },
+
+  // 处理附件字段
+  processAttachmentField(fields) {
+    fields.forEach((field) => {
+      if (field.type === 'Field::File') {
+        field.USERID = basis.USERID
+        field.URL = basis.Url
+        field.Authorization = basis.Authorization
+      }
+    })
+  },
+```
 
 
+## 表单发送案例
+``` TS
+    submit() {
+      const valueObj = this.$refs.fields.getValue()
+      if (valueObj.valid) {
+        // 提交表单数据
+        common.postSubmitForm(valueObj.entries, FORM_ID)
+      } else {
+        this.$toast.fail('必填值未输入')
+      }
+    },
+```
+
+```TS
+  // 提交数据
+  async postSubmitForm(entries, FORM_ID) {
+    const formData = {
+      user_id: 26071,
+      response: {
+        entries_attributes: entries,
+      },
+    }
+    const data = await api.postSubmitForm(FORM_ID, formData)
+    if (data.status === 201) {
+      Toast.success('填写成功！')
+      location.reload()
+    }
+  },
+```

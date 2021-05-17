@@ -228,6 +228,13 @@ export const RadioButton = {
         }
       },
     },
+    radio: {
+      // 监听你选择的值
+      handler(value) {
+        this.field.value = value
+      },
+      immediate: true,
+    },
   },
 
   methods: {

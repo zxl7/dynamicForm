@@ -249,6 +249,13 @@ export const CheckboxButton = {
       },
       deep: true,
     },
+    selectedShowValue: {
+      // 监听你选择的值
+      handler(value) {
+        this.field.value = value
+      },
+      immediate: true,
+    },
   },
   methods: {
     onCancel(disabled) {

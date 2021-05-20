@@ -75,7 +75,7 @@ value {
 ```TS
     async requestForm() {
       const { data } = await this.api.getRequestForm(FORM_ID)
-      common.processAttachmentField(data.fields)
+      this.fields = common.processAttachmentField(data.fields)
     },
 
   // 处理附件字段

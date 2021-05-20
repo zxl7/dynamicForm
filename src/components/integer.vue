@@ -44,6 +44,11 @@ export const Integer = {
       },
       immediate: true,
     },
+    value: {
+      handler(value) {
+        this.field.value = value
+      },
+    },
   },
 
   methods: {

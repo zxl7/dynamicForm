@@ -1,6 +1,6 @@
 {
   "name": "@byzanteam/slp-fields",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "repository": "https://github.com/Byzanteam/slp-fields",
   "main": "dist/index.common.js",
   "files": [

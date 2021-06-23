@@ -2,8 +2,13 @@
 ## Project setup
 - `yarn add slp-fields`
 ## 需要引入的样式文件
-```TS
+```JS
 import '@byzanteam/slp-fields/index.css'
+```
+
+## 组件注册
+```js
+import { Fields } from '@byzanteam/slp-fields'
 ```
 
 ## 已开发组件
@@ -15,16 +20,50 @@ import '@byzanteam/slp-fields/index.css'
 - 级联选择（布局）
 
 ## 组件使用
-```HTML
+```JS
   <Fields
     ref="fields"
     :fields="data.fields"
     :entries="entries"
   />
 
-  <!-- ref 为了使用组件内方法 -->
-  <!-- fields 传递需要渲染的表单表项 -->
-  <!-- entries 传入缓存值 or 自定义的值 -->
+  // ref 为了使用组件内方法 
+  // fields 传递需要渲染的表单表项 
+  // entries 传入缓存值 or 自定义的值 
+  fields:[
+    {
+      id: 10181,
+      title: '姓名',
+      description:
+        '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
+      type: 'Field::TextField',
+      position: 0,
+      validations: ['presence'],
+      other_option: null,
+      visibility: 'public_visibility',
+      marked: false,
+      settings: {
+        layout: 'block',
+        char_size_limit_settings: {},
+        other_option_settings: { limit: {} },
+        length_limit: {},
+        limit_settings: {},
+        enable_wechat_scan: false,
+      },
+      detail_id: null,
+      identity_key: 'flow_username',
+      data: {},
+    },
+    ...
+  ]
+
+  entries:[
+    {
+      field_id: 10741,
+      value: '成都短发',
+    },
+    ...
+  ]
 ```
 
 ### 获取填写的值和必填字段是否都填写
@@ -75,7 +114,7 @@ value {
 ```TS
     async requestForm() {
       const { data } = await this.api.getRequestForm(FORM_ID)
-      common.processAttachmentField(data.fields)
+      this.fields = common.processAttachmentField(data.fields)
     },
 
   // 处理附件字段

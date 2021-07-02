@@ -1,6 +1,6 @@
 # slp-fields
 ## Project setup
-- `yarn add slp-fields`
+- `npm i @byzanteam/slp-fields`
 ## 需要引入的样式文件
 ```JS
 import '@byzanteam/slp-fields/index.css'

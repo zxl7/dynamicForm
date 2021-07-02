@@ -1,5 +1,5 @@
 <template>
-  <div class="text-area">
+  <div :class="['text-area', field.identity_key]">
     <van-field
       :id="field.identity_key"
       v-model="value"

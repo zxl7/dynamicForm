@@ -1,5 +1,5 @@
 <template>
-  <div class="location">
+  <div :class="['location', field.identity_key]">
     <van-field
       :id="field.identity_key"
       v-model="value"

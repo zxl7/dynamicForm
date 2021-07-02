@@ -559,7 +559,7 @@ export default {
             char_size_limit_settings: {},
           },
           detail_id: null,
-          identity_key: 'phone',
+          identity_key: 'phone231231',
           data: {},
         },
         {

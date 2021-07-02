@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 <template>
-  <div class="uploader">
+  <div :class="['uploader', field.identity_key]">
     <van-field
       :id="field.identity_key"
       :label="field.title"

@@ -1,5 +1,5 @@
 <template>
-  <div class="radio">
+  <div :class="['radio', field.identity_key]">
     <van-field
       v-if="field.settings.layout !== 'select'"
       :id="field.identity_key"

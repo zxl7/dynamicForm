@@ -1,5 +1,5 @@
 <template>
-  <div class="text">
+  <div :class="['text', field.identity_key]">
     <van-field
       :id="field.identity_key"
       v-model="value"
@@ -8,7 +8,7 @@
       :disabled="disabled"
       :error-message="error"
       autocomplete="off"
-      :placeholder="field.placeholder?field.placeholder:'请输入'"
+      :placeholder="field.placeholder ? field.placeholder : '请输入'"
       type="text"
       @blur="errorMessageBlur(value)"
     >
@@ -71,6 +71,4 @@ export default TextField
 
 <style lang="scss">
 @import './style.scss';
-
-
 </style>

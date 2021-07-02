@@ -1,5 +1,5 @@
 <template>
-  <div class="date">
+  <div :class="['date', field.identity_key]">
     <van-field
       :id="field.identity_key"
       :label="field.title"

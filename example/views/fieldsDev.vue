@@ -80,11 +80,11 @@ export default {
           group_id: null,
           detail_id: null,
           attachment: {
-            id: 950834,
-            name: '数据库映射查询接口.md',
+            id: 35,
+            name: '图片',
             size: '1551',
-            mime_type: 'text/markdown',
-            extension: 'text',
+            mime_type: 'image/jpeg',
+            extension: 'image',
             extra_info: {},
             download_url:
               'http://gxattachment.skylarkly.com/1/create_responses/6-1610987603-1b630dc40cd1fc2cae23e6d69f542a61-Tue Jan 19 2021 00:33:07 GMT+0800 (中国标准时间)?attname=%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%A0%E5%B0%84%E6%9F%A5%E8%AF%A2%E6%8E%A5%E5%8F%A3.md&e=1611028222&token=fy5AR0qixNg-dMJBsjhVo3UXIg7RixR66pxOiblU:-fDaELmw01xpvzg5kKg0-aVRtFQ=',
@@ -102,7 +102,7 @@ export default {
           group_id: null,
           detail_id: null,
           attachment: {
-            id: 948500,
+            id: 36,
             name: 'logo.jpg',
             size: '33554',
             mime_type: 'image/jpeg',
@@ -209,9 +209,9 @@ export default {
           identity_key: 'file',
           data: {},
           USERID: 1,
-          URL: 'https://beta.skylarkly.com',
+          URL: 'http://rs.cdyoue.com/',
           Authorization:
-            'b01110629541b3eb51697db5a05dd2388aed11a58c81a75e9c08347bc30a09e6:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lc3BhY2VfaWQiOjF9.wj9V0ZVOOzSPuRYztizJL_5w0u8aJKb05Z73tEV_HuY',
+            'a9cb227b2e01c6309408bcd7a18fa1e8e1ad39ec7e18f20d69e537f36eab5f2b:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lc3BhY2VfaWQiOjF9.rUVOgKhWhP6apRFbQbt1ODdgrADzCdbrYkZYkiCsH1s',
         },
         {
           id: 10181,
@@ -241,7 +241,7 @@ export default {
           title: '姓名（平铺）',
           description:
             '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
-          type: 'Field::TextField',
+          type: 'Field::SectionBreak',
           position: 0,
           validations: ['presence'],
           other_option: null,
@@ -559,7 +559,7 @@ export default {
             char_size_limit_settings: {},
           },
           detail_id: null,
-          identity_key: 'phone231231',
+          identity_key: 'phone',
           data: {},
         },
         {

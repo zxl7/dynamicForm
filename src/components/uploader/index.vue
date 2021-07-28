@@ -59,11 +59,71 @@ export const Upload = {
     }
   },
   mounted() {},
+  watch: {
+    dataList: {
+      async handler(entries) {
+        this.init()
+        await this.cycle(entries)
+      },
+      // deep: true,
+      immediate: true,
+    },
+  },
   methods: {
+    // 附件回传-获取附件file
+    cycle(entries) {
+      if (Array.isArray(entries)) {
+        entries.forEach((attachment) => {
+          this.getUpload(attachment.attachment)
+        })
+      }
+    },
+    init() {
+      this.fileList = []
+    },
+    // 获取附件base64
+    async getUpload(attachment) {
+      axios({
+        method: 'get',
+        url: `${this.field.URL}/api/v4/attachments/${attachment.id}/base64_file`,
+        headers: {
+          Authorization: `${this.field.Authorization}`,
+        },
+      }).then(({ data }) => {
+        const file = this.blobToFile(attachment, data, this.fileList)
+        this.afterRead(file)
+      })
+    },
+    // 通过附件base64构建file
+    blobToFile(attachment, data, fileList) {
+      const base64Data = data
+      const blob = this.base64ToBlob(base64Data, attachment.mime_type)
+      blob.lastModifiedDate = new Date()
+      blob.name = attachment.name
+      const file = { file: new File([blob], attachment.name, { type: attachment.mime_type }) }
+      fileList.push({
+        content: `data:${attachment.mime_type};base64,${base64Data}`,
+        file: file.file,
+        name: blob.name,
+      })
+      return file
+    },
+    base64ToBlob(dataUrl, type) {
+      const bstr = atob(dataUrl)
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      // eslint-disable-next-line no-plusplus
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new Blob([u8arr], { type })
+    },
+
     onOversize() {
       Toast.fail(`文件大小不能超过 ${this.field.size ? this.field.size : 10} M`)
     },
     afterRead(file) {
+      console.log(file)
       if (Array.isArray(file)) {
         file.forEach((res) => {
           this.beforeUploadFunc(res, this.files)

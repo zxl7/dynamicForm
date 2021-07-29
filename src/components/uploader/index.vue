@@ -23,8 +23,8 @@
           :deletable="!disabled"
           :before-delete="beforeDelete"
           :after-read="afterRead"
-          :accept="field.accept?field.accept:'*'"
-          :max-count="field.count?field.count : '10'"
+          :accept="field.accept ? field.accept : '*'"
+          :max-count="field.count ? field.count : '10'"
           :max-size="field.size ? field.size * 1024 * 1024 : 10 * 1024 * 1024"
           @oversize="onOversize"
         />
@@ -85,9 +85,13 @@ export const Upload = {
     async getUpload(attachment) {
       axios({
         method: 'get',
-        url: `${this.field.cacheUrl}/api/v4/attachments/${attachment.id}/base64_file`,
+        url: `${this.field.cacheUrl ? this.field.cacheUrl : this.field.URL}/api/v4/attachments/${
+          attachment.id
+        }/base64_file`,
         headers: {
-          Authorization: `${this.field.cacheAuthorization}`,
+          Authorization: `${
+            this.field.cacheAuthorization ? this.field.cacheAuthorization : this.field.Authorization
+          }`,
         },
       }).then(({ data }) => {
         const file = this.blobToFile(attachment, data, this.fileList)

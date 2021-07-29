@@ -79,8 +79,10 @@ value {
 ## 注意事项
 ### 附件上传
 - 使用附件上传的时候需要重新构建附件的 files 对象
-- 必须新增：`USERID,URL,Authorization` 字段
-- 也可以添加属性 `accept,count,size` 用于控制附件的格式，数量，大小
+- **必须新增**：`USERID,URL,Authorization,cacheUrl,cacheAuthorization` 字段
+  - `cacheUrl,cacheAuthorization` 附件来源空间信息
+  - `USERID,URL,Authorization` 附件需要发送的空间信息
+- 也可以添加属性： `accept,count,size` 用于控制附件的格式，数量，大小
 - 案例如下：
 ```TS
     {

@@ -85,9 +85,9 @@ export const Upload = {
     async getUpload(attachment) {
       axios({
         method: 'get',
-        url: `${this.field.URL}/api/v4/attachments/${attachment.id}/base64_file`,
+        url: `${this.field.cacheUrl}/api/v4/attachments/${attachment.id}/base64_file`,
         headers: {
-          Authorization: `${this.field.Authorization}`,
+          Authorization: `${this.field.cacheAuthorization}`,
         },
       }).then(({ data }) => {
         const file = this.blobToFile(attachment, data, this.fileList)

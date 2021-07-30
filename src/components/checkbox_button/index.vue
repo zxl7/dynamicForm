@@ -356,7 +356,11 @@ export const CheckboxButton = {
       result = result.concat(deletedOldEntries)
       // 其他传值
       if (this.selectedOther) {
-        result.push({ field_id: this.field.id, value: this.selectedOther })
+        result.push({
+          field_id: this.field.id,
+          value: this.selectedOther,
+          identity_key: this.field.identity_key,
+        })
       }
       return result
     },

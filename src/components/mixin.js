@@ -75,10 +75,12 @@ export default {
           result = _.clone(this.entries[0])
           result._destroy = false
           result.value = this.value
+          result.identity_key = this.field.identity_key
         } else {
           result = {
             value: this.value,
             field_id: this.field.id,
+            identity_key: this.field.identity_key,
           }
         }
       } else if (this.entries.length && this.entries[0].id) {

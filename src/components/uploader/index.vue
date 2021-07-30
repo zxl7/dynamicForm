@@ -206,6 +206,7 @@ export const Upload = {
         value_id: item.id,
         value: item.name,
         field_id: this.field.id,
+        identity_key: this.field.identity_key,
       }))
       return entries
     },

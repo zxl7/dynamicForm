@@ -330,6 +330,7 @@ export const CheckboxButton = {
             option_id: option.id,
             value: option.value,
             field_id: fieldId,
+            identity_key: this.field.identity_key,
           })
         } else {
           const oldEntry = _.clone(oldEntries.splice(oldEntryIndex, 1)[0])

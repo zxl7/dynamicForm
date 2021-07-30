@@ -51,6 +51,7 @@ export const TextField = {
       const entry = {
         field_id: this.field.id,
         value: this.value,
+        identity_key: this.field.identity_key,
       }
       return [entry]
     },

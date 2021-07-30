@@ -299,6 +299,7 @@ export const RadioButton = {
         value: option.value,
         field_id: this.field.id,
         option_id: option.id,
+        identity_key: this.field.identity_key,
       }
     },
   },

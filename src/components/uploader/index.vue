@@ -10,10 +10,7 @@
       class="no-border"
     >
       <template #input>
-        <p
-          v-if="field.description"
-          class="description"
-        >
+        <p v-if="field.description" class="description">
           {{ field.description }}
         </p>
         <van-uploader
@@ -66,6 +63,12 @@ export const Upload = {
         await this.cycle(entries)
       },
       // deep: true,
+      immediate: true,
+    },
+    fileList: {
+      async handler(fileList) {
+        sessionStorage.setItem('fileList', JSON.stringify(fileList))
+      },
       immediate: true,
     },
   },
@@ -166,18 +169,13 @@ export const Upload = {
             'content-type': false,
           },
         })
-          // eslint-disable-next-line no-shadow
           .then((data) => {
             files.push(data.data)
-            // eslint-disable-next-line no-param-reassign
             file.status = 'done'
-            // eslint-disable-next-line no-param-reassign
             file.name = data.data.name
           })
           .catch(() => {
-            // eslint-disable-next-line no-param-reassign
             file.status = 'failed'
-            // eslint-disable-next-line no-param-reassign
             file.message = '上传失败'
             Toast.fail('上传文件失败，请重试')
           })
@@ -202,7 +200,7 @@ export const Upload = {
     getEntries() {
       // 解析给流程
       if (this.files.length <= 0) return []
-      const entries = this.files.map(item => ({
+      const entries = this.files.map((item) => ({
         value_id: item.id,
         value: item.name,
         field_id: this.field.id,

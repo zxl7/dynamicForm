@@ -65,6 +65,8 @@ import { Fields } from '@byzanteam/slp-fields'
     ...
   ]
 ```
+### 组件冻结
+  - `Vue.set(field, 'customClass', ['disabled'])`
 
 ### 获取填写的值和必填字段是否都填写
 ```TS

@@ -65,9 +65,15 @@ export const Upload = {
       // deep: true,
       immediate: true,
     },
-    fileList: {
-      async handler(fileList) {
-        sessionStorage.setItem('fileList', JSON.stringify(fileList))
+    files: {
+      async handler(files) {
+        const fileList = files
+        if (sessionStorage.getItem('fileList') {
+        const arr = JSON.parse(sessionStorage.getItem('fileList'))
+          fileList = [...arr,...fileList]
+        }else{
+          sessionStorage.setItem('fileList', JSON.stringify(fileList))
+        }
       },
       immediate: true,
     },

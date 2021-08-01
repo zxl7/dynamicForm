@@ -65,18 +65,6 @@ export const Upload = {
       // deep: true,
       immediate: true,
     },
-    files: {
-      async handler(files) {
-        const fileList = files
-        if (sessionStorage.getItem('fileList')) {
-          const arr = JSON.parse(sessionStorage.getItem('fileList'))
-          fileList = [...arr, ...fileList]
-        } else {
-          sessionStorage.setItem('fileList', JSON.stringify(fileList))
-        }
-      },
-      immediate: true,
-    },
   },
   methods: {
     // 附件回传-获取附件file
@@ -147,10 +135,9 @@ export const Upload = {
     },
     // 上传附件
     beforeUploadFunc(file, files) {
-      // eslint-disable-next-line no-param-reassign
       file.status = 'uploading'
-      // eslint-disable-next-line no-param-reassign
       file.message = '上传中...'
+      file.name = file.file.name
       axios({
         method: 'get',
         url: `${this.field.URL}/api/v4/attachments/uptoken`,

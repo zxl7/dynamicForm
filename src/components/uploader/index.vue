@@ -5,7 +5,7 @@
       :id="field.identity_key"
       :label="field.title"
       :class="[statusClass, field.customClass]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       :error-message="errorMessage"
       class="no-border"
     >
@@ -16,7 +16,7 @@
         <van-uploader
           v-model="fileList"
           multiple
-          :disabled="disabled"
+          :disabled="field.disabled"
           :deletable="!disabled"
           :before-delete="beforeDelete"
           :after-read="afterRead"

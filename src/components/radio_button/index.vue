@@ -5,7 +5,7 @@
       :id="field.identity_key"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       :error-message="error"
     >
       <template #input>
@@ -17,11 +17,12 @@
         </p>
         <van-radio-group
           v-model="chooseValue"
-          :disabled="disabled"
+          :disabled="field.disabled"
         >
           <van-radio
             v-for="option in field.options"
             :key="option.id"
+            :disabled="field.disabled"
             checked-color="#fd7d58"
             :name="option.id"
             @click="onConfirm(option, disabled)"
@@ -32,6 +33,7 @@
             v-if="field.other_option"
             checked-color="#fd7d58"
             :name="0"
+            :disabled="field.disabled"
             @click="onOtherValue(disabled)"
           >
             <span>{{ field.other_option }}</span>
@@ -52,7 +54,7 @@
       v-model="radio"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       :error-message="error"
       placeholder="请选择"
       readonly
@@ -83,7 +85,7 @@
       <div class="popup">
         <van-radio-group
           v-model="chooseValue"
-          :disabled="disabled"
+          :disabled="field.disabled"
         >
           <van-cell-group>
             <van-cell
@@ -92,6 +94,7 @@
             >
               <template #right-icon>
                 <van-radio
+                  :disabled="field.disabled"
                   v-if="field.other_option"
                   :name="0"
                   checked-color="#fd7d58"
@@ -115,6 +118,7 @@
             >
               <template #right-icon>
                 <van-radio
+                  :disabled="field.disabled"
                   :name="option.id"
                   checked-color="#fd7d58"
                 />

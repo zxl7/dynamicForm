@@ -5,7 +5,7 @@
       v-model="value"
       :label="field.title"
       :class="[statusClass, field.customCla, field.settings.layout]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       :error-message="error"
       autocomplete="off"
       placeholder="请输入"

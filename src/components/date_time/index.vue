@@ -9,7 +9,7 @@
       :value="value"
       readonly
       clickable
-      :disabled="disabled"
+      :disabled="field.disabled"
       name="datetimePicker"
       :right-icon="value ? 'clear' : 'play'"
       @blur="errorMessageBlur"
@@ -37,6 +37,7 @@
           <van-datetime-picker
             v-model="currentTime"
             type="time"
+            :disabled="field.disabled"
             @confirm="onConfirm(currentTime)"
             @cancel="onCancel"
           />
@@ -45,6 +46,7 @@
         <div v-else>
           <van-datetime-picker
             v-model="currentDate"
+            :disabled="field.disabled"
             confirm-button-text="确定"
             :type="
               field.settings.input_type === 'datetime-local'

@@ -198,6 +198,7 @@ export default {
           other_option: null,
           visibility: 'public_visibility',
           marked: false,
+          disabled: true,
           settings: {
             layout: 'block',
             other_option_settings: { limit: {} },

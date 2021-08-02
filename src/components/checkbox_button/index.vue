@@ -5,7 +5,7 @@
       :id="field.identity_key"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       :error-message="error"
     >
       <template #input>
@@ -17,12 +17,13 @@
         </p>
         <van-checkbox-group
           v-model="selectedValue"
-          :disabled="disabled"
+          :disabled="field.disabled"
           :direction="field.settings.layout === 'list' ? '' : 'horizontal'"
         >
           <van-checkbox
             v-for="option in field.options"
             :key="option.id"
+            :disabled="field.disabled"
             checked-color="#fd7d58"
             :name="option.id"
             shape="square"
@@ -32,6 +33,7 @@
           <van-checkbox
             v-if="field.other_option"
             shape="square"
+            :disabled="field.disabled"
             :name="0"
             checked-color="#fd7d58"
             @click="onOtherValue(disabled)"
@@ -55,7 +57,7 @@
       v-model="selectedShowValue"
       :label="field.title"
       :class="[statusClass, field.customClass, field.settings.layout]"
-      :disabled="disabled"
+      :disabled="field.disabled"
       placeholder="请选择"
       readonly
       right-icon="arrow-down"
@@ -86,7 +88,7 @@
       <div class="popup">
         <van-checkbox-group
           v-model="selectedValue"
-          :disabled="disabled"
+          :disabled="field.disabled"
         >
           <van-cell-group>
             <van-cell

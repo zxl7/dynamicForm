@@ -196,6 +196,8 @@ export const Upload = {
       const entries = this.files.map((item) => ({
         value_id: item.id,
         value: item.name,
+        mime_type: item.mime_type,
+        size: item.size,
         field_id: this.field.id,
         identity_key: this.field.identity_key,
       }))

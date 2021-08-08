@@ -68,50 +68,7 @@ export default {
           group_id: null,
           detail_id: null,
         },
-        {
-          id: 5076190,
-          field_id: 10785,
-          option_id: null,
-          value: '数据库映射查询接口.md',
-          choice_id: null,
-          value_id: 950834,
-          latitude: null,
-          longitude: null,
-          group_id: null,
-          detail_id: null,
-          attachment: {
-            id: 35,
-            name: '图片',
-            size: '1551',
-            mime_type: 'image/jpeg',
-            extension: 'image',
-            extra_info: {},
-            download_url:
-              'http://gxattachment.skylarkly.com/1/create_responses/6-1610987603-1b630dc40cd1fc2cae23e6d69f542a61-Tue Jan 19 2021 00:33:07 GMT+0800 (中国标准时间)?attname=%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%A0%E5%B0%84%E6%9F%A5%E8%AF%A2%E6%8E%A5%E5%8F%A3.md&e=1611028222&token=fy5AR0qixNg-dMJBsjhVo3UXIg7RixR66pxOiblU:-fDaELmw01xpvzg5kKg0-aVRtFQ=',
-          },
-        },
-        {
-          id: 4909977,
-          field_id: 10785,
-          option_id: null,
-          value: 'logo.jpg',
-          choice_id: null,
-          value_id: 948500,
-          latitude: null,
-          longitude: null,
-          group_id: null,
-          detail_id: null,
-          attachment: {
-            id: 36,
-            name: 'logo.jpg',
-            size: '33554',
-            mime_type: 'image/jpeg',
-            extension: 'image',
-            extra_info: {},
-            download_url:
-              'http://gxattachment.skylarkly.com/1/create_responses/6-1610522321-3203f50552a473e93bb9f89531e755a1-Wed Jan 13 2021 15:18:38 GMT+0800 (中国标准时间)?attname=logo.jpg&e=1610527775&token=fy5AR0qixNg-dMJBsjhVo3UXIg7RixR66pxOiblU:bQRTL1ENdEjU-NT2pdt9rzVANcU=',
-          },
-        },
+
         {
           id: 4892902,
           field_id: 10724,
@@ -217,8 +174,7 @@ export default {
         {
           id: 10181,
           title: '姓名',
-          description:
-            '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试',
+          description: '请输入姓名',
           type: 'Field::TextField',
           position: 0,
           validations: ['presence'],
@@ -236,6 +192,7 @@ export default {
           detail_id: null,
           identity_key: 'flow_usernam',
           data: {},
+          disabled: true,
         },
         {
           id: 20181,

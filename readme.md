@@ -1,17 +1,23 @@
-# slp-fields
+# dynamicForm
+
 ## Project setup
+
 - `npm i @zxl7/dynamicForm`
+
 ## 需要引入的样式文件
+
 ```JS
 import '@zxl7/dynamicForm/index.css'
 ```
 
 ## 组件注册
+
 ```js
-import { Fields } from '@zxl7/dynamicForm'
+import { Fields } from "@zxl7/dynamicForm"
 ```
 
 ## 已开发组件
+
 - 单，多选（布局）
 - 单，多行文本（布局）
 - 时间选择（布局）
@@ -20,6 +26,7 @@ import { Fields } from '@zxl7/dynamicForm'
 - 级联选择（布局）
 
 ## 组件使用
+
 ```JS
   <Fields
     ref="fields"
@@ -27,9 +34,9 @@ import { Fields } from '@zxl7/dynamicForm'
     :entries="entries"
   />
 
-  // ref 为了使用组件内方法 
-  // fields 传递需要渲染的表单表项 
-  // entries 传入缓存值 or 自定义的值 
+  // ref 为了使用组件内方法
+  // fields 传递需要渲染的表单表项
+  // entries 传入缓存值 or 自定义的值
   fields:[
     {
       id: 10181,
@@ -65,10 +72,13 @@ import { Fields } from '@zxl7/dynamicForm'
     ...
   ]
 ```
+
 ### 组件冻结
-  - `Vue.set(field, 'customClass', ['disabled'])`
+
+- `Vue.set(field, 'customClass', ['disabled'])`
 
 ### 获取填写的值和必填字段是否都填写
+
 ```TS
 const value = this.$refs.fields.getValue()
 
@@ -79,13 +89,16 @@ value {
 ```
 
 ## 注意事项
+
 ### 附件上传
+
 - 使用附件上传的时候需要重新构建附件的 files 对象
 - **必须新增**：`USERID,URL,Authorization` 字段
   - `USERID,URL,Authorization` 附件需要发送的空间信息
   - `cacheUrl,cacheAuthorization` 可选字段，附件来源空间信息
 - 也可以添加属性： `accept,count,size` 用于控制附件的格式，数量，大小
 - 案例如下：
+
 ```TS
     {
       id: 10785,
@@ -114,7 +127,9 @@ value {
         'b01110629541b3eb51697db5a05dd2388aed11a58c81a75e9c08347bc30a09e6:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lc3BhY2VfaWQiOjF9.wj9V0ZVOOzSPuRYztizJL_5w0u8aJKb05Z73tEV_HuY',
     },
 ```
+
 ### 方法如下
+
 ```TS
     async requestForm() {
       const { data } = await this.api.getRequestForm(FORM_ID)
@@ -133,9 +148,9 @@ value {
   },
 ```
 
-
 ## 表单发送案例
-``` TS
+
+```TS
     submit() {
       const valueObj = this.$refs.fields.getValue()
       if (valueObj.valid) {

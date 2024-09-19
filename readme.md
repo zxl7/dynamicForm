@@ -1,14 +1,14 @@
 # slp-fields
 ## Project setup
-- `npm i @byzanteam/slp-fields`
+- `npm i @zxl7/dynamicForm`
 ## 需要引入的样式文件
 ```JS
-import '@byzanteam/slp-fields/index.css'
+import '@zxl7/dynamicForm/index.css'
 ```
 
 ## 组件注册
 ```js
-import { Fields } from '@byzanteam/slp-fields'
+import { Fields } from '@zxl7/dynamicForm'
 ```
 
 ## 已开发组件
